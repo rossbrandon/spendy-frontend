@@ -1,7 +1,10 @@
 {
     "name": "spendy-frontend",
-    "version": "0.1.0",
+    "version": "0.0.1",
+    "description": "",
+    "author": "Ross Brandon",
     "private": true,
+    "license": "UNLICENSED",
     "dependencies": {
         "@testing-library/jest-dom": "^5.11.6",
         "@testing-library/react": "^11.2.2",
@@ -27,7 +30,11 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+        "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+        "format": "prettier --check \"src/**/*.ts\" \"test/**/*.tsx\"",
+        "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.tsx\""
     },
     "eslintConfig": {
         "extends": [
