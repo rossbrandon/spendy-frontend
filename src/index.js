@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Auth0Provider } from '@auth0/auth0-react'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { config } from './config'
 import './i18n'
 
@@ -16,9 +16,9 @@ const app = (
         scope={config.auth0.scope}
         // useRefreshTokens={true}
     >
-        <BrowserRouter>
+        <HashRouter>
             <App />
-        </BrowserRouter>
+        </HashRouter>
     </Auth0Provider>
 )
 
