@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Collapse } from 'reactstrap'
 import { useBudgets } from 'hooks'
 import { withTranslation } from 'react-i18next'
@@ -56,4 +56,4 @@ Navbar.propTypes = {
     t: PropTypes.any,
 }
 
-export default withRouter(withTranslation()(Navbar))
+export default withTranslation()(Navbar)

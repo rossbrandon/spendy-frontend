@@ -1,10 +1,10 @@
 import React from 'react'
 import { Container, Row, Col, Card, CardBody, Media } from 'reactstrap'
-import HorizontalLayout from '../../components/Layout/Layout'
 import BudgetCard from '../../components/BudgetCard/BudgetCard'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import { useBudgets } from 'hooks'
 import MonthSwitcher from 'components/MonthSwitcher'
+import Layout from '../../components/Layout/Layout'
 
 const Dashboard = () => {
     const { budgets } = useBudgets()
@@ -24,8 +24,7 @@ const Dashboard = () => {
     const remainingClass = totalRemaining >= 0 ? 'text-info' : 'text-danger'
 
     return (
-        <React.Fragment>
-            <HorizontalLayout budgets={budgets} />
+        <Layout>
             <div className="page-content">
                 <Container fluid>
                     <MonthSwitcher />
@@ -141,7 +140,7 @@ const Dashboard = () => {
                     </Row>
                 </Container>
             </div>
-        </React.Fragment>
+        </Layout>
     )
 }
 

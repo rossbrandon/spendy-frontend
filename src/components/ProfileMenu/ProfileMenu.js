@@ -15,7 +15,7 @@ import './profileMenu.scss'
 const ProfileMenu = props => {
     const [menu, setMenu] = useState(false)
     const {
-        isLoading,
+        isLoadingMask,
         user,
         loginWithRedirect,
         logout,
@@ -72,10 +72,10 @@ const ProfileMenu = props => {
                         <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
                     </DropdownToggle>
                 )}
-                {!isLoading && !user && (
+                {!isLoadingMask && !user && (
                     <DropdownMenu right>
                         <Link
-                            to="/login"
+                            to="/dashboard"
                             onClick={loginWithRedirect}
                             className="dropdown-item"
                         >
@@ -91,13 +91,13 @@ const ProfileMenu = props => {
                             <i className="bx bx-user font-size-16 align-middle mr-1" />
                             {props.t('Profile')}{' '}
                         </DropdownItem>
-                        <DropdownItem tag="a" href="/budgets">
+                        <Link to="/budgets" className="dropdown-item">
                             <i className="bx bx-wallet font-size-16 align-middle mr-1" />
                             {props.t('My Budgets')}
-                        </DropdownItem>
+                        </Link>
                         <div className="dropdown-divider" />
                         <Link
-                            to="/logout"
+                            to="/"
                             onClick={clearAndLogout}
                             className="dropdown-item"
                         >

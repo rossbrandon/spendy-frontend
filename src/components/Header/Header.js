@@ -5,15 +5,19 @@ import LanguageDropdown from '../LanguageDropdown/LanguageDropdown'
 import ProfileMenu from '../ProfileMenu/ProfileMenu'
 import spendyLogo from '../../assets/images/spendy_logo.png'
 import { withTranslation } from 'react-i18next'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const Header = props => {
     const { openMenu } = props
+    const { isAuthenticated } = useAuth0()
+    const routePath = isAuthenticated ? '/dashboard' : '/'
+
     return (
         <header id="page-topbar">
             <div className="navbar-header">
                 <div className="d-flex">
                     <div className="navbar-brand-box">
-                        <Link to="/dashboard" className="logo logo-light">
+                        <Link to={`${routePath}`} className="logo logo-light">
                             <span className="logo-sm">
                                 <img src={spendyLogo} alt="" height="50" />
                             </span>
@@ -22,7 +26,6 @@ const Header = props => {
                             </span>
                         </Link>
                     </div>
-
                     <button
                         type="button"
                         className="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light"
@@ -35,10 +38,8 @@ const Header = props => {
                         <i className="fa fa-fw fa-bars" />
                     </button>
                 </div>
-
                 <div className="d-flex">
                     <LanguageDropdown />
-
                     <ProfileMenu />
                 </div>
             </div>

@@ -6,7 +6,6 @@ import paginationFactory, {
     PaginationProvider,
 } from 'react-bootstrap-table2-paginator'
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
-import HorizontalLayout from '../../components/Layout/Layout'
 import ExpensesColumns from '../../components/ExpensesColumns/ExpensesColumns'
 import ViewExpenseModal from '../../components/ViewExpenseModal/ViewExpenseModal'
 import CreateExpenseModal from '../../components/CreateExpenseModal/CreateExpenseModal'
@@ -15,6 +14,7 @@ import DeleteExpenseModal from '../../components/DeleteExpenseModal/DeleteExpens
 import { useParams } from 'react-router-dom'
 import { useBudgets, useExpenses } from 'hooks'
 import MonthSwitcher from 'components/MonthSwitcher'
+import Layout from '../../components/Layout/Layout'
 
 const Expenses = () => {
     const paramBudgetId = useParams('budgetId')?.budgetId
@@ -71,8 +71,7 @@ const Expenses = () => {
     }
 
     return (
-        <React.Fragment>
-            <HorizontalLayout budgets={budgets} />
+        <Layout>
             <ViewExpenseModal
                 isOpen={viewModal}
                 toggle={toggleViewModal}
@@ -314,7 +313,7 @@ const Expenses = () => {
                     </Row>
                 </Container>
             </div>
-        </React.Fragment>
+        </Layout>
     )
 }
 

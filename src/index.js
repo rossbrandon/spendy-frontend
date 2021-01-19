@@ -14,7 +14,7 @@ const app = (
         redirectUri={window.location.origin}
         audience={config.auth0.audience}
         scope={config.auth0.scope}
-        // useRefreshTokens={true}
+        useRefreshTokens={true}
     >
         <HashRouter>
             <App />

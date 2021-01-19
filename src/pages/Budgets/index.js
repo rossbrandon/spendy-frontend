@@ -6,13 +6,13 @@ import paginationFactory, {
     PaginationProvider,
 } from 'react-bootstrap-table2-paginator'
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
-import HorizontalLayout from '../../components/Layout/Layout'
 import BudgetsColumns from '../../components/BudgetsColumns/BudgetsColumns'
 import ViewBudgetModal from '../../components/ViewBudgetModal/ViewBudgetModal'
 import CreateBudgetModal from '../../components/CreateBudgetModal/CreateBudgetModal'
 import EditBudgetModal from '../../components/EditBudgetModal/EditBudgetModal'
 import DeleteBudgetModal from '../../components/DeleteBudgetModal/DeleteBudgetModal'
 import { useBudgets } from 'hooks'
+import Layout from '../../components/Layout/Layout'
 
 const Budgets = () => {
     const { budgets, refetchData, setRefetchData } = useBudgets()
@@ -58,8 +58,7 @@ const Budgets = () => {
     }
 
     return (
-        <React.Fragment>
-            <HorizontalLayout budgets={budgets} />
+        <Layout>
             <ViewBudgetModal
                 isOpen={viewModal}
                 toggle={toggleViewModal}
@@ -191,7 +190,7 @@ const Budgets = () => {
                     </Row>
                 </Container>
             </div>
-        </React.Fragment>
+        </Layout>
     )
 }
 
