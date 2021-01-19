@@ -18,6 +18,7 @@ import Expenses from 'pages/Expenses'
 import Budgets from './pages/Budgets'
 import { config } from './config'
 import './assets/scss/theme.scss'
+import Profile from 'pages/Profile'
 
 const httpLink = createHttpLink({
     uri: config.backend.url,
@@ -84,6 +85,11 @@ const App = () => {
             <ApolloProvider client={client}>
                 <MonthSwitcherProvider>
                     <BudgetsProvider>
+                        <PrivateRoute
+                            path="/profile"
+                            component={Profile}
+                            exact
+                        />
                         <PrivateRoute
                             path="/dashboard"
                             component={Dashboard}

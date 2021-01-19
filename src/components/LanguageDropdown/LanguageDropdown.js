@@ -46,9 +46,6 @@ const LanguageDropdown = () => {
                         height="16"
                         className="mr-1"
                     />
-                    <span className="align-middle">
-                        {get(languages, `${selectedLang}.label`)}
-                    </span>
                 </DropdownToggle>
                 <DropdownMenu className="language-switch" right>
                     {map(Object.keys(languages), key => (

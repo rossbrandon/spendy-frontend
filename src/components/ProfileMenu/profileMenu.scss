@@ -7,7 +7,37 @@
 @media (max-width: 992px) {
     #user-avatar,
     #guest-avatar {
-        width: 100%;
+        width: 50px;
+        height: 90%;
+        border-radius: 50%;
+    }
+}
+
+/* Tablet Portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+    #user-avatar,
+    #guest-avatar {
+        width: 50px;
+        height: 90%;
+        border-radius: 50%;
+    }
+}
+
+/* Tablet Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+    #user-avatar,
+    #guest-avatar {
+        width: 50px;
+        height: 90%;
+        border-radius: 50%;
+    }
+}
+
+/* Phone Portrait */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+    #user-avatar,
+    #guest-avatar {
+        width: 50px;
         height: 90%;
         border-radius: 50%;
     }

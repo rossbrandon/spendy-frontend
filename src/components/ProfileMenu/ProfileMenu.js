@@ -86,11 +86,11 @@ const ProfileMenu = props => {
                 )}
                 {isAuthenticated && (
                     <DropdownMenu right>
-                        <DropdownItem tag="a" href="/profile">
+                        <Link to="/profile" className="dropdown-item">
                             {' '}
                             <i className="bx bx-user font-size-16 align-middle mr-1" />
                             {props.t('Profile')}{' '}
-                        </DropdownItem>
+                        </Link>
                         <Link to="/budgets" className="dropdown-item">
                             <i className="bx bx-wallet font-size-16 align-middle mr-1" />
                             {props.t('My Budgets')}
