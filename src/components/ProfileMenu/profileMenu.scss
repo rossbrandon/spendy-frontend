@@ -1,0 +1,14 @@
+#user-avatar,
+#guest-avatar {
+    height: 100%;
+    border-radius: 50%;
+}
+
+@media (max-width: 992px) {
+    #user-avatar,
+    #guest-avatar {
+        width: 100%;
+        height: 90%;
+        border-radius: 50%;
+    }
+}
