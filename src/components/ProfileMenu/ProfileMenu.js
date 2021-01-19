@@ -79,7 +79,7 @@ const ProfileMenu = props => {
                             onClick={loginWithRedirect}
                             className="dropdown-item"
                         >
-                            <i className="bx bx-log-in font-size-16 align-middle mr-1 text-danger" />
+                            <i className="bx bx-log-in font-size-16 align-middle mr-2 text-success" />
                             <span>{props.t('Login')}</span>
                         </Link>
                     </DropdownMenu>
@@ -101,7 +101,7 @@ const ProfileMenu = props => {
                             onClick={clearAndLogout}
                             className="dropdown-item"
                         >
-                            <i className="bx bx-power-off font-size-16 align-middle mr-1 text-danger" />
+                            <i className="bx bx-power-off font-size-16 align-middle mr-2 text-danger" />
                             <span>{props.t('Logout')}</span>
                         </Link>
                     </DropdownMenu>

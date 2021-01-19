@@ -17,8 +17,6 @@ const MonthSwitcherProvider = ({ children }) => {
         defaultEndDate,
     )
 
-    console.log(startDate)
-
     const context = {
         startDate,
         setStartDate,

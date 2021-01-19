@@ -15,6 +15,7 @@ import PrivateRoute from 'components/PrivateRoute'
 import { setContext } from '@apollo/client/link/context'
 import { config } from './config'
 import './assets/scss/theme.scss'
+import Budgets from './pages/Budgets'
 
 const httpLink = createHttpLink({
     uri: config.backend.url,
@@ -95,12 +96,15 @@ const App = () => {
                             <PrivateRoute path="/dashboard">
                                 <Dashboard />
                             </PrivateRoute>
+                            <PrivateRoute path="/budgets">
+                                <Budgets />
+                            </PrivateRoute>
                             <PrivateRoute path="/expenses/:budgetId">
                                 <ExpensesProvider>
                                     <Expenses />
                                 </ExpensesProvider>
                             </PrivateRoute>
-                            <PrivateRoute path="/">
+                            <PrivateRoute path="/" exact={true}>
                                 <Redirect to="/dashboard" />
                             </PrivateRoute>
                         </BudgetsProvider>

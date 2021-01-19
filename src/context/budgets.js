@@ -11,6 +11,8 @@ const BUDGETS_QUERY = gql`
             name
             amount
             showInMenu
+            startDate
+            endDate
             sum(startDate: $startDate, endDate: $endDate) {
                 total
             }
@@ -23,6 +25,7 @@ const BudgetsContext = createContext()
 const BudgetsProvider = ({ children }) => {
     const { startDate, endDate } = useMonthSwitcher()
     const [budgets, setBudgets] = useLocalStorageState('budgets', [])
+    const [refetchData, setRefetchData] = useState(0)
 
     const { loading, error, data, refetch } = useQuery(BUDGETS_QUERY, {
         variables: { startDate, endDate },
@@ -39,11 +42,13 @@ const BudgetsProvider = ({ children }) => {
 
     useEffect(() => {
         refetch()
-    }, [startDate])
+    }, [startDate, refetchData])
 
     const context = {
         budgets,
         setBudgets,
+        refetchData,
+        setRefetchData,
     }
 
     return (

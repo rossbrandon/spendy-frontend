@@ -30,6 +30,7 @@ const ExpensesProvider = ({ children }) => {
     const { startDate, endDate } = useMonthSwitcher()
     const [budgetId, setBudgetId] = useState('')
     const [expenses, setExpenses] = useState([])
+    const [refetchData, setRefetchData] = useState(0)
 
     const { loading, error, data, refetch } = useQuery(EXPENSES_QUERY, {
         variables: { id: budgetId, startDate, endDate },
@@ -46,13 +47,15 @@ const ExpensesProvider = ({ children }) => {
 
     useEffect(() => {
         refetch()
-    }, [startDate])
+    }, [startDate, refetchData])
 
     const context = {
         expenses,
         setExpenses,
         budgetId,
         setBudgetId,
+        refetchData,
+        setRefetchData,
     }
 
     return (

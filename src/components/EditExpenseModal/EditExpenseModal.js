@@ -11,6 +11,42 @@ import {
     ModalHeader,
 } from 'reactstrap'
 import { AvForm, AvInput } from 'availity-reactstrap-validation'
+import { gql, useMutation } from '@apollo/client'
+
+const UPDATE_MUTATION = gql`
+    mutation updateExpense(
+        $id: String!
+        $reason: String!
+        $date: DateTime!
+        $price: Float!
+        $place: String!
+        $recurUntil: DateTime
+        $recurring: Boolean!
+        $budget: String!
+    ) {
+        updateExpense(
+            id: $id
+            date: $date
+            price: $price
+            place: $place
+            reason: $reason
+            recurUntil: $recurUntil
+            recurring: $recurring
+            budget: $budget
+        ) {
+            _id
+            date
+            place
+            price
+            reason
+            budget(populate: true) {
+                _id
+                name
+                amount
+            }
+        }
+    }
+`
 
 const getFormattedDate = date => {
     return new Date(date.getTime()).toISOString().substr(0, 10)
@@ -19,9 +55,7 @@ const getFormattedDate = date => {
 const EditExpenseModal = props => {
     const { isOpen, toggle, budgets, currentBudget, expense } = props
 
-    const updateExpense = () => {
-        console.log(`Updating expense _id: ${expense._id}`)
-    }
+    const [updateExpense, { data }] = useMutation(UPDATE_MUTATION)
 
     const options = budgets.map(budget => (
         <option key={budget._id} value={budget._id}>
@@ -41,15 +75,33 @@ const EditExpenseModal = props => {
         >
             {expense && (
                 <div className="modal-content">
-                    <ModalHeader toggle={toggle}>Edit Expense</ModalHeader>
-                    <ModalBody>
-                        <AvForm className="needs-validation">
+                    <AvForm
+                        className="needs-validation"
+                        onSubmit={e => {
+                            e.preventDefault()
+                            updateExpense({
+                                variables: {
+                                    id: expense._id,
+                                    date: date.value,
+                                    budget: budget.value,
+                                    place: place.value,
+                                    price: parseInt(price.value),
+                                    reason: reason.value,
+                                    recurUntil: null,
+                                    recurring: false,
+                                },
+                            })
+                            toggle()
+                        }}
+                    >
+                        <ModalHeader toggle={toggle}>Edit Expense</ModalHeader>
+                        <ModalBody>
                             <FormGroup>
-                                <Label for="date-input">Date</Label>
+                                <Label for="date">Date</Label>
                                 <Input
                                     type="date"
                                     className="form-control"
-                                    id="date-input"
+                                    id="date"
                                     defaultValue={getFormattedDate(
                                         new Date(expense.date),
                                     )}
@@ -57,10 +109,10 @@ const EditExpenseModal = props => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="budget-select">Budget</Label>
+                                <Label for="budget">Budget</Label>
                                 <select
                                     className="form-control"
-                                    id="budget-select"
+                                    id="budget"
                                     defaultValue={currentBudget._id}
                                     required
                                 >
@@ -68,12 +120,12 @@ const EditExpenseModal = props => {
                                 </select>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="place-input">Place</Label>
+                                <Label for="place">Place</Label>
                                 <AvInput
                                     name="place"
                                     type="text"
                                     className="form-control"
-                                    id="place-input"
+                                    id="place"
                                     placeholder="Where was the expense?"
                                     value={expense.place}
                                     errorMessage="Enter Expense Place"
@@ -82,12 +134,12 @@ const EditExpenseModal = props => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="price-input">Price</Label>
+                                <Label for="price">Price</Label>
                                 <AvInput
                                     name="price"
                                     type="text"
                                     className="form-control"
-                                    id="price-input"
+                                    id="price"
                                     placeholder="How much was it?"
                                     value={expense.price}
                                     errorMessage="Enter Expense Price"
@@ -96,34 +148,30 @@ const EditExpenseModal = props => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="reason-input">Reason</Label>
+                                <Label for="reason">Reason</Label>
                                 <AvInput
                                     name="reason"
                                     type="textarea"
                                     className="form-control"
-                                    id="reason-input"
+                                    id="reason"
                                     placeholder="(Optional) Enter a reason or description?"
                                     value={expense.reason}
                                 />
                             </FormGroup>
-                        </AvForm>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button
-                            type="button"
-                            color="success"
-                            onClick={updateExpense}
-                        >
-                            Save
-                        </Button>
-                        <Button
-                            type="button"
-                            color="secondary"
-                            onClick={toggle}
-                        >
-                            Cancel
-                        </Button>
-                    </ModalFooter>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button type="submit" color="success">
+                                Save
+                            </Button>
+                            <Button
+                                type="button"
+                                color="secondary"
+                                onClick={toggle}
+                            >
+                                Cancel
+                            </Button>
+                        </ModalFooter>
+                    </AvForm>
                 </div>
             )}
         </Modal>

@@ -4,26 +4,20 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { gql, useMutation } from '@apollo/client'
 
 const DELETE_MUTATION = gql`
-    mutation deleteExpense($id: String!) {
-        deleteExpense(id: $id) {
+    mutation deleteBudget($id: String!) {
+        deleteBudget(id: $id) {
             _id
-            date
-            place
-            price
-            reason
-            budget(populate: true) {
-                _id
-                name
-                amount
-            }
+            name
+            amount
+            showInMenu
         }
     }
 `
 
-const DeleteExpenseModal = props => {
-    const { isOpen, toggle, expense } = props
+const DeleteBudgetModal = props => {
+    const { isOpen, toggle, budget } = props
 
-    const [deleteExpense, { data }] = useMutation(DELETE_MUTATION)
+    const [deleteBudget, { data }] = useMutation(DELETE_MUTATION)
 
     return (
         <Modal
@@ -36,18 +30,18 @@ const DeleteExpenseModal = props => {
             toggle={toggle}
         >
             <div className="modal-content">
-                <ModalHeader toggle={toggle}>Delete Expense</ModalHeader>
+                <ModalHeader toggle={toggle}>Delete Budget</ModalHeader>
                 <ModalBody>
-                    <p className="mb-2">Do you want to delete this expense?</p>
+                    <p className="mb-2">Do you want to delete this budget?</p>
                 </ModalBody>
                 <ModalFooter>
                     <Button
                         type="button"
                         color="danger"
                         onClick={() => {
-                            deleteExpense({
+                            deleteBudget({
                                 variables: {
-                                    id: expense._id,
+                                    id: budget._id,
                                 },
                             })
                             toggle()
@@ -64,10 +58,10 @@ const DeleteExpenseModal = props => {
     )
 }
 
-DeleteExpenseModal.propTypes = {
+DeleteBudgetModal.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
-    expense: PropTypes.object,
+    budget: PropTypes.object,
 }
 
-export default DeleteExpenseModal
+export default DeleteBudgetModal

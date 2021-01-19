@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Container, Row, Col, Card, CardBody, Media } from 'reactstrap'
+import React, { useState } from 'react'
+import { Button, Container, Row, Col, Card, CardBody } from 'reactstrap'
 import BootstrapTable from 'react-bootstrap-table-next'
 import paginationFactory, {
     PaginationListStandalone,
@@ -7,43 +7,29 @@ import paginationFactory, {
 } from 'react-bootstrap-table2-paginator'
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
 import HorizontalLayout from '../../components/Layout/Layout'
-import ExpensesColumns from '../../components/ExpensesColumns/ExpensesColumns'
-import ViewExpenseModal from '../../components/ViewExpenseModal/ViewExpenseModal'
-import CreateExpenseModal from '../../components/CreateExpenseModal/CreateExpenseModal'
-import EditExpenseModal from '../../components/EditExpenseModal/EditExpenseModal'
-import DeleteExpenseModal from '../../components/DeleteExpenseModal/DeleteExpenseModal'
-import { useParams } from 'react-router-dom'
-import { useBudgets, useExpenses } from 'hooks'
-import MonthSwitcher from 'components/MonthSwitcher'
+import BudgetsColumns from '../../components/BudgetsColumns/BudgetsColumns'
+import ViewBudgetModal from '../../components/ViewBudgetModal/ViewBudgetModal'
+import CreateBudgetModal from '../../components/CreateBudgetModal/CreateBudgetModal'
+import EditBudgetModal from '../../components/EditBudgetModal/EditBudgetModal'
+import DeleteBudgetModal from '../../components/DeleteBudgetModal/DeleteBudgetModal'
+import { useBudgets } from 'hooks'
 
-const Expenses = () => {
-    const paramBudgetId = useParams('budgetId')?.budgetId
-    const { budgets } = useBudgets()
-    const { expenses, setBudgetId, refetchData, setRefetchData } = useExpenses()
-
-    useEffect(() => {
-        setBudgetId(paramBudgetId)
-    }, [paramBudgetId])
-
-    const budget = budgets.find(b => b._id == paramBudgetId)
-
-    const { SearchBar } = Search
-
-    const totalBudget = budget.amount
-    const totalSpent = budget.sum.length ? budget.sum[0].total : 0
-    const totalRemaining = totalBudget - totalSpent
-    const remainingClass = totalRemaining >= 0 ? 'text-info' : 'text-danger'
-    const pageOptions = {
-        sizePerPage: 10,
-        totalSize: expenses.length,
-        custom: true,
-    }
+const Budgets = () => {
+    const { budgets, refetchData, setRefetchData } = useBudgets()
 
     const [viewModal, setViewModal] = useState(false)
     const [createModal, setCreateModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
     const [modalInfo, setModalInfo] = useState()
+
+    const { SearchBar } = Search
+
+    const pageOptions = {
+        sizePerPage: 10,
+        totalSize: budgets.length,
+        custom: true,
+    }
 
     const toggleViewModal = () => {
         setViewModal(!viewModal)
@@ -66,6 +52,7 @@ const Expenses = () => {
 
     const rowEvents = {
         onClick: (e, row) => {
+            console.log(row)
             setModalInfo(row)
         },
     }
@@ -73,144 +60,34 @@ const Expenses = () => {
     return (
         <React.Fragment>
             <HorizontalLayout budgets={budgets} />
-            <ViewExpenseModal
+            <ViewBudgetModal
                 isOpen={viewModal}
                 toggle={toggleViewModal}
-                currentBudget={budget}
-                expense={modalInfo}
+                budget={modalInfo}
             />
-            <CreateExpenseModal
+            <CreateBudgetModal
                 isOpen={createModal}
                 toggle={toggleCreateModal}
                 budgets={budgets}
-                currentBudget={budget}
             />
-            <EditExpenseModal
+            <EditBudgetModal
                 isOpen={editModal}
                 toggle={toggleEditModal}
                 budgets={budgets}
-                currentBudget={budget}
-                expense={modalInfo}
+                budget={modalInfo}
             />
-            <DeleteExpenseModal
+            <DeleteBudgetModal
                 isOpen={deleteModal}
                 toggle={toggleDeleteModal}
-                expense={modalInfo}
+                budget={modalInfo}
             />
             <div className="page-content">
                 <Container fluid>
-                    <MonthSwitcher />
-                    <h4>{budget.name}</h4>
-                    <Row>
-                        <Col xl="12">
-                            <Row>
-                                <Col sm="3">
-                                    <Card className="mini-stats-wid">
-                                        <CardBody>
-                                            <Media>
-                                                <div className="mr-3 align-self-center">
-                                                    <i className="mdi mdi-ethereum h2 text-success mb-0" />
-                                                </div>
-                                                <Media body>
-                                                    <p className="text-muted mb-2">
-                                                        Transations
-                                                    </p>
-                                                    <h5 className="mb-0">
-                                                        {expenses.length}
-                                                    </h5>
-                                                </Media>
-                                            </Media>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col sm="3">
-                                    <Card className="mini-stats-wid">
-                                        <CardBody>
-                                            <Media>
-                                                <div className="mr-3 align-self-center">
-                                                    <i className="mdi mdi-ethereum h2 text-warning mb-0" />
-                                                </div>
-                                                <Media body>
-                                                    <p className="text-muted mb-2">
-                                                        Budget
-                                                    </p>
-                                                    <h5 className="mb-0">
-                                                        {totalBudget.toLocaleString(
-                                                            'en-US',
-                                                            {
-                                                                style:
-                                                                    'currency',
-                                                                currency: 'USD',
-                                                            },
-                                                        )}
-                                                    </h5>
-                                                </Media>
-                                            </Media>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col sm="3">
-                                    <Card className="mini-stats-wid">
-                                        <CardBody>
-                                            <Media>
-                                                <div className="mr-3 align-self-center">
-                                                    <i className="mdi mdi-ethereum h2 text-info mb-0" />
-                                                </div>
-                                                <Media body>
-                                                    <p className="text-muted mb-2">
-                                                        Spent
-                                                    </p>
-                                                    <h5 className="mb-0">
-                                                        {totalSpent.toLocaleString(
-                                                            'en-US',
-                                                            {
-                                                                style:
-                                                                    'currency',
-                                                                currency: 'USD',
-                                                            },
-                                                        )}
-                                                    </h5>
-                                                </Media>
-                                            </Media>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col sm="3">
-                                    <Card className="mini-stats-wid">
-                                        <CardBody>
-                                            <Media>
-                                                <div className="mr-3 align-self-center">
-                                                    <i
-                                                        className={`mdi mdi-ethereum h2 ${remainingClass} mb-0`}
-                                                    />
-                                                </div>
-                                                <Media body>
-                                                    <p className="text-muted mb-2">
-                                                        Remaining
-                                                    </p>
-                                                    <h5 className="mb-0">
-                                                        {totalRemaining.toLocaleString(
-                                                            'en-US',
-                                                            {
-                                                                style:
-                                                                    'currency',
-                                                                currency: 'USD',
-                                                            },
-                                                        )}
-                                                    </h5>
-                                                </Media>
-                                            </Media>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
-
+                    <h4>My Budgets</h4>
                     <Row>
                         <Col xl="12">
                             <Card>
-                                {expenses && (
+                                {`budgets` && (
                                     <CardBody>
                                         <PaginationProvider
                                             pagination={paginationFactory(
@@ -223,8 +100,8 @@ const Expenses = () => {
                                             }) => (
                                                 <ToolkitProvider
                                                     keyField="_id"
-                                                    data={expenses || []}
-                                                    columns={ExpensesColumns(
+                                                    data={budgets || []}
+                                                    columns={BudgetsColumns(
                                                         toggleViewModal,
                                                         toggleEditModal,
                                                         toggleDeleteModal,
@@ -258,7 +135,7 @@ const Expenses = () => {
                                                                             <i className="mdi mdi-plus mr-1" />
                                                                             Add
                                                                             New
-                                                                            Expense
+                                                                            Budget
                                                                         </Button>
                                                                     </div>
                                                                 </Col>
@@ -318,4 +195,4 @@ const Expenses = () => {
     )
 }
 
-export default Expenses
+export default Budgets
