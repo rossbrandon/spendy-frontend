@@ -72,256 +72,261 @@ const Expenses = () => {
 
     return (
         <Layout>
-            <ViewExpenseModal
-                isOpen={viewModal}
-                toggle={toggleViewModal}
-                currentBudget={budget}
-                expense={modalInfo}
-            />
-            <CreateExpenseModal
-                isOpen={createModal}
-                toggle={toggleCreateModal}
-                budgets={budgets}
-                currentBudget={budget}
-            />
-            <EditExpenseModal
-                isOpen={editModal}
-                toggle={toggleEditModal}
-                budgets={budgets}
-                currentBudget={budget}
-                expense={modalInfo}
-            />
-            <DeleteExpenseModal
-                isOpen={deleteModal}
-                toggle={toggleDeleteModal}
-                expense={modalInfo}
-            />
-            <div className="page-content">
-                <Container fluid>
-                    <MonthSwitcher />
-                    <h4>{budget.name}</h4>
-                    <Row>
-                        <Col xl="12">
-                            <Row>
-                                <Col sm="3">
-                                    <Card className="mini-stats-wid">
-                                        <CardBody>
-                                            <Media>
-                                                <div className="mr-3 align-self-center">
-                                                    <i className="mdi mdi-ethereum h2 text-success mb-0" />
-                                                </div>
-                                                <Media body>
-                                                    <p className="text-muted mb-2">
-                                                        Transations
-                                                    </p>
-                                                    <h5 className="mb-0">
-                                                        {expenses.length}
-                                                    </h5>
+            <React.Fragment>
+                <ViewExpenseModal
+                    isOpen={viewModal}
+                    toggle={toggleViewModal}
+                    currentBudget={budget}
+                    expense={modalInfo}
+                />
+                <CreateExpenseModal
+                    isOpen={createModal}
+                    toggle={toggleCreateModal}
+                    budgets={budgets}
+                    currentBudget={budget}
+                />
+                <EditExpenseModal
+                    isOpen={editModal}
+                    toggle={toggleEditModal}
+                    budgets={budgets}
+                    currentBudget={budget}
+                    expense={modalInfo}
+                />
+                <DeleteExpenseModal
+                    isOpen={deleteModal}
+                    toggle={toggleDeleteModal}
+                    expense={modalInfo}
+                />
+                <div className="page-content">
+                    <Container fluid>
+                        <MonthSwitcher />
+                        <h4>{budget.name}</h4>
+                        <Row>
+                            <Col xl="12">
+                                <Row>
+                                    <Col sm="3">
+                                        <Card className="mini-stats-wid">
+                                            <CardBody>
+                                                <Media>
+                                                    <div className="mr-3 align-self-center">
+                                                        <i className="mdi mdi-ethereum h2 text-success mb-0" />
+                                                    </div>
+                                                    <Media body>
+                                                        <p className="text-muted mb-2">
+                                                            Transations
+                                                        </p>
+                                                        <h5 className="mb-0">
+                                                            {expenses.length}
+                                                        </h5>
+                                                    </Media>
                                                 </Media>
-                                            </Media>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col sm="3">
-                                    <Card className="mini-stats-wid">
-                                        <CardBody>
-                                            <Media>
-                                                <div className="mr-3 align-self-center">
-                                                    <i className="mdi mdi-ethereum h2 text-warning mb-0" />
-                                                </div>
-                                                <Media body>
-                                                    <p className="text-muted mb-2">
-                                                        Budget
-                                                    </p>
-                                                    <h5 className="mb-0">
-                                                        {totalBudget.toLocaleString(
-                                                            'en-US',
-                                                            {
-                                                                style:
-                                                                    'currency',
-                                                                currency: 'USD',
-                                                            },
-                                                        )}
-                                                    </h5>
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+                                    <Col sm="3">
+                                        <Card className="mini-stats-wid">
+                                            <CardBody>
+                                                <Media>
+                                                    <div className="mr-3 align-self-center">
+                                                        <i className="mdi mdi-ethereum h2 text-warning mb-0" />
+                                                    </div>
+                                                    <Media body>
+                                                        <p className="text-muted mb-2">
+                                                            Budget
+                                                        </p>
+                                                        <h5 className="mb-0">
+                                                            {totalBudget.toLocaleString(
+                                                                'en-US',
+                                                                {
+                                                                    style:
+                                                                        'currency',
+                                                                    currency:
+                                                                        'USD',
+                                                                },
+                                                            )}
+                                                        </h5>
+                                                    </Media>
                                                 </Media>
-                                            </Media>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col sm="3">
-                                    <Card className="mini-stats-wid">
-                                        <CardBody>
-                                            <Media>
-                                                <div className="mr-3 align-self-center">
-                                                    <i className="mdi mdi-ethereum h2 text-info mb-0" />
-                                                </div>
-                                                <Media body>
-                                                    <p className="text-muted mb-2">
-                                                        Spent
-                                                    </p>
-                                                    <h5 className="mb-0">
-                                                        {totalSpent.toLocaleString(
-                                                            'en-US',
-                                                            {
-                                                                style:
-                                                                    'currency',
-                                                                currency: 'USD',
-                                                            },
-                                                        )}
-                                                    </h5>
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+                                    <Col sm="3">
+                                        <Card className="mini-stats-wid">
+                                            <CardBody>
+                                                <Media>
+                                                    <div className="mr-3 align-self-center">
+                                                        <i className="mdi mdi-ethereum h2 text-info mb-0" />
+                                                    </div>
+                                                    <Media body>
+                                                        <p className="text-muted mb-2">
+                                                            Spent
+                                                        </p>
+                                                        <h5 className="mb-0">
+                                                            {totalSpent.toLocaleString(
+                                                                'en-US',
+                                                                {
+                                                                    style:
+                                                                        'currency',
+                                                                    currency:
+                                                                        'USD',
+                                                                },
+                                                            )}
+                                                        </h5>
+                                                    </Media>
                                                 </Media>
-                                            </Media>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col sm="3">
-                                    <Card className="mini-stats-wid">
-                                        <CardBody>
-                                            <Media>
-                                                <div className="mr-3 align-self-center">
-                                                    <i
-                                                        className={`mdi mdi-ethereum h2 ${remainingClass} mb-0`}
-                                                    />
-                                                </div>
-                                                <Media body>
-                                                    <p className="text-muted mb-2">
-                                                        Remaining
-                                                    </p>
-                                                    <h5 className="mb-0">
-                                                        {totalRemaining.toLocaleString(
-                                                            'en-US',
-                                                            {
-                                                                style:
-                                                                    'currency',
-                                                                currency: 'USD',
-                                                            },
-                                                        )}
-                                                    </h5>
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+                                    <Col sm="3">
+                                        <Card className="mini-stats-wid">
+                                            <CardBody>
+                                                <Media>
+                                                    <div className="mr-3 align-self-center">
+                                                        <i
+                                                            className={`mdi mdi-ethereum h2 ${remainingClass} mb-0`}
+                                                        />
+                                                    </div>
+                                                    <Media body>
+                                                        <p className="text-muted mb-2">
+                                                            Remaining
+                                                        </p>
+                                                        <h5 className="mb-0">
+                                                            {totalRemaining.toLocaleString(
+                                                                'en-US',
+                                                                {
+                                                                    style:
+                                                                        'currency',
+                                                                    currency:
+                                                                        'USD',
+                                                                },
+                                                            )}
+                                                        </h5>
+                                                    </Media>
                                                 </Media>
-                                            </Media>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
 
-                    <Row>
-                        <Col xl="12">
-                            <Card>
-                                {expenses && (
-                                    <CardBody>
-                                        <PaginationProvider
-                                            pagination={paginationFactory(
-                                                pageOptions,
-                                            )}
-                                        >
-                                            {({
-                                                paginationProps,
-                                                paginationTableProps,
-                                            }) => (
-                                                <ToolkitProvider
-                                                    keyField="_id"
-                                                    data={expenses || []}
-                                                    columns={ExpensesColumns(
-                                                        toggleViewModal,
-                                                        toggleEditModal,
-                                                        toggleDeleteModal,
-                                                    )}
-                                                    bootstrap4
-                                                    search
-                                                >
-                                                    {toolkitProps => (
-                                                        <React.Fragment>
-                                                            <Row className="mb-2">
-                                                                <Col sm="4">
-                                                                    <div className="search-box mr-2 mb-2 d-inline-block">
-                                                                        <div className="position-relative">
-                                                                            <SearchBar
-                                                                                {...toolkitProps.searchProps}
-                                                                            />
-                                                                            <i className="bx bx-search-alt search-icon" />
+                        <Row>
+                            <Col xl="12">
+                                <Card>
+                                    {expenses && (
+                                        <CardBody>
+                                            <PaginationProvider
+                                                pagination={paginationFactory(
+                                                    pageOptions,
+                                                )}
+                                            >
+                                                {({
+                                                    paginationProps,
+                                                    paginationTableProps,
+                                                }) => (
+                                                    <ToolkitProvider
+                                                        keyField="_id"
+                                                        data={expenses || []}
+                                                        columns={ExpensesColumns(
+                                                            toggleViewModal,
+                                                            toggleEditModal,
+                                                            toggleDeleteModal,
+                                                        )}
+                                                        bootstrap4
+                                                        search
+                                                    >
+                                                        {toolkitProps => (
+                                                            <React.Fragment>
+                                                                <Row className="mb-2">
+                                                                    <Col sm="4">
+                                                                        <div className="search-box mr-2 mb-2 d-inline-block">
+                                                                            <div className="position-relative">
+                                                                                <SearchBar
+                                                                                    {...toolkitProps.searchProps}
+                                                                                />
+                                                                                <i className="bx bx-search-alt search-icon" />
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </Col>
-                                                                <Col sm="8">
-                                                                    <div className="text-sm-right">
-                                                                        <Button
-                                                                            type="button"
-                                                                            color="success"
-                                                                            className="btn-rounded waves-effect waves-light mb-2 mr-2"
-                                                                            onClick={
-                                                                                toggleCreateModal
-                                                                            }
-                                                                        >
-                                                                            <i className="mdi mdi-plus mr-1" />
-                                                                            Add
-                                                                            New
-                                                                            Expense
-                                                                        </Button>
-                                                                    </div>
-                                                                </Col>
-                                                            </Row>
-                                                            <Row>
-                                                                <Col xl="12">
-                                                                    <div className="table-responsive">
-                                                                        <BootstrapTable
-                                                                            responsive
-                                                                            bordered={
-                                                                                false
-                                                                            }
-                                                                            striped={
-                                                                                false
-                                                                            }
-                                                                            classes={
-                                                                                'table table-centered table-nowrap'
-                                                                            }
-                                                                            headerWrapperClasses={
-                                                                                'thead-light'
-                                                                            }
-                                                                            {...toolkitProps.baseProps}
-                                                                            {...paginationTableProps}
-                                                                            rowEvents={
-                                                                                rowEvents
-                                                                            }
-                                                                            sort={{
-                                                                                dataField:
-                                                                                    'date',
-                                                                                order:
-                                                                                    'asc',
-                                                                            }}
+                                                                    </Col>
+                                                                    <Col sm="8">
+                                                                        <div className="text-sm-right">
+                                                                            <Button
+                                                                                type="button"
+                                                                                color="success"
+                                                                                className="btn-rounded waves-effect waves-light mb-2 mr-2"
+                                                                                onClick={
+                                                                                    toggleCreateModal
+                                                                                }
+                                                                            >
+                                                                                <i className="mdi mdi-plus mr-1" />
+                                                                                Add
+                                                                                New
+                                                                                Expense
+                                                                            </Button>
+                                                                        </div>
+                                                                    </Col>
+                                                                </Row>
+                                                                <Row>
+                                                                    <Col xl="12">
+                                                                        <div className="table-responsive">
+                                                                            <BootstrapTable
+                                                                                responsive
+                                                                                bordered={
+                                                                                    false
+                                                                                }
+                                                                                striped={
+                                                                                    false
+                                                                                }
+                                                                                classes={
+                                                                                    'table table-centered table-nowrap'
+                                                                                }
+                                                                                headerWrapperClasses={
+                                                                                    'thead-light'
+                                                                                }
+                                                                                {...toolkitProps.baseProps}
+                                                                                {...paginationTableProps}
+                                                                                rowEvents={
+                                                                                    rowEvents
+                                                                                }
+                                                                                sort={{
+                                                                                    dataField:
+                                                                                        'date',
+                                                                                    order:
+                                                                                        'asc',
+                                                                                }}
+                                                                            />
+                                                                        </div>
+                                                                    </Col>
+                                                                    {!expenses.length >
+                                                                        0 && (
+                                                                        <h3 className="m-auto">
+                                                                            No
+                                                                            expenses
+                                                                            found
+                                                                            yet!
+                                                                        </h3>
+                                                                    )}
+                                                                </Row>
+                                                                <Row className="align-items-md-center mt-30">
+                                                                    <Col className="pagination pagination-rounded justify-content-end mb-2 inner-custom-pagination">
+                                                                        <PaginationListStandalone
+                                                                            {...paginationProps}
                                                                         />
-                                                                    </div>
-                                                                </Col>
-                                                                {!expenses.length >
-                                                                    0 && (
-                                                                    <h3 className="m-auto">
-                                                                        No
-                                                                        expenses
-                                                                        found
-                                                                        yet!
-                                                                    </h3>
-                                                                )}
-                                                            </Row>
-                                                            <Row className="align-items-md-center mt-30">
-                                                                <Col className="pagination pagination-rounded justify-content-end mb-2 inner-custom-pagination">
-                                                                    <PaginationListStandalone
-                                                                        {...paginationProps}
-                                                                    />
-                                                                </Col>
-                                                            </Row>
-                                                        </React.Fragment>
-                                                    )}
-                                                </ToolkitProvider>
-                                            )}
-                                        </PaginationProvider>
-                                    </CardBody>
-                                )}
-                            </Card>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+                                                                    </Col>
+                                                                </Row>
+                                                            </React.Fragment>
+                                                        )}
+                                                    </ToolkitProvider>
+                                                )}
+                                            </PaginationProvider>
+                                        </CardBody>
+                                    )}
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Container>
+                </div>
+            </React.Fragment>
         </Layout>
     )
 }

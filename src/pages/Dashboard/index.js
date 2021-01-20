@@ -138,7 +138,7 @@ const Dashboard = () => {
                             )
                         })}
 
-                        {!budgets && (
+                        {!budgets.length > 0 && (
                             <h2 className="m-auto">No budgets found yet!</h2>
                         )}
                     </Row>

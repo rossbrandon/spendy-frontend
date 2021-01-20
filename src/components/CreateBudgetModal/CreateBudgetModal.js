@@ -11,30 +11,36 @@ import {
     ModalHeader,
 } from 'reactstrap'
 import { AvForm, AvInput } from 'availity-reactstrap-validation'
-import { gql, useMutation } from '@apollo/client'
+import { useAuth0 } from '@auth0/auth0-react'
+import { config } from '../../config'
 
-const CREATE_MUTATION = gql`
-    mutation createBudget(
-        $name: String!
-        $amount: Float!
-        $showInMenu: Boolean!
-        $startDate: DateTime!
-        $endDate: DateTime
-    ) {
-        createBudget(
-            name: $name
-            amount: $amount
-            showInMenu: $showInMenu
-            startDate: $startDate
-            endDate: $endDate
-        ) {
-            _id
-            name
-            amount
-            showInMenu
-        }
+const getQuery = variables => {
+    return {
+        query: `
+            mutation createBudget(
+                $name: String!
+                $amount: Float!
+                $showInMenu: Boolean!
+                $startDate: DateTime!
+                $endDate: DateTime
+            ) {
+                createBudget(
+                    name: $name
+                    amount: $amount
+                    showInMenu: $showInMenu
+                    startDate: $startDate
+                    endDate: $endDate
+                ) {
+                    _id
+                    name
+                    amount
+                    showInMenu
+                }
+            }
+        `,
+        variables,
     }
-`
+}
 
 const getFormattedDate = date => {
     return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
@@ -45,8 +51,21 @@ const getFormattedDate = date => {
 const CreateBudgetModal = props => {
     const { isOpen, toggle } = props
     const [showInMenu, setShowInMenu] = useState(false)
+    const { getAccessTokenSilently } = useAuth0()
 
-    const [createBudget, { data }] = useMutation(CREATE_MUTATION)
+    const createBudget = async variables => {
+        const token = await getAccessTokenSilently()
+        const query = getQuery(variables)
+        const response = await fetch(config.backend.url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(query),
+        })
+        await response.json()
+    }
 
     return (
         <Modal
@@ -64,13 +83,11 @@ const CreateBudgetModal = props => {
                     onSubmit={e => {
                         e.preventDefault()
                         createBudget({
-                            variables: {
-                                name: budgetName.value,
-                                amount: parseInt(amount.value),
-                                showInMenu: showInMenu,
-                                startDate: startDate.value,
-                                endDate: null,
-                            },
+                            name: budgetName.value,
+                            amount: parseInt(amount.value),
+                            showInMenu: showInMenu,
+                            startDate: startDate.value,
+                            endDate: null,
                         })
                         toggle()
                     }}

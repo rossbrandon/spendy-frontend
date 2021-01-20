@@ -26,7 +26,7 @@ const Landing = () => {
                     <Row>
                         <Col xl="12">
                             <Row className="mb-6 text-center">
-                                <h1 className="display-2 m-auto">
+                                <h1 className="display-3 m-auto">
                                     Welcome to Spendy
                                 </h1>
                             </Row>

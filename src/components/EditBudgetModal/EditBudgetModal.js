@@ -11,32 +11,38 @@ import {
     ModalHeader,
 } from 'reactstrap'
 import { AvForm, AvInput } from 'availity-reactstrap-validation'
-import { gql, useMutation } from '@apollo/client'
+import { useAuth0 } from '@auth0/auth0-react'
+import { config } from '../../config'
 
-const UPDATE_MUTATION = gql`
-    mutation updateBudget(
-        $id: String!
-        $name: String!
-        $amount: Float!
-        $showInMenu: Boolean!
-        $startDate: DateTime!
-        $endDate: DateTime
-    ) {
-        updateBudget(
-            id: $id
-            name: $name
-            amount: $amount
-            showInMenu: $showInMenu
-            startDate: $startDate
-            endDate: $endDate
-        ) {
-            _id
-            name
-            amount
-            showInMenu
-        }
+const getQuery = variables => {
+    return {
+        query: `
+            mutation updateBudget(
+                $id: String!
+                $name: String!
+                $amount: Float!
+                $showInMenu: Boolean!
+                $startDate: DateTime!
+                $endDate: DateTime
+            ) {
+                updateBudget(
+                    id: $id
+                    name: $name
+                    amount: $amount
+                    showInMenu: $showInMenu
+                    startDate: $startDate
+                    endDate: $endDate
+                ) {
+                    _id
+                    name
+                    amount
+                    showInMenu
+                }
+            }
+        `,
+        variables,
     }
-`
+}
 
 const getFormattedDate = date => {
     return new Date(date.getTime()).toISOString().substr(0, 10)
@@ -45,6 +51,7 @@ const getFormattedDate = date => {
 const EditBudgetModal = props => {
     const { isOpen, toggle, budget } = props
     const [showInMenu, setShowInMenu] = useState(false)
+    const { getAccessTokenSilently } = useAuth0()
 
     const toggleState = budget?.showInMenu ? budget.showInMenu : false
 
@@ -52,7 +59,19 @@ const EditBudgetModal = props => {
         setShowInMenu(toggleState)
     }, [toggleState])
 
-    const [updateBudget, { data }] = useMutation(UPDATE_MUTATION)
+    const updateBudget = async variables => {
+        const token = await getAccessTokenSilently()
+        const query = getQuery(variables)
+        const response = await fetch(config.backend.url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(query),
+        })
+        await response.json()
+    }
 
     return (
         <Modal
@@ -71,14 +90,12 @@ const EditBudgetModal = props => {
                         onSubmit={e => {
                             e.preventDefault()
                             updateBudget({
-                                variables: {
-                                    id: budget._id,
-                                    name: budgetName.value,
-                                    amount: parseInt(amount.value),
-                                    showInMenu: showInMenu,
-                                    startDate: startDate.value,
-                                    endDate: null,
-                                },
+                                id: budget._id,
+                                name: budgetName.value,
+                                amount: parseInt(amount.value),
+                                showInMenu: showInMenu,
+                                startDate: startDate.value,
+                                endDate: null,
                             })
                             toggle()
                         }}

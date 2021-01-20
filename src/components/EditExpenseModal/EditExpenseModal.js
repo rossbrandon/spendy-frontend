@@ -11,42 +11,48 @@ import {
     ModalHeader,
 } from 'reactstrap'
 import { AvForm, AvInput } from 'availity-reactstrap-validation'
-import { gql, useMutation } from '@apollo/client'
+import { useAuth0 } from '@auth0/auth0-react'
+import { config } from '../../config'
 
-const UPDATE_MUTATION = gql`
-    mutation updateExpense(
-        $id: String!
-        $reason: String!
-        $date: DateTime!
-        $price: Float!
-        $place: String!
-        $recurUntil: DateTime
-        $recurring: Boolean!
-        $budget: String!
-    ) {
-        updateExpense(
-            id: $id
-            date: $date
-            price: $price
-            place: $place
-            reason: $reason
-            recurUntil: $recurUntil
-            recurring: $recurring
-            budget: $budget
-        ) {
-            _id
-            date
-            place
-            price
-            reason
-            budget(populate: true) {
-                _id
-                name
-                amount
+const getQuery = variables => {
+    return {
+        query: `
+            mutation updateExpense(
+                $id: String!
+                $reason: String!
+                $date: DateTime!
+                $price: Float!
+                $place: String!
+                $recurUntil: DateTime
+                $recurring: Boolean!
+                $budget: String!
+            ) {
+                updateExpense(
+                    id: $id
+                    date: $date
+                    price: $price
+                    place: $place
+                    reason: $reason
+                    recurUntil: $recurUntil
+                    recurring: $recurring
+                    budget: $budget
+                ) {
+                    _id
+                    date
+                    place
+                    price
+                    reason
+                    budget(populate: true) {
+                        _id
+                        name
+                        amount
+                    }
+                }
             }
-        }
+        `,
+        variables,
     }
-`
+}
 
 const getFormattedDate = date => {
     return new Date(date.getTime()).toISOString().substr(0, 10)
@@ -54,8 +60,21 @@ const getFormattedDate = date => {
 
 const EditExpenseModal = props => {
     const { isOpen, toggle, budgets, currentBudget, expense } = props
+    const { getAccessTokenSilently } = useAuth0()
 
-    const [updateExpense, { data }] = useMutation(UPDATE_MUTATION)
+    const updateExpense = async variables => {
+        const token = await getAccessTokenSilently()
+        const query = getQuery(variables)
+        const response = await fetch(config.backend.url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(query),
+        })
+        await response.json()
+    }
 
     const options = budgets.map(budget => (
         <option key={budget._id} value={budget._id}>
@@ -80,16 +99,14 @@ const EditExpenseModal = props => {
                         onSubmit={e => {
                             e.preventDefault()
                             updateExpense({
-                                variables: {
-                                    id: expense._id,
-                                    date: date.value,
-                                    budget: budget.value,
-                                    place: place.value,
-                                    price: parseInt(price.value),
-                                    reason: reason.value,
-                                    recurUntil: null,
-                                    recurring: false,
-                                },
+                                id: expense._id,
+                                date: date.value,
+                                budget: budget.value,
+                                place: place.value,
+                                price: parseInt(price.value),
+                                reason: reason.value,
+                                recurUntil: null,
+                                recurring: false,
                             })
                             toggle()
                         }}

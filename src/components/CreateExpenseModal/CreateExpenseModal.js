@@ -11,40 +11,46 @@ import {
     ModalHeader,
 } from 'reactstrap'
 import { AvForm, AvInput } from 'availity-reactstrap-validation'
-import { gql, useMutation } from '@apollo/client'
+import { useAuth0 } from '@auth0/auth0-react'
+import { config } from '../../config'
 
-const CREATE_MUTATION = gql`
-    mutation createExpense(
-        $reason: String!
-        $date: DateTime!
-        $price: Float!
-        $place: String!
-        $recurUntil: DateTime
-        $recurring: Boolean!
-        $budget: String!
-    ) {
-        createExpense(
-            date: $date
-            price: $price
-            place: $place
-            reason: $reason
-            recurUntil: $recurUntil
-            recurring: $recurring
-            budget: $budget
-        ) {
-            _id
-            date
-            place
-            price
-            reason
-            budget(populate: true) {
-                _id
-                name
-                amount
+const getQuery = variables => {
+    return {
+        query: `
+            mutation createExpense(
+                $reason: String!
+                $date: DateTime!
+                $price: Float!
+                $place: String!
+                $recurUntil: DateTime
+                $recurring: Boolean!
+                $budget: String!
+            ) {
+                createExpense(
+                    date: $date
+                    price: $price
+                    place: $place
+                    reason: $reason
+                    recurUntil: $recurUntil
+                    recurring: $recurring
+                    budget: $budget
+                ) {
+                    _id
+                    date
+                    place
+                    price
+                    reason
+                    budget(populate: true) {
+                        _id
+                        name
+                        amount
+                    }
+                }
             }
-        }
+        `,
+        variables,
     }
-`
+}
 
 const getFormattedDate = date => {
     return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
@@ -54,8 +60,21 @@ const getFormattedDate = date => {
 
 const CreateExpenseModal = props => {
     const { isOpen, toggle, budgets, currentBudget } = props
+    const { getAccessTokenSilently } = useAuth0()
 
-    const [createExpense, { data }] = useMutation(CREATE_MUTATION)
+    const createExpense = async variables => {
+        const token = await getAccessTokenSilently()
+        const query = getQuery(variables)
+        const response = await fetch(config.backend.url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(query),
+        })
+        await response.json()
+    }
 
     const options = budgets.map(budget => (
         <option key={budget._id} value={budget._id}>
@@ -79,15 +98,13 @@ const CreateExpenseModal = props => {
                     onSubmit={e => {
                         e.preventDefault()
                         createExpense({
-                            variables: {
-                                date: date.value,
-                                budget: budget.value,
-                                place: place.value,
-                                price: parseInt(price.value),
-                                reason: reason.value,
-                                recurUntil: null,
-                                recurring: false,
-                            },
+                            date: date.value,
+                            budget: budget.value,
+                            place: place.value,
+                            price: parseInt(price.value),
+                            reason: reason.value,
+                            recurUntil: null,
+                            recurring: false,
                         })
                         toggle()
                     }}

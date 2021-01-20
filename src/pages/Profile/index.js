@@ -12,6 +12,8 @@ import {
 import { useAuth0 } from '@auth0/auth0-react'
 import Layout from '../../components/Layout/Layout'
 
+import './profile.scss'
+
 const Profile = () => {
     const { user } = useAuth0()
 
@@ -33,7 +35,7 @@ const Profile = () => {
                                                 <img
                                                     src={user.picture}
                                                     alt="My Avatar"
-                                                    id="user-avatar"
+                                                    id="profile-avatar"
                                                 />
                                             </div>
                                         </div>

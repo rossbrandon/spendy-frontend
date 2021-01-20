@@ -1,23 +1,42 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
-import { gql, useMutation } from '@apollo/client'
+import { useAuth0 } from '@auth0/auth0-react'
+import { config } from '../../config'
 
-const DELETE_MUTATION = gql`
-    mutation deleteBudget($id: String!) {
-        deleteBudget(id: $id) {
-            _id
-            name
-            amount
-            showInMenu
-        }
+const getQuery = variables => {
+    return {
+        query: `
+            mutation deleteBudget($id: String!) {
+                deleteBudget(id: $id) {
+                    _id
+                    name
+                    amount
+                    showInMenu
+                }
+            }
+        `,
+        variables,
     }
-`
+}
 
 const DeleteBudgetModal = props => {
     const { isOpen, toggle, budget } = props
+    const { getAccessTokenSilently } = useAuth0()
 
-    const [deleteBudget, { data }] = useMutation(DELETE_MUTATION)
+    const deleteBudget = async variables => {
+        const token = await getAccessTokenSilently()
+        const query = getQuery(variables)
+        const response = await fetch(config.backend.url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(query),
+        })
+        await response.json()
+    }
 
     return (
         <Modal
@@ -40,9 +59,7 @@ const DeleteBudgetModal = props => {
                         color="danger"
                         onClick={() => {
                             deleteBudget({
-                                variables: {
-                                    id: budget._id,
-                                },
+                                id: budget._id,
                             })
                             toggle()
                         }}

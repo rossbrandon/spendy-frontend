@@ -1,53 +1,65 @@
 import React, { createContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { gql, useQuery } from '@apollo/client'
 import { useMonthSwitcher } from 'hooks'
+import { useAuth0 } from '@auth0/auth0-react'
+import { config } from '../config'
 
-const EXPENSES_QUERY = gql`
-    query($id: String!, $startDate: DateTime!, $endDate: DateTime!) {
-        budget(id: $id) {
-            _id
-            name
-            amount
-            sum(startDate: $startDate, endDate: $endDate) {
-                total
+const getQuery = (id, startDate, endDate) => {
+    return {
+        query: `
+            query($id: String!, $startDate: DateTime!, $endDate: DateTime!) {
+                budget(id: $id) {
+                    _id
+                    name
+                    amount
+                    sum(startDate: $startDate, endDate: $endDate) {
+                        total
+                    }
+                    expenses(startDate: $startDate, endDate: $endDate) {
+                        _id
+                        date
+                        place
+                        reason
+                        userEmail
+                        price
+                    }
+                }
             }
-            expenses(startDate: $startDate, endDate: $endDate) {
-                _id
-                date
-                place
-                reason
-                userEmail
-                price
-            }
-        }
+        `,
+        variables: { id, startDate, endDate },
     }
-`
+}
 
 const ExpensesContext = createContext()
 
 const ExpensesProvider = ({ children }) => {
+    const { getAccessTokenSilently } = useAuth0()
     const { startDate, endDate } = useMonthSwitcher()
     const [budgetId, setBudgetId] = useState('')
     const [expenses, setExpenses] = useState([])
     const [refetchData, setRefetchData] = useState(0)
 
-    const { loading, error, data, refetch } = useQuery(EXPENSES_QUERY, {
-        variables: { id: budgetId, startDate, endDate },
-    })
+    const fetchExpenses = async (id, startDate, endDate) => {
+        const token = await getAccessTokenSilently()
+        const query = getQuery(id, startDate, endDate)
+        const response = await fetch(config.backend.url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(query),
+        })
+        const result = await response.json()
+        const { expenses } = result.data.budget
+        return expenses
+    }
 
-    if (loading) console.log('Loading expenses...')
-    if (error) console.log(error)
-
-    useEffect(() => {
-        if (data) {
-            setExpenses(data.budget.expenses)
+    useEffect(async () => {
+        if (budgetId) {
+            setExpenses(await fetchExpenses(budgetId, startDate, endDate))
         }
-    }, [data])
-
-    useEffect(() => {
-        refetch()
-    }, [startDate, refetchData])
+    }, [budgetId, startDate, refetchData])
 
     const context = {
         expenses,
