@@ -13,6 +13,7 @@ import {
 import { AvForm, AvInput } from 'availity-reactstrap-validation'
 import { useAuth0 } from '@auth0/auth0-react'
 import { config } from '../../config'
+import { showToast } from 'utils'
 
 const getQuery = variables => {
     return {
@@ -64,7 +65,12 @@ const CreateBudgetModal = props => {
             },
             body: JSON.stringify(query),
         })
-        await response.json()
+        const result = await response.json()
+        if (result.errors) {
+            showToast('error', result.errors[0].message)
+        } else {
+            showToast('success', 'Budget created!')
+        }
     }
 
     return (
@@ -84,7 +90,7 @@ const CreateBudgetModal = props => {
                         e.preventDefault()
                         createBudget({
                             name: budgetName.value,
-                            amount: parseInt(amount.value),
+                            amount: parseFloat(amount.value),
                             showInMenu: showInMenu,
                             startDate: startDate.value,
                             endDate: null,

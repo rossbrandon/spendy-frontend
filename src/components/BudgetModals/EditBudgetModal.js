@@ -13,6 +13,7 @@ import {
 import { AvForm, AvInput } from 'availity-reactstrap-validation'
 import { useAuth0 } from '@auth0/auth0-react'
 import { config } from '../../config'
+import { showToast } from 'utils'
 
 const getQuery = variables => {
     return {
@@ -70,7 +71,12 @@ const EditBudgetModal = props => {
             },
             body: JSON.stringify(query),
         })
-        await response.json()
+        const result = await response.json()
+        if (result.errors) {
+            showToast('error', result.errors[0].message)
+        } else {
+            showToast('success', 'Budget updated!')
+        }
     }
 
     return (
@@ -92,7 +98,7 @@ const EditBudgetModal = props => {
                             updateBudget({
                                 id: budget._id,
                                 name: budgetName.value,
-                                amount: parseInt(amount.value),
+                                amount: parseFloat(amount.value),
                                 showInMenu: showInMenu,
                                 startDate: startDate.value,
                                 endDate: null,
@@ -168,7 +174,7 @@ const EditBudgetModal = props => {
                         </ModalBody>
                         <ModalFooter>
                             <Button type="submit" color="success">
-                                Create
+                                Save
                             </Button>
                             <Button
                                 type="button"

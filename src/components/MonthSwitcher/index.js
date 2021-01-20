@@ -57,7 +57,20 @@ const MonthSwitcher = () => {
                             <ModalHeader toggle={toggle}>
                                 Change Month
                             </ModalHeader>
-                            <ModalBody>
+                            <ModalBody className="text-center">
+                                <div className="mb-2">
+                                    <Button
+                                        type="button"
+                                        color="info"
+                                        onClick={() => {
+                                            updateDates(new Date())
+                                            toggle()
+                                        }}
+                                    >
+                                        Go to Current Month
+                                    </Button>
+                                </div>
+                                <hr />
                                 <p className="mb-2">
                                     Select month to display budgets and expenses
                                 </p>
@@ -65,7 +78,7 @@ const MonthSwitcher = () => {
                                     className="m-auto"
                                     value={new Date(endDate)}
                                     onChangeYearUpdate={false}
-                                    onChange={function (selectedYear) {
+                                    onChange={selectedYear => {
                                         updateDates(selectedYear)
                                         toggle()
                                     }}

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import Navbar from '../Navbar/Navbar'
-import Header from '../Header/Header'
-import Footer from '../Footer/Footer'
+import Navbar from '../Navbar'
+import Header from '../Header'
+import Footer from '../Footer'
+
+import 'toastr/build/toastr.min.css'
 
 const Layout = props => {
     const [isMenuOpened, setIsMenuOpened] = useState(false)

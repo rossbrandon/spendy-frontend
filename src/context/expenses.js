@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { useMonthSwitcher } from 'hooks'
 import { useAuth0 } from '@auth0/auth0-react'
 import { config } from '../config'
+import { showToast } from '../utils'
 
 const getQuery = (id, startDate, endDate) => {
     return {
@@ -37,37 +38,42 @@ const ExpensesProvider = ({ children }) => {
     const { startDate, endDate } = useMonthSwitcher()
     const [budgetId, setBudgetId] = useState('')
     const [expenses, setExpenses] = useState([])
-    const [refetchData, setRefetchData] = useState(0)
-
-    const fetchExpenses = async (id, startDate, endDate) => {
-        const token = await getAccessTokenSilently()
-        const query = getQuery(id, startDate, endDate)
-        const response = await fetch(config.backend.url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(query),
-        })
-        const result = await response.json()
-        const { expenses } = result.data.budget
-        return expenses
-    }
+    const [refetchExpenseData, setRefetchExpenseData] = useState(0)
 
     useEffect(async () => {
-        if (budgetId) {
-            setExpenses(await fetchExpenses(budgetId, startDate, endDate))
+        const fetchExpenses = async (id, startDate, endDate) => {
+            const token = await getAccessTokenSilently()
+            const query = getQuery(id, startDate, endDate)
+            const response = await fetch(config.backend.url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(query),
+            })
+            const result = await response.json()
+            if (result.errors) {
+                showToast(result)
+                return []
+            }
+            const { expenses } = result.data.budget
+            return expenses
         }
-    }, [budgetId, startDate, refetchData])
+
+        if (budgetId) {
+            const data = await fetchExpenses(budgetId, startDate, endDate)
+            setExpenses(data)
+        }
+    }, [budgetId, startDate, refetchExpenseData])
 
     const context = {
         expenses,
         setExpenses,
         budgetId,
         setBudgetId,
-        refetchData,
-        setRefetchData,
+        refetchExpenseData,
+        setRefetchExpenseData,
     }
 
     return (

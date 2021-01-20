@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Col } from 'reactstrap'
 
 const ProgressBar = props => {
-    const { totalBudget, totalSpent, totalRemaining } = props
+    const { totalBudget, totalSpent } = props
 
     const progressClass = totalBudget >= totalSpent ? 'bg-success' : 'bg-danger'
     const widthPercent = totalBudget > 0 ? (totalSpent / totalBudget) * 100 : 0
@@ -25,7 +24,6 @@ const ProgressBar = props => {
 ProgressBar.propTypes = {
     totalBudget: PropTypes.number,
     totalSpent: PropTypes.number,
-    totalRemaining: PropTypes.number,
 }
 
 export default ProgressBar

@@ -1,10 +1,10 @@
 import React from 'react'
 import { Container, Row, Col, Card, CardBody, Media } from 'reactstrap'
-import BudgetCard from '../../components/BudgetCard/BudgetCard'
-import ProgressBar from '../../components/ProgressBar/ProgressBar'
+import BudgetCard from 'components/BudgetCard'
+import ProgressBar from 'components/ProgressBar'
 import { useBudgets } from 'hooks'
 import MonthSwitcher from 'components/MonthSwitcher'
-import Layout from '../../components/Layout/Layout'
+import Layout from 'components/Layout'
 
 const Dashboard = () => {
     const { budgets } = useBudgets()
@@ -21,7 +21,7 @@ const Dashboard = () => {
               )
             : 0
     const totalRemaining = totalBudget - totalSpent
-    const remainingClass = totalRemaining >= 0 ? 'text-info' : 'text-danger'
+    const remainingClass = totalRemaining >= 0 ? 'text-success' : 'text-danger'
 
     return (
         <Layout>
@@ -34,7 +34,6 @@ const Dashboard = () => {
                             <ProgressBar
                                 totalBudget={totalBudget}
                                 totalSpent={totalSpent}
-                                totalRemaining={totalRemaining}
                             />
                         </Col>
                     </Row>
@@ -46,7 +45,7 @@ const Dashboard = () => {
                                         <CardBody>
                                             <Media>
                                                 <div className="mr-3 align-self-center">
-                                                    <i className="mdi mdi-ethereum h2 text-warning mb-0" />
+                                                    <i className="bx bx-purchase-tag h2 text-warning mb-0" />
                                                 </div>
                                                 <Media body>
                                                     <p className="text-muted mb-2">
@@ -73,7 +72,7 @@ const Dashboard = () => {
                                             <Media>
                                                 <div className="mr-3 align-self-center">
                                                     <i
-                                                        className={`mdi mdi-ethereum h2 text-primary mb-0`}
+                                                        className={`bx bx-wallet h2 text-primary mb-0`}
                                                     />
                                                 </div>
                                                 <Media body>
@@ -101,7 +100,7 @@ const Dashboard = () => {
                                             <Media>
                                                 <div className="mr-3 align-self-center">
                                                     <i
-                                                        className={`mdi mdi-ethereum h2 ${remainingClass} mb-0`}
+                                                        className={`bx bx-dollar-circle h2 ${remainingClass} mb-0`}
                                                     />
                                                 </div>
                                                 <Media body>

@@ -4,6 +4,7 @@ import { useMonthSwitcher } from 'hooks'
 import useLocalStorageState from 'use-local-storage-state'
 import { useAuth0 } from '@auth0/auth0-react'
 import { config } from '../config'
+import { showToast } from '../utils'
 
 const getQuery = (startDate, endDate) => {
     return {
@@ -34,24 +35,29 @@ const BudgetsProvider = ({ children }) => {
     const [budgets, setBudgets] = useLocalStorageState('budgets', [])
     const [refetchBudgetData, setRefetchBudgetData] = useState(0)
 
-    const fetchBudgets = async (startDate, endDate) => {
-        const token = await getAccessTokenSilently()
-        const query = getQuery(startDate, endDate)
-        const response = await fetch(config.backend.url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(query),
-        })
-        const result = await response.json()
-        const { budgets } = result.data
-        return budgets
-    }
-
     useEffect(async () => {
-        setBudgets(await fetchBudgets(startDate, endDate))
+        const fetchBudgets = async (startDate, endDate) => {
+            const token = await getAccessTokenSilently()
+            const query = getQuery(startDate, endDate)
+            const response = await fetch(config.backend.url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(query),
+            })
+            const result = await response.json()
+            if (result.errors) {
+                showToast(result)
+                return []
+            }
+            const { budgets } = result.data
+            return budgets
+        }
+
+        const data = await fetchBudgets(startDate, endDate)
+        setBudgets(data)
     }, [startDate, refetchBudgetData])
 
     const context = {

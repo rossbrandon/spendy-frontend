@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { useAuth0 } from '@auth0/auth0-react'
 import { config } from '../../config'
+import { showToast } from 'utils'
 
 const getQuery = variables => {
     return {
@@ -41,7 +42,12 @@ const DeleteExpenseModal = props => {
             },
             body: JSON.stringify(query),
         })
-        await response.json()
+        const result = await response.json()
+        if (result.errors) {
+            showToast('error', result.errors[0].message)
+        } else {
+            showToast('success', 'Expense deleted!')
+        }
     }
 
     return (
