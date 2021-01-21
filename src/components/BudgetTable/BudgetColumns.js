@@ -11,7 +11,7 @@ const getFormattedDate = date => {
     return `${dayName}, ${monthName} ${utcDate.getDate()}`
 }
 
-const BudgetColumns = (toggleViewModal, toggleEditModal, toggleDeleteModal) => [
+const BudgetColumns = toggleEditModal => [
     {
         dataField: '_id',
         hidden: true,
@@ -58,22 +58,7 @@ const BudgetColumns = (toggleViewModal, toggleEditModal, toggleDeleteModal) => [
         sort: true,
     },
     {
-        dataField: 'dummy1',
-        isDummyField: true,
-        text: 'View Details',
-        formatter: () => (
-            <Button
-                type="button"
-                color="info"
-                className="btn-sm btn-rounded"
-                onClick={toggleViewModal}
-            >
-                View Details
-            </Button>
-        ),
-    },
-    {
-        dataField: 'dummy2',
+        dataField: 'action',
         isDummyField: true,
         text: 'Action',
         formatter: () => (
@@ -84,15 +69,7 @@ const BudgetColumns = (toggleViewModal, toggleEditModal, toggleDeleteModal) => [
                     className="btn-sm btn-rounded"
                     onClick={toggleEditModal}
                 >
-                    Edit
-                </Button>{' '}
-                <Button
-                    type="button"
-                    color="danger"
-                    className="btn-sm btn-rounded"
-                    onClick={toggleDeleteModal}
-                >
-                    Delete
+                    Edit Details
                 </Button>
             </>
         ),

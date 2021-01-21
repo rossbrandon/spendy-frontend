@@ -20,13 +20,13 @@ const BudgetCard = props => {
             <Col xl="4" sm="6">
                 <Card className="text-center">
                     <CardBody>
-                        <div className="avatar-sm mx-auto mb-4">
-                            <Link
-                                to={{
-                                    pathname: `/expenses/${budget._id}`,
-                                }}
-                                className="text-dark"
-                            >
+                        <Link
+                            to={{
+                                pathname: `/expenses/${budget._id}`,
+                            }}
+                            className="text-dark"
+                        >
+                            <div className="avatar-sm mx-auto mb-4">
                                 <span
                                     className={
                                         'avatar-title rounded-circle bg-soft-info text-info font-size-16'
@@ -34,42 +34,36 @@ const BudgetCard = props => {
                                 >
                                     {budget.name.charAt(0)}
                                 </span>
-                            </Link>
-                        </div>
-                        <h5 className="font-size-18">
-                            <Link
-                                to={{
-                                    pathname: `/expenses/${budget._id}`,
-                                }}
-                                className="text-dark"
-                            >
-                                {budget.name}
-                            </Link>
-                        </h5>
-                        <div>
-                            <p className="badge badge-info font-size-14 m-1">
-                                {t('Amount')}:{' '}
-                                {budget.amount.toLocaleString(localeString, {
-                                    style: 'currency',
-                                    currency,
-                                })}
-                            </p>
-                            <p
-                                className={`badge ${spentClass} font-size-14 m-1`}
-                            >
-                                {t('Spent')}:{' '}
-                                {totalSpent.toLocaleString(localeString, {
-                                    style: 'currency',
-                                    currency,
-                                })}
-                            </p>
-                        </div>
-                        <div className="mt-5">
-                            <ProgressBar
-                                totalBudget={budget.amount}
-                                totalSpent={totalSpent}
-                            />
-                        </div>
+                            </div>
+                            <h5 className="font-size-18">{budget.name}</h5>
+                            <div>
+                                <p className="badge badge-info font-size-14 m-1">
+                                    {t('Amount')}:{' '}
+                                    {budget.amount.toLocaleString(
+                                        localeString,
+                                        {
+                                            style: 'currency',
+                                            currency,
+                                        },
+                                    )}
+                                </p>
+                                <p
+                                    className={`badge ${spentClass} font-size-14 m-1`}
+                                >
+                                    {t('Spent')}:{' '}
+                                    {totalSpent.toLocaleString(localeString, {
+                                        style: 'currency',
+                                        currency,
+                                    })}
+                                </p>
+                            </div>
+                            <div className="mt-5">
+                                <ProgressBar
+                                    totalBudget={budget.amount}
+                                    totalSpent={totalSpent}
+                                />
+                            </div>
+                        </Link>
                     </CardBody>
                 </Card>
             </Col>

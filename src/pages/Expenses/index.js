@@ -1,22 +1,30 @@
 import React, { useEffect } from 'react'
 import { Container, Row, Col, Card, CardBody } from 'reactstrap'
 import { useParams } from 'react-router-dom'
-import { useBudgets, useExpenses } from 'hooks'
+import { useBudgets, useExpenses, useMonthSwitcher } from 'hooks'
 import MonthSwitcher from 'components/MonthSwitcher'
 import Layout from 'components/Layout'
 import ExpenseTable from 'components/ExpenseTable'
 import ExpenseTotals from 'components/ExpenseTotals'
 
 const Expenses = () => {
-    const paramBudgetId = useParams('budgetId')?.budgetId
+    const { budgetId, startDateOverride, endDateOverride } = useParams()
     const { budgets } = useBudgets()
     const { expenses, setBudgetId } = useExpenses()
+    const { setStartDate, setEndDate } = useMonthSwitcher()
 
     useEffect(() => {
-        setBudgetId(paramBudgetId)
-    }, [paramBudgetId])
+        setBudgetId(budgetId)
+    }, [budgetId])
 
-    const budget = budgets.find(b => b._id == paramBudgetId)
+    useEffect(() => {
+        if (startDateOverride && endDateOverride) {
+            setStartDate(startDateOverride)
+            setEndDate(endDateOverride)
+        }
+    }, [startDateOverride])
+
+    const budget = budgets.find(b => b._id == budgetId)
 
     return (
         <Layout>

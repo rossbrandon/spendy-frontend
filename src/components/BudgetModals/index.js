@@ -9,23 +9,16 @@ const BudgetModals = props => {
     const {
         budgets,
         modalInfo,
-        viewModal,
-        toggleViewModal,
         createModal,
         toggleCreateModal,
         editModal,
         toggleEditModal,
-        deleteModal,
-        toggleDeleteModal,
+        showConfirmation,
+        setShowConfirmation,
     } = props
 
     return (
         <React.Fragment>
-            <ViewBudgetModal
-                isOpen={viewModal}
-                toggle={toggleViewModal}
-                budget={modalInfo}
-            />
             <CreateBudgetModal
                 isOpen={createModal}
                 toggle={toggleCreateModal}
@@ -36,27 +29,22 @@ const BudgetModals = props => {
                 toggle={toggleEditModal}
                 budgets={budgets}
                 budget={modalInfo}
-            />
-            <DeleteBudgetModal
-                isOpen={deleteModal}
-                toggle={toggleDeleteModal}
-                budget={modalInfo}
+                showConfirmation={showConfirmation}
+                setShowConfirmation={setShowConfirmation}
             />
         </React.Fragment>
     )
 }
 
 BudgetModals.propTypes = {
-    budgets: PropTypes.object,
+    budgets: PropTypes.array,
     modalInfo: PropTypes.object,
     viewModal: PropTypes.bool,
     toggleViewModal: PropTypes.func,
-    createModal: PropTypes.bool,
-    toggleCreateModal: PropTypes.func,
     editModal: PropTypes.bool,
     toggleEditModal: PropTypes.func,
-    deleteModal: PropTypes.bool,
-    toggleDeleteModal: PropTypes.func,
+    showConfirmation: PropTypes.bool,
+    setShowConfirmation: PropTypes.func,
 }
 
 export default BudgetModals

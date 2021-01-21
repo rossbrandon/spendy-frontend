@@ -1,5 +1,7 @@
 import React from 'react'
-import { Button, Badge } from 'reactstrap'
+import { Link } from 'react-router-dom'
+import { Badge } from 'reactstrap'
+import { getFirstDayOfMonth, getLastDayOfMonth } from 'utils'
 
 const getFormattedDate = date => {
     const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
@@ -11,11 +13,8 @@ const getFormattedDate = date => {
     const year = utcDate.getFullYear()
     return `${dayName}, ${monthName} ${utcDate.getDate()}, ${year}`
 }
-const ExpenseSearchColumns = (
-    toggleViewModal,
-    toggleEditModal,
-    toggleDeleteModal,
-) => [
+
+const ExpenseSearchColumns = (startDate, endDate) => [
     {
         dataField: '_id',
         hidden: true,
@@ -58,53 +57,23 @@ const ExpenseSearchColumns = (
         sort: true,
         formatter: (cellContent, row) => (
             <>
-                <Badge
-                    className={'font-size-12 badge-soft-success'}
-                    color="success"
-                    pill
+                <Link
+                    to={{
+                        pathname: `/expenses/${
+                            row.budget._id
+                        }/${getFirstDayOfMonth(
+                            new Date(row.date),
+                        )}/${getLastDayOfMonth(new Date(row.date))}`,
+                    }}
                 >
-                    {row.budget.name}
-                </Badge>
-            </>
-        ),
-    },
-    {
-        dataField: 'dummy1',
-        isDummyField: true,
-        text: 'View Details',
-        formatter: () => (
-            <Button
-                type="button"
-                color="info"
-                className="btn-sm btn-rounded"
-                onClick={toggleViewModal}
-            >
-                View Details
-            </Button>
-        ),
-    },
-    {
-        dataField: 'dummy2',
-        isDummyField: true,
-        text: 'Action',
-        formatter: () => (
-            <>
-                <Button
-                    type="button"
-                    color="primary"
-                    className="btn-sm btn-rounded"
-                    onClick={toggleEditModal}
-                >
-                    Edit
-                </Button>{' '}
-                <Button
-                    type="button"
-                    color="danger"
-                    className="btn-sm btn-rounded"
-                    onClick={toggleDeleteModal}
-                >
-                    Delete
-                </Button>
+                    <Badge
+                        className={'font-size-12 badge-soft-success'}
+                        color="success"
+                        pill
+                    >
+                        {row.budget.name}
+                    </Badge>
+                </Link>
             </>
         ),
     },

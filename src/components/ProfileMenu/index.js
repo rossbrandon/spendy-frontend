@@ -83,6 +83,7 @@ const ProfileMenu = props => {
                 )}
                 {isAuthenticated && (
                     <DropdownMenu right>
+                        <div className="dropdown-divider" />
                         <Link to="/profile" className="dropdown-item">
                             {' '}
                             <i className="bx bx-user font-size-16 align-middle mr-1" />

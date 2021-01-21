@@ -47,7 +47,7 @@ const AggregateProvider = ({ children }) => {
             })
             const result = await response.json()
             if (result.errors) {
-                showToast(result)
+                showToast('error', result.errors[0].message)
                 return []
             }
             const { aggregate } = result.data

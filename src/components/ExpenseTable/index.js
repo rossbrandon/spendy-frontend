@@ -18,16 +18,11 @@ const ExpenseTable = props => {
     const { refetchExpenseData, setRefetchExpenseData } = useExpenses()
 
     const [modalInfo, setModalInfo] = useState()
-    const [viewModal, setViewModal] = useState(false)
     const [createModal, setCreateModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
-    const [deleteModal, setDeleteModal] = useState(false)
+    const [showConfirmation, setShowConfirmation] = useState(false)
 
     const { SearchBar } = Search
-
-    const toggleViewModal = () => {
-        setViewModal(!viewModal)
-    }
 
     const toggleCreateModal = () => {
         setCreateModal(!createModal)
@@ -36,11 +31,7 @@ const ExpenseTable = props => {
 
     const toggleEditModal = () => {
         setEditModal(!editModal)
-        setRefetchExpenseData(refetchExpenseData + 1)
-    }
-
-    const toggleDeleteModal = () => {
-        setDeleteModal(!deleteModal)
+        setShowConfirmation(false)
         setRefetchExpenseData(refetchExpenseData + 1)
     }
 
@@ -53,6 +44,7 @@ const ExpenseTable = props => {
     const rowEvents = {
         onClick: (e, row) => {
             setModalInfo(row)
+            toggleEditModal()
         },
     }
 
@@ -62,25 +54,19 @@ const ExpenseTable = props => {
                 budgets={budgets}
                 currentBudget={currentBudget}
                 modalInfo={modalInfo}
-                viewModal={viewModal}
-                toggleViewModal={toggleViewModal}
                 createModal={createModal}
                 toggleCreateModal={toggleCreateModal}
                 editModal={editModal}
                 toggleEditModal={toggleEditModal}
-                deleteModal={deleteModal}
-                toggleDeleteModal={toggleDeleteModal}
+                showConfirmation={showConfirmation}
+                setShowConfirmation={setShowConfirmation}
             />
             <PaginationProvider pagination={paginationFactory(pageOptions)}>
                 {({ paginationProps, paginationTableProps }) => (
                     <ToolkitProvider
                         keyField="_id"
                         data={expenses || []}
-                        columns={ExpenseColumns(
-                            toggleViewModal,
-                            toggleEditModal,
-                            toggleDeleteModal,
-                        )}
+                        columns={ExpenseColumns(toggleEditModal)}
                         bootstrap4
                         search={{ placeholder: `${t('Search')}` }}
                     >
@@ -117,6 +103,7 @@ const ExpenseTable = props => {
                                                 responsive
                                                 bordered={false}
                                                 striped={false}
+                                                hover
                                                 classes={
                                                     'table table-centered table-nowrap'
                                                 }

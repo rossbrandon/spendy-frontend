@@ -61,7 +61,7 @@ const App = () => {
                             </AggregateProvider>
                             <ExpensesProvider>
                                 <PrivateRoute
-                                    path="/expenses/:budgetId"
+                                    path="/expenses/:budgetId/:startDateOverride?/:endDateOverride?"
                                     component={Expenses}
                                     exact
                                 />

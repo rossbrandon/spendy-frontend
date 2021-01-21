@@ -16,10 +16,10 @@ const Landing = () => {
 
     return (
         <LocaleProvider>
-            <div className="text-right mt-4 mr-4">
+            <div className="text-right mr-4">
                 <LanguageDropdown />
             </div>
-            <div className="page-content">
+            <div className="page-content pt-0">
                 <Container fluid>
                     <Row>
                         <Col xl="12">

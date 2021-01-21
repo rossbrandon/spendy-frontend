@@ -1,7 +1,10 @@
 import toastr from 'toastr'
 
 const showToast = (type, message) => {
-    toastr.options = { positionClass: 'toast-top-center ' }
+    toastr.options = {
+        positionClass: 'toast-top-center ',
+        preventDuplicates: true,
+    }
 
     switch (type) {
         case 'info':

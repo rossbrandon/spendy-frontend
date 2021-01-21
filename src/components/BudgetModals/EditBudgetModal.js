@@ -16,7 +16,7 @@ import { config } from '../../config'
 import { showToast } from 'utils'
 import { useTranslation } from 'react-i18next'
 
-const getQuery = variables => {
+const getSaveQuery = variables => {
     return {
         query: `
             mutation updateBudget(
@@ -46,12 +46,34 @@ const getQuery = variables => {
     }
 }
 
+const getDeleteQuery = variables => {
+    return {
+        query: `
+            mutation deleteBudget($id: String!) {
+                deleteBudget(id: $id) {
+                    _id
+                    name
+                    amount
+                    showInMenu
+                }
+            }
+        `,
+        variables,
+    }
+}
+
 const getFormattedDate = date => {
     return new Date(date.getTime()).toISOString().substr(0, 10)
 }
 
 const EditBudgetModal = props => {
-    const { isOpen, toggle, budget } = props
+    const {
+        isOpen,
+        toggle,
+        budget,
+        showConfirmation,
+        setShowConfirmation,
+    } = props
     const { t } = useTranslation()
     const [showInMenu, setShowInMenu] = useState(false)
     const { getAccessTokenSilently } = useAuth0()
@@ -64,7 +86,7 @@ const EditBudgetModal = props => {
 
     const updateBudget = async variables => {
         const token = await getAccessTokenSilently()
-        const query = getQuery(variables)
+        const query = getSaveQuery(variables)
         const response = await fetch(config.backend.url, {
             method: 'POST',
             headers: {
@@ -78,6 +100,25 @@ const EditBudgetModal = props => {
             showToast('error', result.errors[0].message)
         } else {
             showToast('success', t('Budget updated!'))
+        }
+    }
+
+    const deleteBudget = async variables => {
+        const token = await getAccessTokenSilently()
+        const query = getDeleteQuery(variables)
+        const response = await fetch(config.backend.url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(query),
+        })
+        const result = await response.json()
+        if (result.errors) {
+            showToast('error', result.errors[0].message)
+        } else {
+            showToast('success', t('Budget deleted!'))
         }
     }
 
@@ -179,16 +220,59 @@ const EditBudgetModal = props => {
                             </FormGroup>
                         </ModalBody>
                         <ModalFooter>
-                            <Button type="submit" color="success">
-                                {t('Save')}
-                            </Button>
-                            <Button
-                                type="button"
-                                color="secondary"
-                                onClick={toggle}
-                            >
-                                {t('Cancel')}
-                            </Button>
+                            {showConfirmation ? (
+                                <React.Fragment>
+                                    <p className="mb-2 mr-5">
+                                        {t(
+                                            'Do you want to delete this budget?',
+                                        )}
+                                    </p>
+                                    <Button
+                                        type="button"
+                                        color="danger"
+                                        onClick={() => {
+                                            deleteBudget({
+                                                id: budget._id,
+                                            })
+                                            setShowConfirmation(false)
+                                            toggle()
+                                        }}
+                                    >
+                                        {t('Delete')}
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        color="secondary"
+                                        onClick={() => {
+                                            setShowConfirmation(false)
+                                        }}
+                                    >
+                                        {t('Cancel')}
+                                    </Button>
+                                </React.Fragment>
+                            ) : (
+                                <React.Fragment>
+                                    <Button type="submit" color="success">
+                                        {t('Save')}
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        color="danger"
+                                        onClick={() => {
+                                            setShowConfirmation(true)
+                                        }}
+                                    >
+                                        {t('Delete')}
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        color="secondary"
+                                        onClick={toggle}
+                                    >
+                                        {t('Close')}
+                                    </Button>
+                                </React.Fragment>
+                            )}
                         </ModalFooter>
                     </AvForm>
                 </div>
@@ -198,8 +282,11 @@ const EditBudgetModal = props => {
 }
 
 EditBudgetModal.propTypes = {
-    toggle: PropTypes.func,
     isOpen: PropTypes.bool,
+    toggle: PropTypes.func,
+    budget: PropTypes.object,
+    showConfirmation: PropTypes.bool,
+    setShowConfirmation: PropTypes.func,
 }
 
 export default EditBudgetModal

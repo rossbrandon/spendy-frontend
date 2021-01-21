@@ -1,33 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ViewExpenseModal from 'components/ExpenseModals/ViewExpenseModal'
 import CreateExpenseModal from 'components/ExpenseModals/CreateExpenseModal'
 import EditExpenseModal from 'components/ExpenseModals/EditExpenseModal'
-import DeleteExpenseModal from 'components/ExpenseModals/DeleteExpenseModal'
 
 const ExpenseModals = props => {
     const {
         budgets,
         currentBudget,
         modalInfo,
-        viewModal,
-        toggleViewModal,
         createModal,
         toggleCreateModal,
         editModal,
         toggleEditModal,
-        deleteModal,
-        toggleDeleteModal,
+        showConfirmation,
+        setShowConfirmation,
     } = props
 
     return (
         <React.Fragment>
-            <ViewExpenseModal
-                isOpen={viewModal}
-                toggle={toggleViewModal}
-                currentBudget={currentBudget}
-                expense={modalInfo}
-            />
             <CreateExpenseModal
                 isOpen={createModal}
                 toggle={toggleCreateModal}
@@ -40,28 +30,23 @@ const ExpenseModals = props => {
                 budgets={budgets}
                 currentBudget={currentBudget}
                 expense={modalInfo}
-            />
-            <DeleteExpenseModal
-                isOpen={deleteModal}
-                toggle={toggleDeleteModal}
-                expense={modalInfo}
+                showConfirmation={showConfirmation}
+                setShowConfirmation={setShowConfirmation}
             />
         </React.Fragment>
     )
 }
 
 ExpenseModals.propTypes = {
-    budgets: PropTypes.object,
+    budgets: PropTypes.array,
     currentBudget: PropTypes.object,
     modalInfo: PropTypes.object,
-    viewModal: PropTypes.bool,
-    toggleViewModal: PropTypes.func,
     createModal: PropTypes.bool,
     toggleCreateModal: PropTypes.func,
     editModal: PropTypes.bool,
     toggleEditModal: PropTypes.func,
-    deleteModal: PropTypes.bool,
-    toggleDeleteModal: PropTypes.func,
+    showConfirmation: PropTypes.bool,
+    setShowConfirmation: PropTypes.func,
 }
 
 export default ExpenseModals
