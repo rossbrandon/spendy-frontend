@@ -30,9 +30,16 @@ const getLastDayOfMonth = date => {
     return lastDayOfMonth.toISOString()
 }
 
+const getPreviousYearFirstDayOfMonth = date => {
+    date.setMonth(date.getMonth() - 1)
+    date.setFullYear(date.getFullYear() - 1)
+    return getFirstDayOfMonth(date)
+}
+
 export {
     getFirstDayOfCurrentMonth,
     getLastDayOfCurrentMonth,
     getFirstDayOfMonth,
     getLastDayOfMonth,
+    getPreviousYearFirstDayOfMonth,
 }

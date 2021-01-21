@@ -96,6 +96,10 @@ const ProfileMenu = props => {
                             <i className="bx bx-receipt font-size-16 align-middle mr-1" />
                             {props.t('All Expenses')}
                         </Link>
+                        <Link to="/trends" className="dropdown-item">
+                            <i className="bx bx-line-chart font-size-16 align-middle mr-1" />
+                            {props.t('Trends')}
+                        </Link>
                         <div className="dropdown-divider" />
                         <Link
                             to="/"

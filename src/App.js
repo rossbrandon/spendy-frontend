@@ -7,6 +7,7 @@ import {
     LocaleProvider,
     MonthSwitcherProvider,
     LoadingProvider,
+    AggregateProvider,
 } from 'context'
 import PrivateRoute from './components/PrivateRoute'
 import Landing from './pages/Landing'
@@ -17,6 +18,7 @@ import Profile from 'pages/Profile'
 import i18n from 'i18n'
 import './assets/scss/theme.scss'
 import ExpenseSearch from 'pages/ExpenseSearch'
+import Trends from 'pages/Trends'
 
 const App = () => {
     const { isAuthenticated } = useAuth0()
@@ -50,6 +52,13 @@ const App = () => {
                                 component={ExpenseSearch}
                                 exact
                             />
+                            <AggregateProvider>
+                                <PrivateRoute
+                                    path="/trends"
+                                    component={Trends}
+                                    exact
+                                />
+                            </AggregateProvider>
                             <ExpensesProvider>
                                 <PrivateRoute
                                     path="/expenses/:budgetId"
