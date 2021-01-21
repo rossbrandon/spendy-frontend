@@ -1,18 +1,15 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {
-    Dropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-} from 'reactstrap'
+import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap'
 import { useAuth0 } from '@auth0/auth0-react'
 import { withRouter, Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 import './profileMenu.scss'
 
 const ProfileMenu = props => {
+    const { t } = useTranslation()
     const [menu, setMenu] = useState(false)
     const {
         isLoadingMask,
@@ -67,7 +64,7 @@ const ProfileMenu = props => {
                             id="guest-avatar"
                         />
                         <span className="d-none d-xl-inline-block ml-2 mr-1">
-                            Guest
+                            {t('Guest')}
                         </span>
                         <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
                     </DropdownToggle>

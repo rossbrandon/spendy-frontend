@@ -3,9 +3,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Card, CardBody, Col } from 'reactstrap'
 import ProgressBar from '../ProgressBar'
+import { useTranslation } from 'react-i18next'
+import { useLocale } from 'hooks'
 
 const BudgetCard = props => {
     const { budget } = props
+    const { t } = useTranslation()
+    const { currency, localeString } = useLocale()
 
     const totalSpent = budget.sum.length ? budget.sum[0].total : 0
     const spentClass =
@@ -44,19 +48,19 @@ const BudgetCard = props => {
                         </h5>
                         <div>
                             <p className="badge badge-info font-size-14 m-1">
-                                Amount:{' '}
-                                {budget.amount.toLocaleString('en-US', {
+                                {t('Amount')}:{' '}
+                                {budget.amount.toLocaleString(localeString, {
                                     style: 'currency',
-                                    currency: 'USD',
+                                    currency,
                                 })}
                             </p>
                             <p
                                 className={`badge ${spentClass} font-size-14 m-1`}
                             >
-                                Spent:{' '}
-                                {totalSpent.toLocaleString('en-US', {
+                                {t('Spent')}:{' '}
+                                {totalSpent.toLocaleString(localeString, {
                                     style: 'currency',
-                                    currency: 'USD',
+                                    currency,
                                 })}
                             </p>
                         </div>

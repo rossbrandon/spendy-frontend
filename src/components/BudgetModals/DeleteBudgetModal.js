@@ -4,6 +4,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { useAuth0 } from '@auth0/auth0-react'
 import { config } from '../../config'
 import { showToast } from 'utils'
+import { useTranslation } from 'react-i18next'
 
 const getQuery = variables => {
     return {
@@ -23,6 +24,7 @@ const getQuery = variables => {
 
 const DeleteBudgetModal = props => {
     const { isOpen, toggle, budget } = props
+    const { t } = useTranslation()
     const { getAccessTokenSilently } = useAuth0()
 
     const deleteBudget = async variables => {
@@ -40,7 +42,7 @@ const DeleteBudgetModal = props => {
         if (result.errors) {
             showToast('error', result.errors[0].message)
         } else {
-            showToast('success', 'Budget deleted!')
+            showToast('success', t('Budgetdeleted!'))
         }
     }
 
@@ -55,9 +57,11 @@ const DeleteBudgetModal = props => {
             toggle={toggle}
         >
             <div className="modal-content">
-                <ModalHeader toggle={toggle}>Delete Budget</ModalHeader>
+                <ModalHeader toggle={toggle}>{t('Delete Budget')}</ModalHeader>
                 <ModalBody>
-                    <p className="mb-2">Do you want to delete this budget?</p>
+                    <p className="mb-2">
+                        {t('Do you want to delete this budget?')}
+                    </p>
                 </ModalBody>
                 <ModalFooter>
                     <Button
@@ -70,10 +74,10 @@ const DeleteBudgetModal = props => {
                             toggle()
                         }}
                     >
-                        Delete
+                        {t('Delete')}
                     </Button>
                     <Button type="button" color="secondary" onClick={toggle}>
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                 </ModalFooter>
             </div>

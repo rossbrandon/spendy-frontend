@@ -2,12 +2,15 @@ import React from 'react'
 import { Container, Row, Col, Card, CardBody, Media } from 'reactstrap'
 import BudgetCard from 'components/BudgetCard'
 import ProgressBar from 'components/ProgressBar'
-import { useBudgets } from 'hooks'
+import { useBudgets, useLocale } from 'hooks'
 import MonthSwitcher from 'components/MonthSwitcher'
 import Layout from 'components/Layout'
+import { useTranslation } from 'react-i18next'
 
 const Dashboard = () => {
+    const { t } = useTranslation()
     const { budgets } = useBudgets()
+    const { currency, localeString } = useLocale()
 
     const totalBudget =
         budgets.length > 0
@@ -28,7 +31,7 @@ const Dashboard = () => {
             <div className="page-content">
                 <Container fluid>
                     <MonthSwitcher />
-                    <h4>Dashboard</h4>
+                    <h4>{t('Dashboard')}</h4>
                     <Row>
                         <Col xl="12">
                             <ProgressBar
@@ -49,7 +52,7 @@ const Dashboard = () => {
                                                 </div>
                                                 <Media body>
                                                     <p className="text-muted mb-2">
-                                                        Total Budget
+                                                        {t('Total Budget')}
                                                     </p>
                                                     <h5 className="mb-0">
                                                         {totalBudget.toLocaleString(
@@ -57,7 +60,7 @@ const Dashboard = () => {
                                                             {
                                                                 style:
                                                                     'currency',
-                                                                currency: 'USD',
+                                                                currency,
                                                             },
                                                         )}
                                                     </h5>
@@ -77,7 +80,7 @@ const Dashboard = () => {
                                                 </div>
                                                 <Media body>
                                                     <p className="text-muted mb-2">
-                                                        Total Spent
+                                                        {t('Total Spent')}
                                                     </p>
                                                     <h5 className="mb-0">
                                                         {totalSpent.toLocaleString(
@@ -85,7 +88,7 @@ const Dashboard = () => {
                                                             {
                                                                 style:
                                                                     'currency',
-                                                                currency: 'USD',
+                                                                currency,
                                                             },
                                                         )}
                                                     </h5>
@@ -105,7 +108,7 @@ const Dashboard = () => {
                                                 </div>
                                                 <Media body>
                                                     <p className="text-muted mb-2">
-                                                        Total Remaining
+                                                        {t('Total Remaining')}
                                                     </p>
                                                     <h5 className="mb-0">
                                                         {totalRemaining.toLocaleString(
@@ -113,7 +116,7 @@ const Dashboard = () => {
                                                             {
                                                                 style:
                                                                     'currency',
-                                                                currency: 'USD',
+                                                                currency,
                                                             },
                                                         )}
                                                     </h5>
@@ -126,7 +129,7 @@ const Dashboard = () => {
                         </Col>
                     </Row>
 
-                    <h4>Budgets</h4>
+                    <h4>{t('Budgets')}</h4>
                     <Row>
                         {budgets.map((budget, i) => {
                             return (
@@ -138,7 +141,9 @@ const Dashboard = () => {
                         })}
 
                         {!budgets.length > 0 && (
-                            <h2 className="m-auto">No budgets found yet!</h2>
+                            <h2 className="m-auto">
+                                {t('No budgets found yet!')}
+                            </h2>
                         )}
                     </Row>
                 </Container>

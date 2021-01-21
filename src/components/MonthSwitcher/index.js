@@ -11,6 +11,7 @@ import {
     ModalHeader,
 } from 'reactstrap'
 import { getFirstDayOfMonth, getLastDayOfMonth } from 'utils'
+import { useTranslation } from 'react-i18next'
 
 import 'react-calendar/dist/Calendar.css'
 
@@ -22,6 +23,7 @@ const getFormattedDate = date => {
 }
 
 const MonthSwitcher = () => {
+    const { t } = useTranslation()
     const [isOpen, setIsOpen] = useState(false)
     const { startDate, endDate, setStartDate, setEndDate } = useMonthSwitcher()
 
@@ -42,7 +44,7 @@ const MonthSwitcher = () => {
                         {getFormattedDate(new Date(startDate))}
                     </h2>
                     <Button type="button" color="info" onClick={toggle}>
-                        Change Month
+                        {t('Change Month')}
                     </Button>
                     <Modal
                         isOpen={isOpen}
@@ -55,7 +57,7 @@ const MonthSwitcher = () => {
                     >
                         <div className="modal-content">
                             <ModalHeader toggle={toggle}>
-                                Change Month
+                                {t('Change Month')}
                             </ModalHeader>
                             <ModalBody className="text-center">
                                 <div className="mb-2">
@@ -67,12 +69,14 @@ const MonthSwitcher = () => {
                                             toggle()
                                         }}
                                     >
-                                        Go to Current Month
+                                        {t('Go to Current Month')}
                                     </Button>
                                 </div>
                                 <hr />
                                 <p className="mb-2">
-                                    Select month to display budgets and expenses
+                                    {t(
+                                        'Select month to display budgets and expenses',
+                                    )}
                                 </p>
                                 <Calendar
                                     className="m-auto"
@@ -92,7 +96,7 @@ const MonthSwitcher = () => {
                                     color="success"
                                     onClick={toggle}
                                 >
-                                    Apply
+                                    {t('Apply')}
                                 </Button>
                             </ModalFooter>
                         </div>

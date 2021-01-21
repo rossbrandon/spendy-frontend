@@ -3,8 +3,10 @@ import { Container, Row, Col, Card, CardBody } from 'reactstrap'
 import { useBudgets } from 'hooks'
 import Layout from 'components/Layout'
 import BudgetTable from 'components/BudgetTable'
+import { useTranslation } from 'react-i18next'
 
 const Budgets = () => {
+    const { t } = useTranslation()
     const { budgets } = useBudgets()
 
     return (
@@ -12,7 +14,7 @@ const Budgets = () => {
             <React.Fragment>
                 <div className="page-content">
                     <Container fluid>
-                        <h4>My Budgets</h4>
+                        <h4>{t('My Budgets')}</h4>
                         <Row>
                             <Col xl="12">
                                 <Card>

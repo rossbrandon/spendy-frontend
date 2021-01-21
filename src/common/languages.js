@@ -5,27 +5,32 @@ import italy from '../assets/images/flags/italy.jpg'
 import russia from '../assets/images/flags/russia.jpg'
 
 const languages = {
-    sp: {
+    es: {
+        localeString: 'es-ES',
         label: 'Spanish',
         flag: spain,
         currency: 'EUR',
     },
-    gr: {
+    de: {
+        localeString: 'de-DE',
         label: 'German',
         flag: germany,
         currency: 'EUR',
     },
     it: {
+        localeString: 'it-IT',
         label: 'Italian',
         flag: italy,
         currency: 'EUR',
     },
-    rs: {
+    ru: {
+        localeString: 'ru-RU',
         label: 'Russian',
         flag: russia,
         currency: 'RUB',
     },
     en: {
+        localeString: 'en-US',
         label: 'English',
         flag: usFlag,
         currency: 'USD',

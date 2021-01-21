@@ -11,10 +11,12 @@ import {
 } from 'reactstrap'
 import { useAuth0 } from '@auth0/auth0-react'
 import Layout from 'components/Layout'
+import { useTranslation } from 'react-i18next'
 
 import './profile.scss'
 
 const Profile = () => {
+    const { t, i18n } = useTranslation()
     const { user } = useAuth0()
 
     return (
@@ -24,7 +26,7 @@ const Profile = () => {
                     <Row>
                         <Col xl="12">
                             <Row className="mb-6 text-center">
-                                <h1 className="m-auto">My Profile</h1>
+                                <h1 className="m-auto">{t('My Profile')}</h1>
                             </Row>
                             <div className="mb-5"></div>
                             <Row>
@@ -44,25 +46,25 @@ const Profile = () => {
                                         <div className="p-2">
                                             <div className="text-center">
                                                 <p className="p-2 mb-2">
-                                                    Name:{' '}
+                                                    {t('Name')}:{' '}
                                                     <span className="text-primary">
                                                         {user.name}
                                                     </span>
                                                 </p>
                                                 <p className="p-2 mb-2">
-                                                    Email:{' '}
+                                                    {t('Email')}:{' '}
                                                     <span className="text-primary">
                                                         {user.email}
                                                     </span>
                                                 </p>
                                                 <p className="p-2 mb-2">
-                                                    Nickname:{' '}
+                                                    {t('Nickname')}:{' '}
                                                     <span className="text-primary">
                                                         {user.nickname}
                                                     </span>
                                                 </p>
                                                 <p className="p-2 mb-2">
-                                                    Is Email Verified?{' '}
+                                                    {t('Is Email Verified?')}:{' '}
                                                     {user.email_verified ? (
                                                         <Badge
                                                             className={
@@ -71,7 +73,7 @@ const Profile = () => {
                                                             color="success"
                                                             pill
                                                         >
-                                                            Yes
+                                                            {t('Yes')}:{' '}
                                                         </Badge>
                                                     ) : (
                                                         <Badge
@@ -81,7 +83,7 @@ const Profile = () => {
                                                             color="success"
                                                             pill
                                                         >
-                                                            No
+                                                            {t('No')}:{' '}
                                                         </Badge>
                                                     )}
                                                 </p>
@@ -90,7 +92,7 @@ const Profile = () => {
                                     </CardBody>
                                     <CardFooter>
                                         <div className="p-2 text-center">
-                                            Profile loaded from Auth0
+                                            {t('Profile loaded from Auth0')}:{' '}
                                         </div>
                                     </CardFooter>
                                 </Card>

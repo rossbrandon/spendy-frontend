@@ -8,9 +8,13 @@ import {
     ModalFooter,
     ModalHeader,
 } from 'reactstrap'
+import { useTranslation } from 'react-i18next'
+import { useLocale } from 'hooks'
 
 const ViewExpenseModal = props => {
     const { isOpen, toggle, currentBudget, expense } = props
+    const { t } = useTranslation()
+    const { currency, localeString } = useLocale()
 
     const getFormattedDate = date => {
         const utcDate = new Date(
@@ -35,16 +39,18 @@ const ViewExpenseModal = props => {
         >
             {expense && (
                 <div className="modal-content">
-                    <ModalHeader toggle={toggle}>Expense Details</ModalHeader>
+                    <ModalHeader toggle={toggle}>
+                        {t('Expense Details')}
+                    </ModalHeader>
                     <ModalBody>
                         <p className="mb-2">
-                            Date:{' '}
+                            {t('Date')}:{' '}
                             <span className="text-primary">
                                 {getFormattedDate(new Date(expense.date))}
                             </span>
                         </p>
                         <p className="mb-2">
-                            Budget:{' '}
+                            {t('Budget')}:{' '}
                             <Badge
                                 className={'font-size-12 badge-soft-success'}
                                 color="success"
@@ -54,22 +60,22 @@ const ViewExpenseModal = props => {
                             </Badge>
                         </p>
                         <p className="mb-2">
-                            Place:{' '}
+                            {t('Place')}:{' '}
                             <span className="text-primary">
                                 {expense.place}
                             </span>
                         </p>
                         <p className="mb-2">
-                            Price:{' '}
+                            {t('Price')}:{' '}
                             <span className="text-primary">
-                                {expense.price.toLocaleString('en-US', {
+                                {expense.price.toLocaleString(localeString, {
                                     style: 'currency',
-                                    currency: 'USD',
+                                    currency,
                                 })}
                             </span>
                         </p>
                         <p className="mb-4">
-                            Reason:{' '}
+                            {t('Reason')}:{' '}
                             <span className="text-primary">
                                 {expense.reason}
                             </span>
@@ -81,7 +87,7 @@ const ViewExpenseModal = props => {
                             color="secondary"
                             onClick={toggle}
                         >
-                            Close
+                            {t('Close')}
                         </Button>
                     </ModalFooter>
                 </div>

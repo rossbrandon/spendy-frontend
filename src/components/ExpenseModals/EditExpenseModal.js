@@ -14,6 +14,7 @@ import { AvForm, AvInput } from 'availity-reactstrap-validation'
 import { useAuth0 } from '@auth0/auth0-react'
 import { config } from '../../config'
 import { showToast } from 'utils'
+import { useTranslation } from 'react-i18next'
 
 const getQuery = variables => {
     return {
@@ -61,6 +62,7 @@ const getFormattedDate = date => {
 
 const EditExpenseModal = props => {
     const { isOpen, toggle, budgets, currentBudget, expense } = props
+    const { t } = useTranslation()
     const { getAccessTokenSilently } = useAuth0()
 
     const updateExpense = async variables => {
@@ -78,7 +80,7 @@ const EditExpenseModal = props => {
         if (result.errors) {
             showToast('error', result.errors[0].message)
         } else {
-            showToast('success', 'Expense updated!')
+            showToast('success', t('Expense updated!'))
         }
     }
 
@@ -117,10 +119,12 @@ const EditExpenseModal = props => {
                             toggle()
                         }}
                     >
-                        <ModalHeader toggle={toggle}>Edit Expense</ModalHeader>
+                        <ModalHeader toggle={toggle}>
+                            {t('Edit Expense')}
+                        </ModalHeader>
                         <ModalBody>
                             <FormGroup>
-                                <Label for="date">Date</Label>
+                                <Label for="date">{t('Date')}</Label>
                                 <Input
                                     type="date"
                                     className="form-control"
@@ -132,7 +136,7 @@ const EditExpenseModal = props => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="budget">Budget</Label>
+                                <Label for="budget">{t('Budget')}</Label>
                                 <select
                                     className="form-control"
                                     id="budget"
@@ -143,13 +147,13 @@ const EditExpenseModal = props => {
                                 </select>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="place">Place</Label>
+                                <Label for="place">{t('Place')}</Label>
                                 <AvInput
                                     name="place"
                                     type="text"
                                     className="form-control"
                                     id="place"
-                                    placeholder="Where was the expense?"
+                                    placeholder={t('Where was the expense?')}
                                     value={expense.place}
                                     errorMessage="Enter Expense Place"
                                     validate={{ required: { value: true } }}
@@ -157,13 +161,13 @@ const EditExpenseModal = props => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="price">Price</Label>
+                                <Label for="price">{t('Price')}</Label>
                                 <AvInput
                                     name="price"
                                     type="text"
                                     className="form-control"
                                     id="price"
-                                    placeholder="How much was it?"
+                                    placeholder={t('How much was it?')}
                                     value={expense.price}
                                     errorMessage="Enter Expense Price"
                                     validate={{ required: { value: true } }}
@@ -171,27 +175,29 @@ const EditExpenseModal = props => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="reason">Reason</Label>
+                                <Label for="reason">{t('Reason')}</Label>
                                 <AvInput
                                     name="reason"
                                     type="textarea"
                                     className="form-control"
                                     id="reason"
-                                    placeholder="(Optional) Enter a reason or description?"
+                                    placeholder={t(
+                                        '(Optional) Enter a reason or description',
+                                    )}
                                     value={expense.reason}
                                 />
                             </FormGroup>
                         </ModalBody>
                         <ModalFooter>
                             <Button type="submit" color="success">
-                                Save
+                                {t('Save')}
                             </Button>
                             <Button
                                 type="button"
                                 color="secondary"
                                 onClick={toggle}
                             >
-                                Cancel
+                                {t('Cancel')}
                             </Button>
                         </ModalFooter>
                     </AvForm>

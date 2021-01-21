@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import {
-    Badge,
-    Button,
-    Modal,
-    ModalBody,
-    ModalFooter,
-    ModalHeader,
-} from 'reactstrap'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { useTranslation } from 'react-i18next'
+import { useLocale } from 'hooks'
 
 const ViewBudgetModal = props => {
     const { isOpen, toggle, budget } = props
+    const { t } = useTranslation()
+    const { currency, localeString } = useLocale()
     const [showInMenu, setShowInMenu] = useState(false)
 
     const toggleState = budget?.showInMenu ? budget.showInMenu : false
@@ -42,18 +39,20 @@ const ViewBudgetModal = props => {
         >
             {budget && (
                 <div className="modal-content">
-                    <ModalHeader toggle={toggle}>Budget Details</ModalHeader>
+                    <ModalHeader toggle={toggle}>
+                        {t('Budget Details')}
+                    </ModalHeader>
                     <ModalBody>
                         <p className="mb-2">
-                            Name:{' '}
+                            {t('Name')}:{' '}
                             <span className="text-primary">{budget.name}</span>
                         </p>
                         <p className="mb-2">
-                            Amount:{' '}
+                            {t('Amount')}:{' '}
                             <span className="text-primary">
-                                {budget.amount.toLocaleString('en-US', {
+                                {budget.amount.toLocaleString(localeString, {
                                     style: 'currency',
-                                    currency: 'USD',
+                                    currency,
                                 })}
                             </span>
                         </p>
@@ -69,11 +68,11 @@ const ViewBudgetModal = props => {
                                 className="custom-control-label"
                                 htmlFor="showInMenu"
                             >
-                                Show In Top Menu?
+                                {t('Show in Top Menu?')}
                             </label>
                         </div>
                         <p className="mt-2 mb-2">
-                            Start Date:{' '}
+                            {t('Start Date')}:{' '}
                             <span className="text-primary">
                                 {getFormattedDate(new Date(budget.startDate))}
                             </span>
@@ -85,7 +84,7 @@ const ViewBudgetModal = props => {
                             color="secondary"
                             onClick={toggle}
                         >
-                            Close
+                            {t('Close')}
                         </Button>
                     </ModalFooter>
                 </div>

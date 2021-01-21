@@ -14,6 +14,7 @@ import { AvForm, AvInput } from 'availity-reactstrap-validation'
 import { useAuth0 } from '@auth0/auth0-react'
 import { config } from '../../config'
 import { showToast } from 'utils'
+import { useTranslation } from 'react-i18next'
 
 const getQuery = variables => {
     return {
@@ -51,6 +52,7 @@ const getFormattedDate = date => {
 
 const EditBudgetModal = props => {
     const { isOpen, toggle, budget } = props
+    const { t } = useTranslation()
     const [showInMenu, setShowInMenu] = useState(false)
     const { getAccessTokenSilently } = useAuth0()
 
@@ -75,7 +77,7 @@ const EditBudgetModal = props => {
         if (result.errors) {
             showToast('error', result.errors[0].message)
         } else {
-            showToast('success', 'Budget updated!')
+            showToast('success', t('Budget updated!'))
         }
     }
 
@@ -106,16 +108,18 @@ const EditBudgetModal = props => {
                             toggle()
                         }}
                     >
-                        <ModalHeader toggle={toggle}>Edit Budget</ModalHeader>
+                        <ModalHeader toggle={toggle}>
+                            {t('Edit Budget')}
+                        </ModalHeader>
                         <ModalBody>
                             <FormGroup>
-                                <Label for="budgetName">Name</Label>
+                                <Label for="budgetName">{t('Name')}</Label>
                                 <AvInput
                                     name="budgetName"
                                     type="text"
                                     className="form-control"
                                     id="budgetName"
-                                    placeholder="What is the budget for?"
+                                    placeholder={t('What is the budget for?')}
                                     errorMessage="Enter Budget Name"
                                     validate={{ required: { value: true } }}
                                     value={budget.name}
@@ -123,13 +127,15 @@ const EditBudgetModal = props => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="amount">Amount</Label>
+                                <Label for="amount">{t('Amount')}</Label>
                                 <AvInput
                                     name="amount"
                                     type="text"
                                     className="form-control"
                                     id="amount"
-                                    placeholder="How much should be budgetted?"
+                                    placeholder={t(
+                                        'How much should be bugeted?',
+                                    )}
                                     errorMessage="Enter Budget Amount"
                                     validate={{ required: { value: true } }}
                                     value={budget.amount}
@@ -137,7 +143,7 @@ const EditBudgetModal = props => {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="startDate">Start Date</Label>
+                                <Label for="startDate">{t('Start Date')}</Label>
                                 <Input
                                     type="date"
                                     className="form-control"
@@ -167,21 +173,21 @@ const EditBudgetModal = props => {
                                         className="custom-control-label"
                                         htmlFor="showInMenu"
                                     >
-                                        Show In Top Menu?
+                                        {t('Show in Top Menu?')}
                                     </label>
                                 </div>
                             </FormGroup>
                         </ModalBody>
                         <ModalFooter>
                             <Button type="submit" color="success">
-                                Save
+                                {t('Save')}
                             </Button>
                             <Button
                                 type="button"
                                 color="secondary"
                                 onClick={toggle}
                             >
-                                Cancel
+                                {t('Cancel')}
                             </Button>
                         </ModalFooter>
                     </AvForm>

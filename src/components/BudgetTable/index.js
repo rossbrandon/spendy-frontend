@@ -10,8 +10,10 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
 import BudgetsColumns from 'components/BudgetTable/BudgetColumns'
 import BudgetModals from 'components/BudgetModals'
 import { useBudgets } from 'hooks'
+import { useTranslation } from 'react-i18next'
 
 const BudgetTable = props => {
+    const { t } = useTranslation()
     const { budgets } = props
     const { refetchBudgetData, setRefetchBudgetData } = useBudgets()
 
@@ -79,7 +81,7 @@ const BudgetTable = props => {
                             toggleDeleteModal,
                         )}
                         bootstrap4
-                        search
+                        search={{ placeholder: `${t('Search')}` }}
                     >
                         {toolkitProps => (
                             <React.Fragment>
@@ -103,7 +105,7 @@ const BudgetTable = props => {
                                                 onClick={toggleCreateModal}
                                             >
                                                 <i className="mdi mdi-plus mr-1" />
-                                                Add New Budget
+                                                {t('Add New Budget')}
                                             </Button>
                                         </div>
                                     </Col>

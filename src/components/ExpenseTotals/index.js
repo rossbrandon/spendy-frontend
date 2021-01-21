@@ -1,9 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col, Card, CardBody, Media } from 'reactstrap'
+import { useTranslation } from 'react-i18next'
+import { useLocale } from 'hooks'
 
 const ExpenseTotals = props => {
     const { budget, expenses } = props
+    const { t } = useTranslation()
+    const { currency, localeString } = useLocale()
 
     const totalBudget = budget.amount
     const totalSpent = budget.sum.length ? budget.sum[0].total : 0
@@ -22,7 +26,7 @@ const ExpenseTotals = props => {
                                 </div>
                                 <Media body>
                                     <p className="text-muted mb-2">
-                                        Transations
+                                        {t('Transations')}
                                     </p>
                                     <h5 className="mb-0">{expenses.length}</h5>
                                 </Media>
@@ -38,12 +42,17 @@ const ExpenseTotals = props => {
                                     <i className="bx bx-wallet h2 text-warning mb-0" />
                                 </div>
                                 <Media body>
-                                    <p className="text-muted mb-2">Budget</p>
+                                    <p className="text-muted mb-2">
+                                        {t('Budget')}
+                                    </p>
                                     <h5 className="mb-0">
-                                        {totalBudget.toLocaleString('en-US', {
-                                            style: 'currency',
-                                            currency: 'USD',
-                                        })}
+                                        {totalBudget.toLocaleString(
+                                            localeString,
+                                            {
+                                                style: 'currency',
+                                                currency,
+                                            },
+                                        )}
                                     </h5>
                                 </Media>
                             </Media>
@@ -57,12 +66,20 @@ const ExpenseTotals = props => {
                                 <div className="mr-3 align-self-center">
                                     <i className="bx bx-dollar-circle h2 text-info mb-0" />
                                 </div>
-                                <h5 className="mb-0">
-                                    {totalSpent.toLocaleString('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                    })}
-                                </h5>
+                                <Media body>
+                                    <p className="text-muted mb-2">
+                                        {t('Spent')}
+                                    </p>
+                                    <h5 className="mb-0">
+                                        {totalSpent.toLocaleString(
+                                            localeString,
+                                            {
+                                                style: 'currency',
+                                                currency,
+                                            },
+                                        )}
+                                    </h5>
+                                </Media>
                             </Media>
                         </CardBody>
                     </Card>
@@ -77,7 +94,9 @@ const ExpenseTotals = props => {
                                     />
                                 </div>
                                 <Media body>
-                                    <p className="text-muted mb-2">Remaining</p>
+                                    <p className="text-muted mb-2">
+                                        {t('Remaining')}
+                                    </p>
                                     <h5 className="mb-0">
                                         {totalRemaining.toLocaleString(
                                             'en-US',

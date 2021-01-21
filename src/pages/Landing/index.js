@@ -1,9 +1,12 @@
 import React from 'react'
-import { Container, Row, Col, Card, CardBody } from 'reactstrap'
+import { Container, Row, Col, Card, CardBody, CardFooter } from 'reactstrap'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Link } from 'react-router-dom'
+import LanguageDropdown from 'components/LanguageDropdown'
+import { useTranslation } from 'react-i18next'
 
 const Landing = () => {
+    const { t } = useTranslation()
     const { loginWithRedirect, isAuthenticated } = useAuth0()
 
     const loginAction = () => {
@@ -12,14 +15,8 @@ const Landing = () => {
 
     return (
         <React.Fragment>
-            <div className="d-none d-sm-block text-right mt-4 mr-4">
-                <Link
-                    to="/dashboard"
-                    className="text-dark"
-                    onClick={loginAction}
-                >
-                    <i className="bx bx-log-in h2" />
-                </Link>
+            <div className="text-right mt-4 mr-4">
+                <LanguageDropdown />
             </div>
             <div className="page-content">
                 <Container fluid>
@@ -27,7 +24,7 @@ const Landing = () => {
                         <Col xl="12">
                             <Row className="mb-6 text-center">
                                 <h1 className="display-3 m-auto">
-                                    Welcome to Spendy
+                                    {t('Welcome to Spendy')}
                                 </h1>
                             </Row>
                             <div className="mb-5"></div>
@@ -38,20 +35,19 @@ const Landing = () => {
                                             <div className="text-center">
                                                 <div className="avatar-md mx-auto">
                                                     <div className="avatar-title rounded-circle bg-light">
-                                                        <i className="bx bx-dollar h1 mb-0 text-primary"></i>
+                                                        <i className="bx bx-dollar h1 mb-0 text-success"></i>
                                                     </div>
                                                 </div>
                                                 <div className="p-2 mt-4">
                                                     <h4>
-                                                        Spendy is a super simple
-                                                        budget and expense
-                                                        tracker.
+                                                        {t(
+                                                            'Spendy is a super simple budget and expense tracker.',
+                                                        )}
                                                     </h4>
                                                     <p className="text-muted">
-                                                        Track expenses in your
-                                                        own custom budget
-                                                        categories and get your
-                                                        spending under control!
+                                                        {t(
+                                                            'Track expenses in your own custom budget categories and get your spending under control!',
+                                                        )}
                                                     </p>
                                                     <div className="mt-4">
                                                         <Link
@@ -61,13 +57,29 @@ const Landing = () => {
                                                                 loginAction
                                                             }
                                                         >
-                                                            Let's Get Started!
+                                                            {t(
+                                                                "Let's Get Started!",
+                                                            )}
                                                         </Link>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </CardBody>
+                                    <CardFooter>
+                                        <div className="mt-4 mb-4 text-center">
+                                            <p>
+                                                {t('Already have an account?')}
+                                            </p>
+                                            <Link
+                                                to="/dashboard"
+                                                className="btn btn-primary"
+                                                onClick={loginAction}
+                                            >
+                                                {t('Login')}
+                                            </Link>
+                                        </div>
+                                    </CardFooter>
                                 </Card>
                             </Row>
                         </Col>

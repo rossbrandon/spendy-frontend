@@ -10,8 +10,10 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
 import ExpensesColumns from 'components/ExpenseTable/ExpenseColumns'
 import ExpenseModals from 'components/ExpenseModals'
 import { useExpenses } from 'hooks'
+import { useTranslation } from 'react-i18next'
 
 const ExpenseTable = props => {
+    const { t } = useTranslation()
     const { expenses, budgets, currentBudget } = props
     const { refetchExpenseData, setRefetchExpenseData } = useExpenses()
 
@@ -80,7 +82,7 @@ const ExpenseTable = props => {
                             toggleDeleteModal,
                         )}
                         bootstrap4
-                        search
+                        search={{ placeholder: `${t('Search')}` }}
                     >
                         {toolkitProps => (
                             <React.Fragment>
@@ -104,7 +106,7 @@ const ExpenseTable = props => {
                                                 onClick={toggleCreateModal}
                                             >
                                                 <i className="mdi mdi-plus mr-1" />
-                                                Add New Expense
+                                                {t('Add New Expense')}
                                             </Button>
                                         </div>
                                     </Col>

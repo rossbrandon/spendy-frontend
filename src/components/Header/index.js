@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import LanguageDropdown from '../LanguageDropdown'
 import ProfileMenu from '../ProfileMenu'
 import spendyLogo from '../../assets/images/spendy_logo.png'
-import { withTranslation } from 'react-i18next'
 import { useAuth0 } from '@auth0/auth0-react'
 
 const Header = props => {
@@ -52,4 +51,4 @@ Header.propTypes = {
     openMenu: PropTypes.func,
 }
 
-export default withTranslation()(Header)
+export default Header
