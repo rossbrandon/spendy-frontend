@@ -7,7 +7,7 @@ import paginationFactory, {
     PaginationProvider,
 } from 'react-bootstrap-table2-paginator'
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
-import BudgetsColumns from 'components/BudgetTable/BudgetColumns'
+import BudgetColumns from 'components/BudgetTable/BudgetColumns'
 import BudgetModals from 'components/BudgetModals'
 import { useBudgets } from 'hooks'
 import { useTranslation } from 'react-i18next'
@@ -75,7 +75,7 @@ const BudgetTable = props => {
                     <ToolkitProvider
                         keyField="_id"
                         data={budgets || []}
-                        columns={BudgetsColumns(
+                        columns={BudgetColumns(
                             toggleViewModal,
                             toggleEditModal,
                             toggleDeleteModal,

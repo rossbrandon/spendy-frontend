@@ -56,7 +56,7 @@ const Dashboard = () => {
                                                     </p>
                                                     <h5 className="mb-0">
                                                         {totalBudget.toLocaleString(
-                                                            'en-US',
+                                                            localeString,
                                                             {
                                                                 style:
                                                                     'currency',
@@ -84,7 +84,7 @@ const Dashboard = () => {
                                                     </p>
                                                     <h5 className="mb-0">
                                                         {totalSpent.toLocaleString(
-                                                            'en-US',
+                                                            localeString,
                                                             {
                                                                 style:
                                                                     'currency',
@@ -112,7 +112,7 @@ const Dashboard = () => {
                                                     </p>
                                                     <h5 className="mb-0">
                                                         {totalRemaining.toLocaleString(
-                                                            'en-US',
+                                                            localeString,
                                                             {
                                                                 style:
                                                                     'currency',

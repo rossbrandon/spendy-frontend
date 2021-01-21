@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import { Button, Row, Col } from 'reactstrap'
 import BootstrapTable from 'react-bootstrap-table-next'
 import paginationFactory, {
@@ -7,15 +6,16 @@ import paginationFactory, {
     PaginationProvider,
 } from 'react-bootstrap-table2-paginator'
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
-import ExpenseColumns from 'components/ExpenseTable/ExpenseColumns'
+import ExpenseSearchColumns from './ExpenseSearchColumns'
 import ExpenseModals from 'components/ExpenseModals'
-import { useExpenses } from 'hooks'
+import { useBudgets, useAllExpenses } from 'hooks'
 import { useTranslation } from 'react-i18next'
 
-const ExpenseTable = props => {
+const ExpenseSearchTable = () => {
     const { t } = useTranslation()
-    const { expenses, budgets, currentBudget } = props
-    const { refetchExpenseData, setRefetchExpenseData } = useExpenses()
+    const { budgets } = useBudgets()
+    const { allExpenses } = useAllExpenses()
+    const { refetchAllExpenseData, setRefetchAllExpenseData } = useAllExpenses()
 
     const [modalInfo, setModalInfo] = useState()
     const [viewModal, setViewModal] = useState(false)
@@ -31,21 +31,21 @@ const ExpenseTable = props => {
 
     const toggleCreateModal = () => {
         setCreateModal(!createModal)
-        setRefetchExpenseData(refetchExpenseData + 1)
+        setRefetchAllExpenseData(refetchAllExpenseData + 1)
     }
 
     const toggleEditModal = () => {
         setEditModal(!editModal)
-        setRefetchExpenseData(refetchExpenseData + 1)
+        setRefetchAllExpenseData(refetchAllExpenseData + 1)
     }
 
     const toggleDeleteModal = () => {
         setDeleteModal(!deleteModal)
-        setRefetchExpenseData(refetchExpenseData + 1)
+        setRefetchAllExpenseData(refetchAllExpenseData + 1)
     }
 
     const pageOptions = {
-        sizePerPage: 10,
+        sizePerPage: 50,
         totalSize: budgets.length,
         custom: true,
     }
@@ -60,7 +60,9 @@ const ExpenseTable = props => {
         <React.Fragment>
             <ExpenseModals
                 budgets={budgets}
-                currentBudget={currentBudget}
+                currentBudget={
+                    modalInfo?.budget ? modalInfo.budget : budgets[0]
+                }
                 modalInfo={modalInfo}
                 viewModal={viewModal}
                 toggleViewModal={toggleViewModal}
@@ -75,8 +77,8 @@ const ExpenseTable = props => {
                 {({ paginationProps, paginationTableProps }) => (
                     <ToolkitProvider
                         keyField="_id"
-                        data={expenses || []}
-                        columns={ExpenseColumns(
+                        data={allExpenses || []}
+                        columns={ExpenseSearchColumns(
                             toggleViewModal,
                             toggleEditModal,
                             toggleDeleteModal,
@@ -134,9 +136,9 @@ const ExpenseTable = props => {
                                             />
                                         </div>
                                     </Col>
-                                    {!expenses.length > 0 && (
+                                    {!allExpenses.length > 0 && (
                                         <h3 className="m-auto">
-                                            {t('No expenses found yet!')}
+                                            {t('No allExpenses found yet!')}
                                         </h3>
                                     )}
                                 </Row>
@@ -156,11 +158,4 @@ const ExpenseTable = props => {
     )
 }
 
-ExpenseTable.propTypes = {
-    expenses: PropTypes.object,
-    budgets: PropTypes.object,
-    currentBudget: PropTypes.object,
-    modalInfo: PropTypes.object,
-}
-
-export default ExpenseTable
+export default ExpenseSearchTable

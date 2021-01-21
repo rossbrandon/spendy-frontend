@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { Link } from 'react-router-dom'
 import LanguageDropdown from 'components/LanguageDropdown'
 import { useTranslation } from 'react-i18next'
+import { LocaleProvider } from 'context'
 
 const Landing = () => {
     const { t } = useTranslation()
@@ -14,7 +15,7 @@ const Landing = () => {
     }
 
     return (
-        <React.Fragment>
+        <LocaleProvider>
             <div className="text-right mt-4 mr-4">
                 <LanguageDropdown />
             </div>
@@ -86,7 +87,7 @@ const Landing = () => {
                     </Row>
                 </Container>
             </div>
-        </React.Fragment>
+        </LocaleProvider>
     )
 }
 

@@ -9,7 +9,6 @@ const ExpenseModals = props => {
     const {
         budgets,
         currentBudget,
-        expense,
         modalInfo,
         viewModal,
         toggleViewModal,
@@ -54,7 +53,6 @@ const ExpenseModals = props => {
 ExpenseModals.propTypes = {
     budgets: PropTypes.object,
     currentBudget: PropTypes.object,
-    expense: PropTypes.object,
     modalInfo: PropTypes.object,
     viewModal: PropTypes.bool,
     toggleViewModal: PropTypes.func,

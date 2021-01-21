@@ -15,17 +15,19 @@ import { useTranslation } from 'react-i18next'
 
 import 'react-calendar/dist/Calendar.css'
 
-const getFormattedDate = date => {
-    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
-    let year = utcDate.getFullYear()
-    let month = utcDate.toLocaleString('default', { month: 'long' })
-    return `${month} ${year}`
-}
-
 const MonthSwitcher = () => {
     const { t } = useTranslation()
     const [isOpen, setIsOpen] = useState(false)
     const { startDate, endDate, setStartDate, setEndDate } = useMonthSwitcher()
+
+    const getFormattedDate = date => {
+        const utcDate = new Date(
+            date.getTime() + date.getTimezoneOffset() * 60000,
+        )
+        let year = utcDate.getFullYear()
+        let month = utcDate.toLocaleString('default', { month: 'long' })
+        return `${t(month)} ${year}`
+    }
 
     const updateDates = date => {
         setStartDate(getFirstDayOfMonth(date))

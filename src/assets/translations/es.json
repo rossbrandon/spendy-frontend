@@ -91,5 +91,7 @@
     "Expenses": "Gastos",
     "No budgets found yet!": "¡Aún no se han encontrado presupuestos!",
     "How much should be bugeted?": "¿Cuánto se debe cargar?",
-    "Create": "Crear"
+    "Create": "Crear",
+    "All Expenses": "Todos los gastos",
+    "Search Expenses": "Gastos de búsqueda"
 }

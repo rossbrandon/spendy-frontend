@@ -10,7 +10,7 @@ const getFormattedDate = date => {
     const monthName = utcDate.toLocaleString('default', { month: 'long' })
     return `${dayName}, ${monthName} ${utcDate.getDate()}`
 }
-const ExpensesColumns = (
+const ExpenseColumns = (
     toggleViewModal,
     toggleEditModal,
     toggleDeleteModal,
@@ -93,4 +93,4 @@ const ExpensesColumns = (
     },
 ]
 
-export default ExpensesColumns
+export default ExpenseColumns

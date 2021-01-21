@@ -6,6 +6,7 @@ import {
     ExpensesProvider,
     LocaleProvider,
     MonthSwitcherProvider,
+    LoadingProvider,
 } from 'context'
 import PrivateRoute from './components/PrivateRoute'
 import Landing from './pages/Landing'
@@ -15,6 +16,7 @@ import Budgets from './pages/Budgets'
 import Profile from 'pages/Profile'
 import i18n from 'i18n'
 import './assets/scss/theme.scss'
+import ExpenseSearch from 'pages/ExpenseSearch'
 
 const App = () => {
     const { isAuthenticated } = useAuth0()
@@ -22,42 +24,43 @@ const App = () => {
     return (
         <Switch>
             <Route path="/" exact>
-                {isAuthenticated ? (
-                    <Redirect to="/dashboard" />
-                ) : (
-                    <LocaleProvider>
-                        <Landing />
-                    </LocaleProvider>
-                )}
+                {isAuthenticated ? <Redirect to="/dashboard" /> : <Landing />}
             </Route>
-            <LocaleProvider>
-                <MonthSwitcherProvider>
-                    <BudgetsProvider>
-                        <PrivateRoute
-                            path="/profile"
-                            component={Profile}
-                            exact
-                        />
-                        <PrivateRoute
-                            path="/dashboard"
-                            component={Dashboard}
-                            exact
-                        />
-                        <PrivateRoute
-                            path="/budgets"
-                            component={Budgets}
-                            exact
-                        />
-                        <ExpensesProvider>
+            <LoadingProvider>
+                <LocaleProvider>
+                    <MonthSwitcherProvider>
+                        <BudgetsProvider>
                             <PrivateRoute
-                                path="/expenses/:budgetId"
-                                component={Expenses}
+                                path="/profile"
+                                component={Profile}
                                 exact
                             />
-                        </ExpensesProvider>
-                    </BudgetsProvider>
-                </MonthSwitcherProvider>
-            </LocaleProvider>
+                            <PrivateRoute
+                                path="/dashboard"
+                                component={Dashboard}
+                                exact
+                            />
+                            <PrivateRoute
+                                path="/budgets"
+                                component={Budgets}
+                                exact
+                            />
+                            <PrivateRoute
+                                path="/search"
+                                component={ExpenseSearch}
+                                exact
+                            />
+                            <ExpensesProvider>
+                                <PrivateRoute
+                                    path="/expenses/:budgetId"
+                                    component={Expenses}
+                                    exact
+                                />
+                            </ExpensesProvider>
+                        </BudgetsProvider>
+                    </MonthSwitcherProvider>
+                </LocaleProvider>
+            </LoadingProvider>
         </Switch>
     )
 }

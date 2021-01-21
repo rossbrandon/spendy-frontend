@@ -3,9 +3,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Collapse } from 'reactstrap'
 import { useBudgets } from 'hooks'
-import { withTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 const Navbar = props => {
+    const { t } = useTranslation()
     const { budgets } = useBudgets()
 
     const menuBudgets = budgets
@@ -53,7 +54,6 @@ const Navbar = props => {
 
 Navbar.propTypes = {
     isMenuOpened: PropTypes.bool,
-    t: PropTypes.any,
 }
 
-export default withTranslation()(Navbar)
+export default Navbar

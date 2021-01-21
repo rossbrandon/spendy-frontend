@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'reactstrap'
+import { Button, Badge } from 'reactstrap'
 
 const getFormattedDate = date => {
     const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
@@ -8,27 +8,39 @@ const getFormattedDate = date => {
     const dayIndex = utcDate.getDay()
     const dayName = days[dayIndex]
     const monthName = utcDate.toLocaleString('default', { month: 'long' })
-    return `${dayName}, ${monthName} ${utcDate.getDate()}`
+    const year = utcDate.getFullYear()
+    return `${dayName}, ${monthName} ${utcDate.getDate()}, ${year}`
 }
-
-const BudgetColumns = (toggleViewModal, toggleEditModal, toggleDeleteModal) => [
+const ExpenseSearchColumns = (
+    toggleViewModal,
+    toggleEditModal,
+    toggleDeleteModal,
+) => [
     {
         dataField: '_id',
         hidden: true,
         text: '',
     },
     {
-        dataField: 'name',
-        text: 'Name',
+        dataField: 'date',
+        sort: true,
+        text: 'Date',
+        formatter: (cellContent, row) => (
+            <>{getFormattedDate(new Date(row.date))}</>
+        ),
+    },
+    {
+        dataField: 'place',
+        text: 'Place',
         sort: true,
     },
     {
-        dataField: 'amount',
-        text: 'Amount',
+        dataField: 'price',
+        text: 'Price',
         sort: true,
         formatter: (cellContent, row) => (
             <>
-                {row.amount.toLocaleString('en-US', {
+                {row.price.toLocaleString('en-US', {
                     style: 'currency',
                     currency: 'USD',
                 })}
@@ -36,26 +48,25 @@ const BudgetColumns = (toggleViewModal, toggleEditModal, toggleDeleteModal) => [
         ),
     },
     {
-        dataField: 'startDate',
+        dataField: 'reason',
+        text: 'Reason',
         sort: true,
-        text: 'Start Date',
-        formatter: (cellContent, row) => (
-            <>{getFormattedDate(new Date(row.startDate))}</>
-        ),
     },
     {
-        dataField: 'endDate',
+        dataField: 'budget',
+        text: 'Budget',
         sort: true,
-        hidden: true,
-        text: 'End Date',
         formatter: (cellContent, row) => (
-            <>{getFormattedDate(new Date(row.endDate))}</>
+            <>
+                <Badge
+                    className={'font-size-12 badge-soft-success'}
+                    color="success"
+                    pill
+                >
+                    {row.budget.name}
+                </Badge>
+            </>
         ),
-    },
-    {
-        dataField: 'showInMenu',
-        text: 'Show in Top Menu?',
-        sort: true,
     },
     {
         dataField: 'dummy1',
@@ -99,4 +110,4 @@ const BudgetColumns = (toggleViewModal, toggleEditModal, toggleDeleteModal) => [
     },
 ]
 
-export default BudgetColumns
+export default ExpenseSearchColumns

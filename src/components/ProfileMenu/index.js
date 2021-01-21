@@ -12,7 +12,7 @@ const ProfileMenu = props => {
     const { t } = useTranslation()
     const [menu, setMenu] = useState(false)
     const {
-        isLoadingMask,
+        loadingMask,
         user,
         loginWithRedirect,
         logout,
@@ -69,7 +69,7 @@ const ProfileMenu = props => {
                         <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
                     </DropdownToggle>
                 )}
-                {!isLoadingMask && !user && (
+                {!loadingMask && !user && (
                     <DropdownMenu right>
                         <Link
                             to="/dashboard"
@@ -91,6 +91,10 @@ const ProfileMenu = props => {
                         <Link to="/budgets" className="dropdown-item">
                             <i className="bx bx-wallet font-size-16 align-middle mr-1" />
                             {props.t('My Budgets')}
+                        </Link>
+                        <Link to="/search" className="dropdown-item">
+                            <i className="bx bx-receipt font-size-16 align-middle mr-1" />
+                            {props.t('All Expenses')}
                         </Link>
                         <div className="dropdown-divider" />
                         <Link
