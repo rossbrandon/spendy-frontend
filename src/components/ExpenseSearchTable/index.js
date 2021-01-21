@@ -95,7 +95,6 @@ const ExpenseSearchTable = () => {
                                                 <SearchBar
                                                     {...toolkitProps.searchProps}
                                                 />
-                                                <i className="bx bx-search-alt search-icon" />
                                             </div>
                                         </div>
                                     </Col>
