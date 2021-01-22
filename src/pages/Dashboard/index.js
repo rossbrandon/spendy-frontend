@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Container, Row, Col, Card, CardBody, Media } from 'reactstrap'
 import BudgetCard from 'components/BudgetCard'
 import ProgressBar from 'components/ProgressBar'
@@ -44,30 +45,37 @@ const Dashboard = () => {
                         <Col xl="12">
                             <Row>
                                 <Col sm="4">
-                                    <Card className="mini-stats-wid">
-                                        <CardBody>
-                                            <Media>
-                                                <div className="mr-3 align-self-center">
-                                                    <i className="bx bx-purchase-tag h2 text-warning mb-0" />
-                                                </div>
-                                                <Media body>
-                                                    <p className="text-muted mb-2">
-                                                        {t('Total Budget')}
-                                                    </p>
-                                                    <h5 className="mb-0">
-                                                        {totalBudget.toLocaleString(
-                                                            localeString,
-                                                            {
-                                                                style:
-                                                                    'currency',
-                                                                currency,
-                                                            },
-                                                        )}
-                                                    </h5>
+                                    <Link
+                                        to={{
+                                            pathname: `/budgets`,
+                                        }}
+                                        className="text-dark"
+                                    >
+                                        <Card className="mini-stats-wid">
+                                            <CardBody>
+                                                <Media>
+                                                    <div className="mr-3 align-self-center">
+                                                        <i className="bx bx-purchase-tag h2 text-warning mb-0" />
+                                                    </div>
+                                                    <Media body>
+                                                        <p className="text-muted mb-2">
+                                                            {t('Total Budget')}
+                                                        </p>
+                                                        <h5 className="mb-0">
+                                                            {totalBudget.toLocaleString(
+                                                                localeString,
+                                                                {
+                                                                    style:
+                                                                        'currency',
+                                                                    currency,
+                                                                },
+                                                            )}
+                                                        </h5>
+                                                    </Media>
                                                 </Media>
-                                            </Media>
-                                        </CardBody>
-                                    </Card>
+                                            </CardBody>
+                                        </Card>
+                                    </Link>
                                 </Col>
                                 <Col sm="4">
                                     <Card className="mini-stats-wid">

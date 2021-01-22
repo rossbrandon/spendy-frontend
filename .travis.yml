@@ -19,5 +19,5 @@ deploy:
     on:
         branch: main
 
-after_success:
+after_deploy:
     - bash clear_cloudflare_cache.sh -k "$CLOUDFLARE_AUTH_KEY" -e "$CLOUDFLARE_AUTH_EMAIL" -z "$CLOUDFLARE_ZONE"

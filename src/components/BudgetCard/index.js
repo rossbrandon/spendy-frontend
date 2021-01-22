@@ -18,14 +18,14 @@ const BudgetCard = props => {
     return (
         <React.Fragment>
             <Col xl="4" sm="6">
-                <Card className="text-center">
-                    <CardBody>
-                        <Link
-                            to={{
-                                pathname: `/expenses/${budget._id}`,
-                            }}
-                            className="text-dark"
-                        >
+                <Link
+                    to={{
+                        pathname: `/expenses/${budget._id}`,
+                    }}
+                    className="text-dark"
+                >
+                    <Card className="text-center">
+                        <CardBody>
                             <div className="avatar-sm mx-auto mb-4">
                                 <span
                                     className={
@@ -63,9 +63,9 @@ const BudgetCard = props => {
                                     totalSpent={totalSpent}
                                 />
                             </div>
-                        </Link>
-                    </CardBody>
-                </Card>
+                        </CardBody>
+                    </Card>
+                </Link>
             </Col>
         </React.Fragment>
     )

@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Row, Col } from 'reactstrap'
+import { PropTypes } from 'prop-types'
+import { Row, Col } from 'reactstrap'
 import BootstrapTable from 'react-bootstrap-table-next'
 import paginationFactory, {
     PaginationListStandalone,
@@ -7,13 +8,13 @@ import paginationFactory, {
 } from 'react-bootstrap-table2-paginator'
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
 import ExpenseSearchColumns from './ExpenseSearchColumns'
-import { useBudgets, useAllExpenses } from 'hooks'
+import { useBudgets } from 'hooks'
 import { useTranslation } from 'react-i18next'
 
-const ExpenseSearchTable = () => {
+const ExpenseSearchTable = props => {
+    const { allExpenses } = props
     const { t } = useTranslation()
     const { budgets } = useBudgets()
-    const { allExpenses } = useAllExpenses()
 
     const { SearchBar } = Search
 
@@ -90,6 +91,10 @@ const ExpenseSearchTable = () => {
             </PaginationProvider>
         </React.Fragment>
     )
+}
+
+ExpenseSearchTable.propTypes = {
+    allExpenses: PropTypes.array,
 }
 
 export default ExpenseSearchTable
