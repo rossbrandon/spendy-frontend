@@ -15,6 +15,7 @@ import { getPreviousYearFirstDayOfMonth, getLastDayOfCurrentMonth } from 'utils'
  *  b. Get the mm month number with zero prefix if applicable
  *  c. Get full yyyy
  *  d. Push yyyy-mm format to months array
+ * 3. Reverse the array to go yyyy-01 to yyyy-12
  *
  * @param aggregate budget aggregate data from aggregate context
  * @returns array of yyyy-mm data for graph categories
@@ -29,7 +30,6 @@ const getCategoryData = aggregate => {
         months.push(`${year}-${month}`)
     }
     months.reverse()
-    aggregate.sort((a, b) => (a.month > b.month ? 1 : -1))
     return months
 }
 
