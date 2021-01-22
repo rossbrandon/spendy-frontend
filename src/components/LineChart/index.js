@@ -4,7 +4,7 @@ import ReactApexChart from 'react-apexcharts'
 import { useTranslation } from 'react-i18next'
 
 const LineChart = props => {
-    const { series } = props
+    const { series, categories } = props
     const { t } = useTranslation()
 
     const options = {
@@ -17,20 +17,7 @@ const LineChart = props => {
         },
         markers: { size: 0, hover: { sizeOffset: 6 } },
         xaxis: {
-            categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec',
-            ],
+            categories,
         },
         grid: { borderColor: '#f1f1f1' },
     }
@@ -47,6 +34,7 @@ const LineChart = props => {
 
 LineChart.propTypes = {
     series: PropTypes.array,
+    categories: PropTypes.array,
 }
 
 export default LineChart

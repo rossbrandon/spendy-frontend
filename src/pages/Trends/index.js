@@ -6,40 +6,58 @@ import AreaChart from 'components/AreaChart'
 import { useAggregate, useBudgets } from 'hooks'
 import { getPreviousYearFirstDayOfMonth, getLastDayOfCurrentMonth } from 'utils'
 
-const Trends = () => {
-    const { t } = useTranslation()
-    const { budgets } = useBudgets()
-    const {
-        aggregate,
-        setAggregateStartDate,
-        setAggregateEndDate,
-    } = useAggregate()
-
-    useEffect(() => {
-        setAggregateStartDate(getPreviousYearFirstDayOfMonth(new Date()))
-        setAggregateEndDate(getLastDayOfCurrentMonth())
-    }, [])
-
-    // build array of month numbers 1 year from today
+/**
+ * Build array of year-months (yyyy-mm) 1 year from today
+ *
+ * 1. Get today's date
+ * 2. For all months in year (12, obviously)
+ *  a. Set today's date to previous month
+ *  b. Get the mm month number with zero prefix if applicable
+ *  c. Get full yyyy
+ *  d. Push yyyy-mm format to months array
+ *
+ * @param aggregate budget aggregate data from aggregate context
+ * @returns array of yyyy-mm data for graph categories
+ */
+const getCategoryData = aggregate => {
     const months = []
     const date = new Date()
     for (let i = 0; i < 12; i++) {
         date.setMonth(date.getMonth() - 1)
-        const month = date.getMonth()
-        months.push(month)
+        const month = ('0' + (date.getMonth() + 1)).slice(-2)
+        const year = date.getFullYear()
+        months.push(`${year}-${month}`)
     }
     months.reverse()
     aggregate.sort((a, b) => (a.month > b.month ? 1 : -1))
+    return months
+}
 
-    // match budget name to aggregate.budget id
-    // add series data for each month - 0 if month is missing
-    // push object to series array
-    let series = []
+/**
+ * Build series data array for Apex charts in super complicated way
+ *
+ * 1. Loop through budets and aggregates
+ *   a. Match budget name to aggregate budget id
+ *   b. Push series object to series array with budget name and empty data array
+ * 2. Loop through months array
+ *   a. Get aggregate that matches budget id and month (matchedExact)
+ *   b. Get aggregate that matches on budget it but not month (matchedPartial)
+ *   c. Get series that matches budget name (s)
+ *   d. If matchedExact exists: push aggregate total to series.data array for that month
+ *   e. If matchedPartial exists: push 0 to series.data array for that month
+ *   f. Else do nothing
+ *
+ * @param budgets   budget data from budgets context
+ * @param aggregate budget aggregate data from aggregate context
+ * @param months    yyyy-mm category data
+ * @returns array of series objects for chart data
+ */
+const getSeriesData = (budgets, aggregate, months) => {
+    const series = []
     budgets.map(b => {
         const seriesObject = {}
         aggregate.map(a => {
             if (a.budget === b._id) {
-                //a.name = b.name
                 seriesObject.name = b.name
                 seriesObject.data = []
                 if (!series.find(s => s.name === b.name)) {
@@ -63,8 +81,25 @@ const Trends = () => {
             }
         })
     })
+    return series
+}
 
-    console.log(series)
+const Trends = () => {
+    const { t } = useTranslation()
+    const { budgets } = useBudgets()
+    const {
+        aggregate,
+        setAggregateStartDate,
+        setAggregateEndDate,
+    } = useAggregate()
+
+    useEffect(() => {
+        setAggregateStartDate(getPreviousYearFirstDayOfMonth(new Date()))
+        setAggregateEndDate(getLastDayOfCurrentMonth())
+    }, [])
+
+    const months = getCategoryData(aggregate)
+    const series = getSeriesData(budgets, aggregate, months)
 
     return (
         <Layout>
@@ -76,9 +111,12 @@ const Trends = () => {
                             <Card>
                                 <CardBody>
                                     <CardTitle className="mb-4">
-                                        {t('History')}
+                                        {t('Spend History (Previous Year)')}
                                     </CardTitle>
-                                    <AreaChart series={series} />
+                                    <AreaChart
+                                        series={series}
+                                        categories={months}
+                                    />
                                 </CardBody>
                             </Card>
                         </Col>

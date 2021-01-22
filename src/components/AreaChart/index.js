@@ -4,7 +4,7 @@ import ReactApexChart from 'react-apexcharts'
 import { useTranslation } from 'react-i18next'
 
 const AreaChart = props => {
-    const { series } = props
+    const { series, categories } = props
     const { t } = useTranslation()
 
     const options = {
@@ -33,20 +33,7 @@ const AreaChart = props => {
             },
         },
         xaxis: {
-            categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec',
-            ],
+            categories,
         },
 
         markers: {
@@ -76,6 +63,7 @@ const AreaChart = props => {
 
 AreaChart.propTypes = {
     series: PropTypes.array,
+    categories: PropTypes.array,
 }
 
 export default AreaChart
