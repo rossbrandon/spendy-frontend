@@ -103,7 +103,10 @@
         }
     },
     "lint-staged": {
-        "*.{js,jsx,md,html,css,less,scss}": [
+        "*.{css,scss,json,md,html}": [
+            "npm run format:fix"
+        ],
+        "*.{js,jsx}": [
             "npm run format:fix",
             "npm run lint:fix"
         ]
