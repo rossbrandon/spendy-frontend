@@ -48,7 +48,6 @@
     "Budget": "Budget",
     "Remaining": "Remaining",
     "Search": "Search",
-    "No expenses found yet!": "No expenses found yet!",
     "Add New Expense": "Add New Expense",
     "View Details": "View Details",
     "Edit": "Edit",
@@ -89,7 +88,6 @@
     "Expense deleted!": "Expense deleted!",
     "Budgets": "Budgets",
     "Expenses": "Expenses",
-    "No budgets found yet!": "No budgets found yet!",
     "How much should be bugeted?": "How much should be bugeted?",
     "Create": "Create",
     "All Expenses": "All Expenses",
@@ -105,5 +103,9 @@
     "Sort Order": "Sort Order",
     "Which position in the list is this budget?": "Which position in the list is this budget?",
     "Enter Budget Sort Order": "Enter Budget Sort Order",
-    "Top Places": "Top Places"
+    "Top Places": "Top Places",
+    "Manage Your Budgets": "Manage Your Budgets",
+    "No budgets found": "No budgets found",
+    "No expenses found": "No expenses found",
+    "Looks like you don't have any budgets yet...": "Looks like you don't have any budgets yet..."
 }

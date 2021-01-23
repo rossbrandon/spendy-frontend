@@ -105,5 +105,9 @@
     "Sort Order": "Orden de clasificación",
     "Which position in the list is this budget?": "¿En qué posición de la lista se encuentra este presupuesto?",
     "Enter Budget Sort Order": "Entrar presupuesto rden de clasificación",
-    "Top Places": "Mejores lugares"
+    "Top Places": "Mejores lugares",
+    "Manage Your Budgets": "Administra tus presupuestos",
+    "No budgets found": "No se encontraron presupuestos",
+    "No expenses found": "No se encontraron gastos",
+    "Looks like you don't have any budgets yet...": "Parece que todavía no tienes ningún presupuesto..."
 }

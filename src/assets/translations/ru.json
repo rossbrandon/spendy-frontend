@@ -105,5 +105,9 @@
     "Sort Order": "Порядок сортировки",
     "Which position in the list is this budget?": "Какую позицию в списке занимает этот бюджет?",
     "Enter Budget Sort Order": "Войти бюджетный порядок сортировки",
-    "Top Places": "Первые места"
+    "Top Places": "Первые места",
+    "Manage Your Budgets": "Управляйте своими бюджетами",
+    "No budgets found": "Бюджеты не найдены",
+    "No expenses found": "Расходов не обнаружено",
+    "Looks like you don't have any budgets yet...": "Похоже, у вас еще нет бюджета..."
 }

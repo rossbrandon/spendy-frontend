@@ -6,7 +6,7 @@ import { useBudgets, useLocale } from 'hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { Card, CardBody, Col, Container, Media, Row } from 'reactstrap'
+import { Button, Card, CardBody, Col, Container, Media, Row } from 'reactstrap'
 
 const Dashboard = () => {
     const { t } = useTranslation()
@@ -151,9 +151,28 @@ const Dashboard = () => {
                         })}
 
                         {!budgets.length > 0 && (
-                            <h2 className="m-auto">
-                                {t('No budgets found yet!')}
-                            </h2>
+                            <Col>
+                                <Row className="mb-4">
+                                    <h2 className="m-auto">
+                                        {t(
+                                            "Looks like you don't have any budgets yet...",
+                                        )}
+                                    </h2>
+                                </Row>
+                                <Row>
+                                    <div className="m-auto text-center">
+                                        <Link to="/budgets">
+                                            <Button
+                                                type="button"
+                                                color="primary"
+                                                className="btn-rounded waves-effect waves-light float-right"
+                                            >
+                                                {t('Manage Your Budgets')}
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </Row>
+                            </Col>
                         )}
                     </Row>
                 </Container>

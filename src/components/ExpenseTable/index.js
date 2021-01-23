@@ -129,7 +129,7 @@ const ExpenseTable = props => {
                         entries={25}
                         entriesOptions={[10, 25, 50, 100]}
                         entriesLabel={false}
-                        noRecordsFoundLabel={t('No expenses found yet!')}
+                        noRecordsFoundLabel={t('No expenses found')}
                         noBottomColumns
                         responsive
                         hover

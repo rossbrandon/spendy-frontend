@@ -48,7 +48,6 @@
     "Budget": "Budget",
     "Remaining": "Verbleibend",
     "Search": "Suche",
-    "No expenses found yet!": "Noch keine Ausgaben gefunden!",
     "Add New Expense": "Neue Kosten hinzufügen",
     "View Details": "Details anzeigen",
     "Edit": "Bearbeiten",
@@ -89,7 +88,6 @@
     "Expense deleted!": "Aufwand gelöscht!",
     "Budgets": "Budgets",
     "Expenses": "Kosten",
-    "No budgets found yet!": "¡Noch keine Budgets gefunden!",
     "How much should be bugeted?": "Wie viel sollte budgetiert werden?",
     "Create": "Erstellen",
     "All Expenses": "Alle Ausgaben",
@@ -105,5 +103,9 @@
     "Sort Order": "Sortierreihenfolge",
     "Which position in the list is this budget?": "Welche Position in der Liste ist dieses Budget?",
     "Enter Budget Sort Order": "Eingeben Budget Sortierreihenfolge",
-    "Top Places": "Spitzenplatz"
+    "Top Places": "Spitzenplatz",
+    "Manage Your Budgets": "Verwalten Sie Ihre Budgets",
+    "No budgets found": "Keine Budgets gefunden",
+    "No expenses found": "Keine Ausgaben gefunden",
+    "Looks like you don't have any budgets yet...": "Sieht so aus, als hätten Sie noch kein Budget..."
 }
