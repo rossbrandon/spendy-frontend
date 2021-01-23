@@ -14,7 +14,6 @@
         "availity-reactstrap-validation": "^2.7.0",
         "bootstrap": "^4.5.3",
         "classnames": "^2.2.6",
-        "husky": "^4.3.0",
         "i18next": "^19.8.4",
         "i18next-browser-languagedetector": "^6.0.1",
         "mdbreact": "^5.0.1",
@@ -38,6 +37,7 @@
         "eslint-plugin-react": "^7.20.6",
         "eslint-plugin-simple-import-sort": "^7.0.0",
         "gh-pages": "^3.1.0",
+        "husky": "^4.3.8",
         "lint-staged": "^10.5.3",
         "prettier": "^2.1.1"
     },

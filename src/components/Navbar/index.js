@@ -7,21 +7,8 @@ import { Collapse } from 'reactstrap'
 const Navbar = props => {
     const { budgets } = useBudgets()
 
-    const shouldShowBudgetInMenu = budget => {
-        const compareStartDate = new Date(budget.startDate)
-        const compareEndDate = new Date(budget.endDate)
-        if (
-            budget.showInMenu === true &&
-            compareStartDate <= new Date() &&
-            (!budget.endDate || compareEndDate >= new Date())
-        ) {
-            return true
-        }
-        return false
-    }
-
     const menuBudgets = budgets
-        .filter(budget => shouldShowBudgetInMenu(budget))
+        .filter(budget => budget.showInMenu === true)
         .slice(0, 10)
     menuBudgets.sort((a, b) => a.sortOrder > b.sortOrder)
 
