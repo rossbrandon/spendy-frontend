@@ -147,21 +147,18 @@ table.dataTable thead:first-child {
 .mdb-datatable-filter input {
     font-size: 0.8125rem;
     height: calc(1.5em + 0.94rem + 2px);
-}
-
-.dataTables_length label {
-    color: transparent;
+    margin-bottom: 1rem !important;
 }
 
 .custom-select-sm {
     font-size: 0.8125rem;
     height: calc(1.5em + 0.94rem + 2px);
     margin-left: 0 !important;
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 0.25rem !important;
 }
 
 .dataTables_info {
-    margin-top: 0.5rem !important;
+    margin-top: 0.1rem !important;
 }
 
 @media (max-width: 992px) {
@@ -170,10 +167,9 @@ table.dataTable thead:first-child {
     }
     .mdb-datatable-filter {
         width: 100%;
-        margin-bottom: 0.85rem !important;
     }
     .dataTables_info {
-        margin-bottom: 1rem !important;
+        margin-bottom: 0 !important;
     }
 }
 
@@ -184,6 +180,9 @@ table.dataTable thead:first-child {
     }
     .mdb-datatable-filter {
         width: 100%;
+    }
+    .mdb-datatable-filter input {
+        margin-bottom: 0 !important;
     }
 }
 

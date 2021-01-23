@@ -56,6 +56,24 @@ const ViewBudgetModal = props => {
                                 })}
                             </span>
                         </p>
+                        <p className="mt-2 mb-2">
+                            {t('Start Date')}:{' '}
+                            <span className="text-primary">
+                                {getFormattedDate(new Date(budget.startDate))}
+                            </span>
+                        </p>
+                        <p className="mt-2 mb-2">
+                            {t('End Date')}:{' '}
+                            <span className="text-primary">
+                                {getFormattedDate(new Date(budget.endDate))}
+                            </span>
+                        </p>
+                        <p className="mb-2">
+                            {t('Sort Order')}:{' '}
+                            <span className="text-primary">
+                                {budget.sortOrder}
+                            </span>
+                        </p>
                         <div className="custom-control custom-switch" dir="ltr">
                             <input
                                 type="checkbox"
@@ -71,12 +89,6 @@ const ViewBudgetModal = props => {
                                 {t('Show in Top Menu?')}
                             </label>
                         </div>
-                        <p className="mt-2 mb-2">
-                            {t('Start Date')}:{' '}
-                            <span className="text-primary">
-                                {getFormattedDate(new Date(budget.startDate))}
-                            </span>
-                        </p>
                     </ModalBody>
                     <ModalFooter>
                         <Button

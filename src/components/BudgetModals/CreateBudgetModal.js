@@ -23,16 +23,18 @@ const getQuery = variables => {
             mutation createBudget(
                 $name: String!
                 $amount: Float!
-                $showInMenu: Boolean!
                 $startDate: DateTime!
                 $endDate: DateTime
+                $showInMenu: Boolean!
+                $sortOrder: Float!
             ) {
                 createBudget(
                     name: $name
                     amount: $amount
-                    showInMenu: $showInMenu
                     startDate: $startDate
                     endDate: $endDate
+                    showInMenu: $showInMenu
+                    sortOrder: $sortOrder
                 ) {
                     _id
                     name
@@ -52,7 +54,7 @@ const getFormattedDate = date => {
 }
 
 const CreateBudgetModal = props => {
-    const { isOpen, toggle } = props
+    const { isOpen, toggle, budgets } = props
     const { t } = useTranslation()
     const [showInMenu, setShowInMenu] = useState(false)
     const { getAccessTokenSilently } = useAuth0()
@@ -76,6 +78,14 @@ const CreateBudgetModal = props => {
         }
     }
 
+    const nextSortOrder =
+        Math.max.apply(
+            Math,
+            budgets.map(b => {
+                return b.sortOrder
+            }),
+        ) + 1
+
     return (
         <Modal
             isOpen={isOpen}
@@ -96,7 +106,8 @@ const CreateBudgetModal = props => {
                             amount: parseFloat(amount.value),
                             showInMenu: showInMenu,
                             startDate: startDate.value,
-                            endDate: null,
+                            endDate: endDate.value ? endDate.value : null,
+                            sortOrder: parseInt(sortOrder.value),
                         })
                         toggle()
                     }}
@@ -152,6 +163,22 @@ const CreateBudgetModal = props => {
                             />
                         </FormGroup>
                         <FormGroup>
+                            <Label for="sortOrder">{t('Sort Order')}</Label>
+                            <AvInput
+                                name="sortOrder"
+                                type="text"
+                                className="form-control"
+                                id="sortOrder"
+                                errorMessage="Enter Budget Sort Order"
+                                placeholder={t(
+                                    'Which position in the list is this budget?',
+                                )}
+                                validate={{ required: { value: true } }}
+                                defaultValue={nextSortOrder}
+                                required
+                            />
+                        </FormGroup>
+                        <FormGroup>
                             <div
                                 className="custom-control custom-switch"
                                 dir="ltr"
@@ -195,6 +222,7 @@ const CreateBudgetModal = props => {
 CreateBudgetModal.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
+    budgets: PropTypes.array,
 }
 
 export default CreateBudgetModal

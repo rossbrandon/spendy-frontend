@@ -101,5 +101,8 @@
     "Previous": "Previous",
     "Next": "Next",
     "Trends": "Trends",
-    "Spend History (Previous Year)": "Spend History (Previous Year)"
+    "Spend History (Previous Year)": "Spend History (Previous Year)",
+    "Sort Order": "Sort Order",
+    "Which position in the list is this budget?": "Which position in the list is this budget?",
+    "Enter Budget Sort Order": "Enter Budget Sort Order"
 }

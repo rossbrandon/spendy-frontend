@@ -1,4 +1,5 @@
 export * from './aggregate'
+export * from './allBudgets'
 export * from './allExpenses'
 export * from './budgets'
 export * from './expenses'

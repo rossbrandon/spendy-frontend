@@ -1,16 +1,14 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { config } from 'config'
-import { useMonthSwitcher } from 'hooks'
 import PropTypes from 'prop-types'
 import React, { createContext, useEffect, useState } from 'react'
-import useLocalStorageState from 'use-local-storage-state'
 import { showToast } from 'utils'
 
-const getQuery = (startDate, endDate) => {
+const getQuery = () => {
     return {
         query: `
-            query($startDate: DateTime!, $endDate: DateTime!) {
-                activeBudgets {
+            query {
+                budgets {
                     _id
                     name
                     amount
@@ -18,28 +16,23 @@ const getQuery = (startDate, endDate) => {
                     endDate
                     showInMenu
                     sortOrder
-                    sum(startDate: $startDate, endDate: $endDate) {
-                        total
-                    }
                 }
             }
         `,
-        variables: { startDate, endDate },
     }
 }
 
-const BudgetsContext = createContext()
+const AllBudgetsContext = createContext()
 
-const BudgetsProvider = ({ children }) => {
+const AllBudgetsProvider = ({ children }) => {
     const { getAccessTokenSilently } = useAuth0()
-    const { startDate, endDate } = useMonthSwitcher()
-    const [budgets, setBudgets] = useLocalStorageState('budgets', [])
-    const [refetchBudgetData, setRefetchBudgetData] = useState(0)
+    const [allBudgets, setAllBudgets] = useState([])
+    const [refetchAllBudgetData, setRefetchAllBudgetData] = useState(0)
 
     useEffect(async () => {
-        const fetchBudgets = async (startDate, endDate) => {
+        const fetchAllBudgets = async () => {
             const token = await getAccessTokenSilently()
-            const query = getQuery(startDate, endDate)
+            const query = getQuery()
             const response = await fetch(config.backend.url, {
                 method: 'POST',
                 headers: {
@@ -53,30 +46,30 @@ const BudgetsProvider = ({ children }) => {
                 showToast('error', result.errors[0].message)
                 return []
             }
-            const budgets = result.data.activeBudgets
+            const { budgets } = result.data
             return budgets
         }
 
-        const data = await fetchBudgets(startDate, endDate)
-        setBudgets(data)
-    }, [startDate, refetchBudgetData])
+        const data = await fetchAllBudgets()
+        setAllBudgets(data)
+    }, [refetchAllBudgetData])
 
     const context = {
-        budgets,
-        setBudgets,
-        refetchBudgetData,
-        setRefetchBudgetData,
+        allBudgets,
+        setAllBudgets,
+        refetchAllBudgetData,
+        setRefetchAllBudgetData,
     }
 
     return (
-        <BudgetsContext.Provider value={context}>
+        <AllBudgetsContext.Provider value={context}>
             {children}
-        </BudgetsContext.Provider>
+        </AllBudgetsContext.Provider>
     )
 }
 
-BudgetsProvider.propTypes = {
+AllBudgetsProvider.propTypes = {
     children: PropTypes.node,
 }
 
-export { BudgetsContext, BudgetsProvider }
+export { AllBudgetsContext, AllBudgetsProvider }

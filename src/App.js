@@ -2,6 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import PrivateRoute from 'components/PrivateRoute'
 import {
     AggregateProvider,
+    AllBudgetsProvider,
     AllExpensesProvider,
     BudgetsProvider,
     ExpensesProvider,
@@ -56,11 +57,6 @@ const App = () => {
                                         component={Dashboard}
                                         exact
                                     />
-                                    <PrivateRoute
-                                        path="/budgets"
-                                        component={Budgets}
-                                        exact
-                                    />
                                 </Route>
                                 <Route path={['/expenses']}>
                                     <ExpensesProvider>
@@ -71,6 +67,13 @@ const App = () => {
                                         />
                                     </ExpensesProvider>
                                 </Route>
+                                <AllBudgetsProvider>
+                                    <PrivateRoute
+                                        path="/budgets"
+                                        component={Budgets}
+                                        exact
+                                    />
+                                </AllBudgetsProvider>
                                 <Route path={['/search']} exact>
                                     <AllExpensesProvider>
                                         <PrivateRoute

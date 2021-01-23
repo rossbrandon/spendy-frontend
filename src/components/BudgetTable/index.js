@@ -1,5 +1,5 @@
 import BudgetModals from 'components/BudgetModals'
-import { useBudgets, useLocale } from 'hooks'
+import { useAllBudgets, useLocale } from 'hooks'
 import { MDBDataTable } from 'mdbreact'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
@@ -10,7 +10,7 @@ import { getYearMonthDayString } from 'utils'
 const BudgetTable = props => {
     const { t } = useTranslation()
     const { budgets } = props
-    const { refetchBudgetData, setRefetchBudgetData } = useBudgets()
+    const { refetchAllBudgetData, setRefetchAllBudgetData } = useAllBudgets()
     const { locale, currency } = useLocale()
 
     const [modalInfo, setModalInfo] = useState()
@@ -20,13 +20,13 @@ const BudgetTable = props => {
 
     const toggleCreateModal = () => {
         setCreateModal(!createModal)
-        setRefetchBudgetData(refetchBudgetData + 1)
+        setRefetchAllBudgetData(refetchAllBudgetData + 1)
     }
 
     const toggleEditModal = () => {
         setEditModal(!editModal)
         setShowConfirmation(false)
-        setRefetchBudgetData(refetchBudgetData + 1)
+        setRefetchAllBudgetData(refetchAllBudgetData + 1)
     }
 
     const rows = []
@@ -46,6 +46,7 @@ const BudgetTable = props => {
             ? getYearMonthDayString(new Date(budget.endDate))
             : null
         row.showInMenu = budget.showInMenu ? 'true' : 'false'
+        row.sortOrder = budget.sortOrder
         row.action = (
             <>
                 <Button
@@ -60,7 +61,7 @@ const BudgetTable = props => {
         )
         rows.push(row)
     })
-    rows.sort((a, b) => a.startDate > b.startDate)
+    rows.sort((a, b) => a.sortOrder > b.sortOrder)
 
     const data = {
         columns: [
@@ -83,6 +84,10 @@ const BudgetTable = props => {
             {
                 field: 'showInMenu',
                 label: t('Show in Top Menu?'),
+            },
+            {
+                field: 'sortOrder',
+                label: t('Sort Order'),
             },
             {
                 field: 'action',
@@ -133,6 +138,9 @@ const BudgetTable = props => {
                                 t('of'),
                                 t('entries'),
                             ]}
+                            entries={25}
+                            entriesOptions={[10, 25, 50, 100]}
+                            entriesLabel={false}
                             noRecordsFoundLabel={t('No budgets found yet!')}
                             responsive
                             noBottomColumns

@@ -13,6 +13,8 @@ const Dashboard = () => {
     const { budgets } = useBudgets()
     const { currency, localeString } = useLocale()
 
+    budgets.sort((a, b) => a.sortOrder > b.sortOrder)
+
     const totalBudget =
         budgets.length > 0
             ? budgets.reduce((tb, { amount }) => tb + amount, 0)

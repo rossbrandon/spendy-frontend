@@ -14,7 +14,10 @@ const getQuery = variables => {
                     _id
                     name
                     amount
+                    startDate
+                    endDate
                     showInMenu
+                    sortOrder
                 }
             }
         `,

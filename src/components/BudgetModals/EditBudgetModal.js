@@ -24,17 +24,19 @@ const getSaveQuery = variables => {
                 $id: String!
                 $name: String!
                 $amount: Float!
-                $showInMenu: Boolean!
                 $startDate: DateTime!
                 $endDate: DateTime
+                $showInMenu: Boolean!
+                $sortOrder: Float!
             ) {
                 updateBudget(
                     id: $id
                     name: $name
                     amount: $amount
-                    showInMenu: $showInMenu
                     startDate: $startDate
                     endDate: $endDate
+                    showInMenu: $showInMenu
+                    sortOrder: $sortOrder
                 ) {
                     _id
                     name
@@ -145,7 +147,8 @@ const EditBudgetModal = props => {
                                 amount: parseFloat(amount.value),
                                 showInMenu: showInMenu,
                                 startDate: startDate.value,
-                                endDate: null,
+                                endDate: endDate.value ? endDate.value : null,
+                                sortOrder: parseInt(sortOrder.value),
                             })
                             toggle()
                         }}
@@ -190,7 +193,7 @@ const EditBudgetModal = props => {
                                     type="date"
                                     className="form-control"
                                     id="startDate"
-                                    value={getFormattedDate(
+                                    defaultValue={getFormattedDate(
                                         new Date(budget.startDate),
                                     )}
                                     required
@@ -202,13 +205,29 @@ const EditBudgetModal = props => {
                                     type="date"
                                     className="form-control"
                                     id="endDate"
-                                    value={
+                                    defaultValue={
                                         budget.endDate
                                             ? getFormattedDate(
-                                                  new Date(budget.date),
+                                                  new Date(budget.endDate),
                                               )
                                             : null
                                     }
+                                    required
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="sortOrder">{t('Sort Order')}</Label>
+                                <AvInput
+                                    name="sortOrder"
+                                    type="text"
+                                    className="form-control"
+                                    id="sortOrder"
+                                    errorMessage="Enter Budget Sort Order"
+                                    placeholder={t(
+                                        'Which position in the list is this budget?',
+                                    )}
+                                    validate={{ required: { value: true } }}
+                                    value={budget.sortOrder}
                                     required
                                 />
                             </FormGroup>
