@@ -106,8 +106,6 @@ const Trends = () => {
     const places = aggregatePlaces.map(p => p.place)
     const counts = [{}]
     counts[0].data = aggregatePlaces.map(c => c.count)
-    console.log(places)
-    console.log(counts)
 
     return (
         <Layout>
