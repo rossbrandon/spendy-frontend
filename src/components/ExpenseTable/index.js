@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, Col, Row } from 'reactstrap'
-import { getDateOrdinal } from 'utils'
+import { getYearMonthDayString } from 'utils'
 
 const ExpenseTable = props => {
     const { t } = useTranslation()
@@ -36,7 +36,7 @@ const ExpenseTable = props => {
             setModalInfo(expense)
             toggleEditModal()
         }
-        row.date = getDateOrdinal(new Date(expense.date))
+        row.date = getYearMonthDayString(new Date(expense.date))
         row.place = expense.place
         row.price = expense.price.toLocaleString(locale, {
             style: 'currency',
