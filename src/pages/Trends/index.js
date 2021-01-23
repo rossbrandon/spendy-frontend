@@ -1,4 +1,5 @@
 import AreaChart from 'components/AreaChart'
+import BarChart from 'components/BarChart'
 import Layout from 'components/Layout'
 import { useAggregate, useBudgets } from 'hooks'
 import React, { useEffect } from 'react'
@@ -35,27 +36,27 @@ const getCategoryData = () => {
 /**
  * Build series data array for Apex charts in super complicated way
  *
- * 1. Loop through budets and aggregates
- *   a. Match budget name to aggregate budget id
+ * 1. Loop through budgets and aggregateSums
+ *   a. Match budget name to aggregateSum budget id
  *   b. Push series object to series array with budget name and empty data array
  * 2. Loop through months array
- *   a. Get aggregate that matches budget id and month (matchedExact)
- *   b. Get aggregate that matches on budget it but not month (matchedPartial)
+ *   a. Get aggregateSum that matches budget id and month (matchedExact)
+ *   b. Get aggregateSum that matches on budget it but not month (matchedPartial)
  *   c. Get series that matches budget name (s)
- *   d. If matchedExact exists: push aggregate total to series.data array for that month
+ *   d. If matchedExact exists: push aggregateSum total to series.data array for that month
  *   e. If matchedPartial exists: push 0 to series.data array for that month
  *   f. Else do nothing
  *
  * @param budgets   budget data from budgets context
- * @param aggregate budget aggregate data from aggregate context
+ * @param aggregateSum budget aggregateSum data from aggregateSum context
  * @param months    yyyy-mm category data
  * @returns array of series objects for chart data
  */
-const getSeriesData = (budgets, aggregate, months) => {
+const getSeriesData = (budgets, aggregateSum, months) => {
     const series = []
     budgets.map(b => {
         const seriesObject = {}
-        aggregate.map(a => {
+        aggregateSum.map(a => {
             if (a.budget === b._id) {
                 seriesObject.name = b.name
                 seriesObject.data = []
@@ -65,10 +66,10 @@ const getSeriesData = (budgets, aggregate, months) => {
             }
         })
         months.map(m => {
-            const matchedExact = aggregate.find(
+            const matchedExact = aggregateSum.find(
                 a => a.budget === b._id && a.month === m,
             )
-            const matchedPartial = aggregate.find(
+            const matchedPartial = aggregateSum.find(
                 a => a.budget === b._id && a.month != m,
             )
 
@@ -87,7 +88,8 @@ const Trends = () => {
     const { t } = useTranslation()
     const { budgets } = useBudgets()
     const {
-        aggregate,
+        aggregateSum,
+        aggregatePlaces,
         setAggregateStartDate,
         setAggregateEndDate,
     } = useAggregate()
@@ -97,8 +99,15 @@ const Trends = () => {
         setAggregateEndDate(getLastDayOfCurrentMonth())
     }, [])
 
-    const months = getCategoryData(aggregate)
-    const series = getSeriesData(budgets, aggregate, months)
+    const months = getCategoryData(aggregateSum)
+    const series = getSeriesData(budgets, aggregateSum, months)
+
+    aggregatePlaces.sort((a, b) => a.count > b.count)
+    const places = aggregatePlaces.map(p => p.place)
+    const counts = [{}]
+    counts[0].data = aggregatePlaces.map(c => c.count)
+    console.log(places)
+    console.log(counts)
 
     return (
         <Layout>
@@ -115,6 +124,21 @@ const Trends = () => {
                                     <AreaChart
                                         series={series}
                                         categories={months}
+                                    />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xl="12">
+                            <Card>
+                                <CardBody>
+                                    <CardTitle className="mb-4">
+                                        {t('Top Places')}
+                                    </CardTitle>
+                                    <BarChart
+                                        series={counts}
+                                        categories={places}
                                     />
                                 </CardBody>
                             </Card>

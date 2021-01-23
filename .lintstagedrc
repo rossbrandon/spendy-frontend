@@ -1,9 +1,0 @@
-{
-  "*.{css,scss,json,md}": [
-    "npm run format:fix",
-  ],
-  "*.{js}": [
-    "npm run format:fix",
-    "npm run lint:fix",
-  ]
-}

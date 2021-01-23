@@ -5,11 +5,11 @@ import React, { createContext, useEffect, useState } from 'react'
 import { getLastDayOfCurrentMonth, getPreviousYearFirstDayOfMonth } from 'utils'
 import { showToast } from 'utils'
 
-const getQuery = (startDate, endDate) => {
+const getSumQuery = (startDate, endDate) => {
     return {
         query: `
             query($startDate: DateTime!, $endDate: DateTime!) {
-                aggregate(startDate: $startDate, endDate: $endDate) {
+                aggregateSum(startDate: $startDate, endDate: $endDate) {
                     budget
                     month
                     total
@@ -17,6 +17,19 @@ const getQuery = (startDate, endDate) => {
             }
         `,
         variables: { startDate, endDate },
+    }
+}
+
+const getPlacesQuery = () => {
+    return {
+        query: `
+            query {
+                aggregatePlaces {
+                    place
+                    count
+                }
+            }
+        `,
     }
 }
 
@@ -30,13 +43,14 @@ const AggregateProvider = ({ children }) => {
     const [aggregateEndDate, setAggregateEndDate] = useState(
         getLastDayOfCurrentMonth(),
     )
-    const [aggregate, setAggregate] = useState([])
+    const [aggregateSum, setAggregateSum] = useState([])
+    const [aggregatePlaces, setAggregatePlaces] = useState([])
     const [refetchAggregateData, setRefetchAggregateData] = useState(0)
 
     useEffect(async () => {
-        const fetchExpenses = async (startDate, endDate) => {
+        const fetchAggregateSum = async (startDate, endDate) => {
             const token = await getAccessTokenSilently()
-            const query = getQuery(startDate, endDate)
+            const query = getSumQuery(startDate, endDate)
             const response = await fetch(config.backend.url, {
                 method: 'POST',
                 headers: {
@@ -50,17 +64,50 @@ const AggregateProvider = ({ children }) => {
                 showToast('error', result.errors[0].message)
                 return []
             }
-            const { aggregate } = result.data
-            return aggregate
+            const { aggregateSum } = result.data
+            return aggregateSum
         }
 
-        const data = await fetchExpenses(aggregateStartDate, aggregateEndDate)
-        setAggregate(data)
+        const data = await fetchAggregateSum(
+            aggregateStartDate,
+            aggregateEndDate,
+        )
+        setAggregateSum(data)
+    }, [aggregateStartDate, refetchAggregateData])
+
+    useEffect(async () => {
+        const fetchAggregatePlaces = async () => {
+            const token = await getAccessTokenSilently()
+            const query = getPlacesQuery()
+            const response = await fetch(config.backend.url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(query),
+            })
+            const result = await response.json()
+            if (result.errors) {
+                showToast('error', result.errors[0].message)
+                return []
+            }
+            const { aggregatePlaces } = result.data
+            return aggregatePlaces
+        }
+
+        const data = await fetchAggregatePlaces(
+            aggregateStartDate,
+            aggregateEndDate,
+        )
+        setAggregatePlaces(data)
     }, [aggregateStartDate, refetchAggregateData])
 
     const context = {
-        aggregate,
-        setAggregate,
+        aggregateSum,
+        setAggregateSum,
+        aggregatePlaces,
+        setAggregatePlaces,
         aggregateStartDate,
         setAggregateStartDate,
         aggregateEndDate,
