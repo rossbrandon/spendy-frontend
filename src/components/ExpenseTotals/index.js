@@ -10,7 +10,7 @@ const ExpenseTotals = props => {
     const { currency, localeString } = useLocale()
 
     const totalBudget = budget.amount
-    const totalSpent = budget.sum.length ? budget.sum[0].total : 0
+    const totalSpent = expenses.reduce((sum, { price }) => sum + price, 0)
     const totalRemaining = totalBudget - totalSpent
     const remainingClass = totalRemaining >= 0 ? 'text-success' : 'text-danger'
 
