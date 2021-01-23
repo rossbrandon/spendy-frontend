@@ -2,6 +2,7 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { AvForm, AvInput } from 'availity-reactstrap-validation'
 import { config } from 'config'
+import { useMonthSwitcher } from 'hooks'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,7 +16,7 @@ import {
     ModalFooter,
     ModalHeader,
 } from 'reactstrap'
-import { showToast } from 'utils'
+import { getFirstDayOfCurrentMonth, getFirstDayOfMonth, showToast } from 'utils'
 
 const getQuery = variables => {
     return {
@@ -55,16 +56,25 @@ const getQuery = variables => {
     }
 }
 
-const getFormattedDate = date => {
-    return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10)
-}
-
 const CreateExpenseModal = props => {
-    const { t } = useTranslation()
     const { isOpen, toggle, budgets, currentBudget } = props
     const { getAccessTokenSilently } = useAuth0()
+    const { t } = useTranslation()
+    const { startDate } = useMonthSwitcher()
+
+    const getFormattedDate = date => {
+        if (startDate == getFirstDayOfCurrentMonth()) {
+            const today = new Date()
+            return new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+                .toISOString()
+                .substr(0, 10)
+        } else {
+            const utcDate = new Date(
+                date.getTime() + date.getTimezoneOffset() * 60000,
+            )
+            return getFirstDayOfMonth(utcDate).substr(0, 10)
+        }
+    }
 
     const createExpense = async variables => {
         const token = await getAccessTokenSilently()
@@ -128,7 +138,9 @@ const CreateExpenseModal = props => {
                                 type="date"
                                 className="form-control"
                                 id="date"
-                                defaultValue={getFormattedDate(new Date())}
+                                defaultValue={getFormattedDate(
+                                    new Date(startDate),
+                                )}
                                 required
                             />
                         </FormGroup>

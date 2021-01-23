@@ -13,7 +13,7 @@
     "plugins": ["jest", "simple-import-sort"],
     "rules": {
         "simple-import-sort/imports": [
-            "error",
+            "warn",
             {
                 "groups": [
                     // Packages.
@@ -30,8 +30,8 @@
                 ]
             }
         ],
-        "simple-import-sort/exports": ["error"],
-        "no-console": ["error"],
-        "no-unused-vars": ["error", { "varsIgnorePattern": "_" }]
+        "simple-import-sort/exports": ["warn"],
+        "no-console": ["warn"],
+        "no-unused-vars": ["warn", { "varsIgnorePattern": "_" }]
     }
 }

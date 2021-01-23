@@ -5,6 +5,7 @@ const getFirstDayOfCurrentMonth = () => {
         currentDate.getMonth(),
         1,
     )
+    firstDayOfCurrentMonth.setUTCHours(0, 0, 0, 0)
     return firstDayOfCurrentMonth.toISOString()
 }
 
@@ -15,6 +16,7 @@ const getLastDayOfCurrentMonth = () => {
         currentDate.getMonth() + 1,
         0,
     )
+    lastDayOfCurrentMonth.setUTCHours(0, 0, 0, 0)
     return lastDayOfCurrentMonth.toISOString()
 }
 
