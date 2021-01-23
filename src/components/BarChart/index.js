@@ -1,9 +1,15 @@
-import PropTypes from 'prop-types'
+import { useAggregate } from 'hooks'
 import React from 'react'
 import ReactApexChart from 'react-apexcharts'
 
-const BarChart = props => {
-    const { series, categories } = props
+const BarChart = () => {
+    const { aggregatePlaces } = useAggregate()
+
+    aggregatePlaces.sort((a, b) => a.count > b.count)
+    const categories = aggregatePlaces.map(p => p.place)
+    const series = [{}]
+    series[0].data = aggregatePlaces.map(c => c.count)
+
     const options = {
         chart: {
             toolbar: {
@@ -36,11 +42,6 @@ const BarChart = props => {
             height="350"
         />
     )
-}
-
-BarChart.propTypes = {
-    series: PropTypes.array,
-    categories: PropTypes.array,
 }
 
 export default BarChart

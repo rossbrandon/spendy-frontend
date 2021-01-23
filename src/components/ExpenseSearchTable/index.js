@@ -84,9 +84,12 @@ const ExpenseSearchTable = props => {
             searchLabel={t('Search')}
             paginationLabel={[t('Previous'), t('Next')]}
             infoLabel={[t('Showing'), t('to'), t('of'), t('entries')]}
+            entries={25}
+            entriesOptions={[10, 25, 50, 100]}
+            entriesLabel={false}
             noRecordsFoundLabel={t('No expenses found yet!')}
-            responsive
             noBottomColumns
+            responsive
             hover
         />
     )

@@ -142,8 +142,8 @@ const BudgetTable = props => {
                             entriesOptions={[10, 25, 50, 100]}
                             entriesLabel={false}
                             noRecordsFoundLabel={t('No budgets found yet!')}
-                            responsive
                             noBottomColumns
+                            responsive
                             hover
                         />
                     </div>
