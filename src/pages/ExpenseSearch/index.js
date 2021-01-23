@@ -1,7 +1,6 @@
 import ExpenseSearchTable from 'components/ExpenseSearchTable'
 import ExpenseSearchTotals from 'components/ExpenseSearchTotals'
 import Layout from 'components/Layout'
-import { AllExpensesProvider } from 'context'
 import { useAllExpenses } from 'hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,27 +12,25 @@ const ExpenseSearch = () => {
 
     return (
         <Layout>
-            <AllExpensesProvider>
-                <div className="page-content">
-                    <Container fluid>
-                        <h4>{t('All Expenses')}</h4>
-                        <Row>
-                            <ExpenseSearchTotals allExpenses={allExpenses} />
-                        </Row>
-                        <Row>
-                            <Col xl="12">
-                                <Card>
-                                    <CardBody>
-                                        <ExpenseSearchTable
-                                            allExpenses={allExpenses}
-                                        />
-                                    </CardBody>
-                                </Card>
-                            </Col>
-                        </Row>
-                    </Container>
-                </div>
-            </AllExpensesProvider>
+            <div className="page-content">
+                <Container fluid>
+                    <h4>{t('All Expenses')}</h4>
+                    <Row>
+                        <ExpenseSearchTotals allExpenses={allExpenses} />
+                    </Row>
+                    <Row>
+                        <Col xl="12">
+                            <Card>
+                                <CardBody>
+                                    <ExpenseSearchTable
+                                        allExpenses={allExpenses}
+                                    />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         </Layout>
     )
 }
