@@ -1,5 +1,10 @@
-import React from 'react'
+/* eslint-disable no-undef */
+import { useAuth0 } from '@auth0/auth0-react'
+import { AvForm, AvInput } from 'availity-reactstrap-validation'
+import { config } from 'config'
 import PropTypes from 'prop-types'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 import {
     Button,
     FormGroup,
@@ -10,11 +15,7 @@ import {
     ModalFooter,
     ModalHeader,
 } from 'reactstrap'
-import { AvForm, AvInput } from 'availity-reactstrap-validation'
-import { useAuth0 } from '@auth0/auth0-react'
-import { config } from '../../config'
 import { showToast } from 'utils'
-import { useTranslation } from 'react-i18next'
 
 const getQuery = variables => {
     return {
@@ -72,7 +73,7 @@ const CreateExpenseModal = props => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(query),
         })
@@ -202,6 +203,8 @@ const CreateExpenseModal = props => {
 CreateExpenseModal.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
+    budgets: PropTypes.array,
+    currentBudget: PropTypes.object,
 }
 
 export default CreateExpenseModal

@@ -1,9 +1,9 @@
-import React, { createContext, useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { useAuth0 } from '@auth0/auth0-react'
-import { config } from '../config'
-import { showToast } from '../utils'
-import { getPreviousYearFirstDayOfMonth, getLastDayOfCurrentMonth } from 'utils'
+import { config } from 'config'
+import PropTypes from 'prop-types'
+import React, { createContext, useEffect, useState } from 'react'
+import { getLastDayOfCurrentMonth, getPreviousYearFirstDayOfMonth } from 'utils'
+import { showToast } from 'utils'
 
 const getQuery = (startDate, endDate) => {
     return {
@@ -41,7 +41,7 @@ const AggregateProvider = ({ children }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(query),
             })

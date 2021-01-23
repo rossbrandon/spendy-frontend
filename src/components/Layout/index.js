@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import Navbar from '../Navbar'
-import Header from '../Header'
-import Footer from '../Footer'
-import { useLoading } from 'hooks'
-import 'toastr/build/toastr.min.css'
 import LoadingMask from 'components/LoadingMask'
+import { useLoading } from 'hooks'
+import PropTypes from 'prop-types'
+import React, { useState } from 'react'
+
+import 'toastr/build/toastr.min.css'
+
+import Footer from '../Footer'
+import Header from '../Header'
+import Navbar from '../Navbar'
 
 const Layout = props => {
     const { isLoading } = useLoading()

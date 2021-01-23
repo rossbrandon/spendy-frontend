@@ -69,7 +69,7 @@
     "Edit Budget": "Edit Budget",
     "Delete Budget": "Delete Budget",
     "Expense Budget": "Budget Details",
-    "What is the budget for?": "How much should be budgetted?",
+    "What is the budget for?": "What is the budget for?",
     "Show in Top Menu?": "Show in Top Menu?",
     "Recur Until": "Recur Until",
     "Recurring": "Recurring",
@@ -93,5 +93,13 @@
     "How much should be bugeted?": "How much should be bugeted?",
     "Create": "Create",
     "All Expenses": "All Expenses",
-    "Search Expenses": "Search Expenses"
+    "Search Expenses": "Search Expenses",
+    "Showing": "Showing",
+    "to": "to",
+    "of": "of",
+    "entries": "entries",
+    "Previous": "Previous",
+    "Next": "Next",
+    "Trends": "Trends",
+    "Spend History (Previous Year)": "Spend History (Previous Year)"
 }

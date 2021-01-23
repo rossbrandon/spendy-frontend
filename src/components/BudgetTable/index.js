@@ -1,28 +1,22 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { Button, Row, Col } from 'reactstrap'
-import BootstrapTable from 'react-bootstrap-table-next'
-import paginationFactory, {
-    PaginationListStandalone,
-    PaginationProvider,
-} from 'react-bootstrap-table2-paginator'
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
-import BudgetColumns from 'components/BudgetTable/BudgetColumns'
 import BudgetModals from 'components/BudgetModals'
-import { useBudgets } from 'hooks'
+import { useBudgets, useLocale } from 'hooks'
+import { MDBDataTable } from 'mdbreact'
+import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Button, Col, Row } from 'reactstrap'
+import { getYearMonthDayString } from 'utils'
 
 const BudgetTable = props => {
     const { t } = useTranslation()
     const { budgets } = props
     const { refetchBudgetData, setRefetchBudgetData } = useBudgets()
+    const { locale, currency } = useLocale()
 
     const [modalInfo, setModalInfo] = useState()
     const [createModal, setCreateModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
     const [showConfirmation, setShowConfirmation] = useState(false)
-
-    const { SearchBar } = Search
 
     const toggleCreateModal = () => {
         setCreateModal(!createModal)
@@ -35,17 +29,68 @@ const BudgetTable = props => {
         setRefetchBudgetData(refetchBudgetData + 1)
     }
 
-    const pageOptions = {
-        sizePerPage: 10,
-        totalSize: budgets.length,
-        custom: true,
-    }
-
-    const rowEvents = {
-        onClick: (e, row) => {
-            setModalInfo(row)
+    const rows = []
+    budgets.map(budget => {
+        const row = {}
+        row.clickEvent = () => {
+            setModalInfo(budget)
             toggleEditModal()
-        },
+        }
+        row.name = budget.name
+        row.amount = budget.amount.toLocaleString(locale, {
+            style: 'currency',
+            currency,
+        })
+        row.startDate = getYearMonthDayString(new Date(budget.startDate))
+        row.endDate = budget.endDate
+            ? getYearMonthDayString(new Date(budget.endDate))
+            : null
+        row.showInMenu = budget.showInMenu ? 'true' : 'false'
+        row.action = (
+            <>
+                <Button
+                    type="button"
+                    color="primary"
+                    className="btn-sm btn-rounded"
+                    onClick={toggleEditModal}
+                >
+                    {t('Edit Budget')}
+                </Button>
+            </>
+        )
+        rows.push(row)
+    })
+    rows.sort((a, b) => a.startDate > b.startDate)
+
+    const data = {
+        columns: [
+            {
+                field: 'name',
+                label: t('Name'),
+            },
+            {
+                field: 'amount',
+                label: t('Amount'),
+            },
+            {
+                field: 'startDate',
+                label: t('Start Date'),
+            },
+            {
+                field: 'endDate',
+                label: t('End Date'),
+            },
+            {
+                field: 'showInMenu',
+                label: t('Show in Top Menu?'),
+            },
+            {
+                field: 'action',
+                label: t('Action'),
+                sort: 'disabled',
+            },
+        ],
+        rows,
     }
 
     return (
@@ -60,78 +105,42 @@ const BudgetTable = props => {
                 showConfirmation={showConfirmation}
                 setShowConfirmation={setShowConfirmation}
             />
-            <PaginationProvider pagination={paginationFactory(pageOptions)}>
-                {({ paginationProps, paginationTableProps }) => (
-                    <ToolkitProvider
-                        keyField="_id"
-                        data={budgets || []}
-                        columns={BudgetColumns(toggleEditModal)}
-                        bootstrap4
-                        search={{ placeholder: `${t('Search')}` }}
-                    >
-                        {toolkitProps => (
-                            <React.Fragment>
-                                <Row className="mb-2">
-                                    <Col sm="4">
-                                        <div className="search-box mr-2 mb-2 d-inline-block">
-                                            <div className="position-relative">
-                                                <SearchBar
-                                                    {...toolkitProps.searchProps}
-                                                />
-                                            </div>
-                                        </div>
-                                    </Col>
-                                    <Col sm="8">
-                                        <div className="text-sm-right">
-                                            <Button
-                                                type="button"
-                                                color="success"
-                                                className="btn-rounded waves-effect waves-light mb-2 mr-2"
-                                                onClick={toggleCreateModal}
-                                            >
-                                                <i className="mdi mdi-plus mr-1" />
-                                                {t('Add New Budget')}
-                                            </Button>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xl="12">
-                                        <div className="table-responsive">
-                                            <BootstrapTable
-                                                responsive
-                                                bordered={false}
-                                                striped={false}
-                                                hover
-                                                classes={
-                                                    'table table-centered table-nowrap'
-                                                }
-                                                headerWrapperClasses={
-                                                    'thead-light'
-                                                }
-                                                {...toolkitProps.baseProps}
-                                                {...paginationTableProps}
-                                                rowEvents={rowEvents}
-                                                sort={{
-                                                    dataField: 'date',
-                                                    order: 'asc',
-                                                }}
-                                            />
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row className="align-items-md-center mt-30">
-                                    <Col className="pagination pagination-rounded justify-content-end mb-2 inner-custom-pagination">
-                                        <PaginationListStandalone
-                                            {...paginationProps}
-                                        />
-                                    </Col>
-                                </Row>
-                            </React.Fragment>
-                        )}
-                    </ToolkitProvider>
-                )}
-            </PaginationProvider>
+            <Row className="mb-2">
+                <Col xl="12">
+                    <div className="text-sm-right float-right">
+                        <Button
+                            type="button"
+                            color="success"
+                            className="btn-rounded waves-effect waves-light float-right"
+                            onClick={toggleCreateModal}
+                        >
+                            <i className="mdi mdi-plus mr-1" />
+                            {t('Add New Budget')}
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col xl="12">
+                    <div className="table-responsive">
+                        <MDBDataTable
+                            data={data}
+                            searchLabel={t('Search')}
+                            paginationLabel={[t('Previous'), t('Next')]}
+                            infoLabel={[
+                                t('Showing'),
+                                t('to'),
+                                t('of'),
+                                t('entries'),
+                            ]}
+                            noRecordsFoundLabel={t('No budgets found yet!')}
+                            responsive
+                            noBottomColumns
+                            hover
+                        />
+                    </div>
+                </Col>
+            </Row>
         </React.Fragment>
     )
 }

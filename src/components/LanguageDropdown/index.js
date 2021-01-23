@@ -1,13 +1,13 @@
+import languages from 'common/languages'
+import { useLocale } from 'hooks'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
     Dropdown,
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
 } from 'reactstrap'
-import { useTranslation } from 'react-i18next'
-import languages from 'common/languages'
-import { useLocale } from 'hooks'
 
 const LanguageDropdown = () => {
     const { t, i18n } = useTranslation()

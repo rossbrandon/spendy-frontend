@@ -13,8 +13,8 @@ const showToast = (type, message) => {
         case 'success':
             toastr.success(message)
             break
-        case 'success':
-            toastr.success(message)
+        case 'warning':
+            toastr.warning(message)
             break
         case 'error':
             toastr.error(message)

@@ -1,5 +1,5 @@
-import { useContext } from 'react'
 import { LoadingContext } from 'context'
+import { useContext } from 'react'
 
 const useLoading = () => {
     const localContext = useContext(LoadingContext)

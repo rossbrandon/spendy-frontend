@@ -1,11 +1,9 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 import ReactApexChart from 'react-apexcharts'
-import { useTranslation } from 'react-i18next'
 
 const LineChart = props => {
     const { series, categories } = props
-    const { t } = useTranslation()
 
     const options = {
         chart: { zoom: { enabled: !1 }, toolbar: { show: !1 } },

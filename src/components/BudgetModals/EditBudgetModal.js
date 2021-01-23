@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable no-undef */
+import { useAuth0 } from '@auth0/auth0-react'
+import { AvForm, AvInput } from 'availity-reactstrap-validation'
+import { config } from 'config'
 import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
     Button,
     FormGroup,
@@ -10,11 +15,7 @@ import {
     ModalFooter,
     ModalHeader,
 } from 'reactstrap'
-import { AvForm, AvInput } from 'availity-reactstrap-validation'
-import { useAuth0 } from '@auth0/auth0-react'
-import { config } from '../../config'
 import { showToast } from 'utils'
-import { useTranslation } from 'react-i18next'
 
 const getSaveQuery = variables => {
     return {
@@ -91,7 +92,7 @@ const EditBudgetModal = props => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(query),
         })
@@ -110,7 +111,7 @@ const EditBudgetModal = props => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(query),
         })
@@ -196,6 +197,22 @@ const EditBudgetModal = props => {
                                 />
                             </FormGroup>
                             <FormGroup>
+                                <Label for="endDate">{t('End Date')}</Label>
+                                <Input
+                                    type="date"
+                                    className="form-control"
+                                    id="endDate"
+                                    value={
+                                        budget.endDate
+                                            ? getFormattedDate(
+                                                  new Date(budget.date),
+                                              )
+                                            : null
+                                    }
+                                    required
+                                />
+                            </FormGroup>
+                            <FormGroup>
                                 <div
                                     className="custom-control custom-switch"
                                     dir="ltr"
@@ -206,7 +223,7 @@ const EditBudgetModal = props => {
                                         id="showInMenu"
                                         name="showInMenu"
                                         checked={showInMenu}
-                                        onChange={e => {
+                                        onChange={() => {
                                             setShowInMenu(!showInMenu)
                                         }}
                                     />

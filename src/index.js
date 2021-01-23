@@ -1,10 +1,12 @@
+import { Auth0Provider } from '@auth0/auth0-react'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Auth0Provider } from '@auth0/auth0-react'
-import App from './App'
-import * as serviceWorker from './serviceWorker'
-import { config } from './config'
+
 import './i18n'
+
+import App from './App'
+import { config } from './config'
+import * as serviceWorker from './serviceWorker'
 
 const app = (
     <Auth0Provider

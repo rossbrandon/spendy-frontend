@@ -1,7 +1,7 @@
-import React, { createContext, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import useLocalStorageState from 'use-local-storage-state'
 import languages from 'common/languages'
+import PropTypes from 'prop-types'
+import React, { createContext, useEffect } from 'react'
+import useLocalStorageState from 'use-local-storage-state'
 
 const LocaleContext = createContext()
 

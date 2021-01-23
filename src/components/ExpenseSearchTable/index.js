@@ -1,95 +1,92 @@
-import React from 'react'
+import { MDBDataTable } from 'mdbreact'
 import { PropTypes } from 'prop-types'
-import { Row, Col } from 'reactstrap'
-import BootstrapTable from 'react-bootstrap-table-next'
-import paginationFactory, {
-    PaginationListStandalone,
-    PaginationProvider,
-} from 'react-bootstrap-table2-paginator'
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
-import ExpenseSearchColumns from './ExpenseSearchColumns'
-import { useBudgets } from 'hooks'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { Badge } from 'reactstrap'
+import {
+    getFirstDayOfMonth,
+    getLastDayOfMonth,
+    getYearMonthDayString,
+} from 'utils'
 
 const ExpenseSearchTable = props => {
     const { allExpenses } = props
     const { t } = useTranslation()
-    const { budgets } = useBudgets()
 
-    const { SearchBar } = Search
+    const rows = []
+    allExpenses.map(expense => {
+        const row = {}
+        row.date = getYearMonthDayString(new Date(expense.date))
+        row.place = expense.place
+        row.price = expense.price.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        })
+        row.reason = expense.reason
+        row.action = (
+            <>
+                <Link
+                    to={{
+                        pathname: `/expenses/${
+                            expense.budget._id
+                        }/${getFirstDayOfMonth(
+                            new Date(expense.date),
+                        )}/${getLastDayOfMonth(new Date(expense.date))}`,
+                    }}
+                >
+                    <Badge
+                        className={'font-size-12 badge-soft-success'}
+                        color="success"
+                        pill
+                    >
+                        {expense.budget.name}
+                    </Badge>
+                </Link>
+            </>
+        )
+        rows.push(row)
+    })
+    rows.sort((a, b) => a.date > b.date)
 
-    const pageOptions = {
-        sizePerPage: 50,
-        totalSize: budgets.length,
-        custom: true,
+    const data = {
+        columns: [
+            {
+                field: 'date',
+                label: t('Date'),
+            },
+            {
+                field: 'place',
+                label: t('Place'),
+            },
+            {
+                field: 'price',
+                label: t('Price'),
+            },
+            {
+                field: 'reason',
+                label: t('Reason'),
+            },
+            {
+                field: 'action',
+                label: t('Action'),
+                sort: 'disabled',
+            },
+        ],
+        rows,
     }
 
     return (
-        <React.Fragment>
-            <PaginationProvider pagination={paginationFactory(pageOptions)}>
-                {({ paginationProps, paginationTableProps }) => (
-                    <ToolkitProvider
-                        keyField="_id"
-                        data={allExpenses || []}
-                        columns={ExpenseSearchColumns()}
-                        bootstrap4
-                        search={{ placeholder: `${t('Search')}` }}
-                    >
-                        {toolkitProps => (
-                            <React.Fragment>
-                                <Row className="mb-2">
-                                    <Col sm="4">
-                                        <div className="search-box mr-2 mb-2 d-inline-block">
-                                            <div className="position-relative">
-                                                <SearchBar
-                                                    {...toolkitProps.searchProps}
-                                                />
-                                            </div>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xl="12">
-                                        <div className="table-responsive">
-                                            <BootstrapTable
-                                                responsive
-                                                bordered={false}
-                                                striped={false}
-                                                hover
-                                                classes={
-                                                    'table table-centered table-nowrap'
-                                                }
-                                                headerWrapperClasses={
-                                                    'thead-light'
-                                                }
-                                                {...toolkitProps.baseProps}
-                                                {...paginationTableProps}
-                                                sort={{
-                                                    dataField: 'date',
-                                                    order: 'asc',
-                                                }}
-                                            />
-                                        </div>
-                                    </Col>
-                                    {!allExpenses.length > 0 && (
-                                        <h3 className="m-auto">
-                                            {t('No expenses found yet!')}
-                                        </h3>
-                                    )}
-                                </Row>
-                                <Row className="align-items-md-center mt-30">
-                                    <Col className="pagination pagination-rounded justify-content-end mb-2 inner-custom-pagination">
-                                        <PaginationListStandalone
-                                            {...paginationProps}
-                                        />
-                                    </Col>
-                                </Row>
-                            </React.Fragment>
-                        )}
-                    </ToolkitProvider>
-                )}
-            </PaginationProvider>
-        </React.Fragment>
+        <MDBDataTable
+            data={data}
+            searchLabel={t('Search')}
+            paginationLabel={[t('Previous'), t('Next')]}
+            infoLabel={[t('Showing'), t('to'), t('of'), t('entries')]}
+            noRecordsFoundLabel={t('No expenses found yet!')}
+            responsive
+            noBottomColumns
+            hover
+        />
     )
 }
 

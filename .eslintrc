@@ -1,15 +1,37 @@
 {
-  "rules": {
-    "no-undef": "off"
-  },
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true,
-      "modules": true,
-      "experimentalObjectRestSpread": true
+    "env": {
+        "node": true,
+        "browser": true,
+        "es6": true
+    },
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": ["jest", "simple-import-sort"],
+    "rules": {
+        "simple-import-sort/imports": [
+            "error",
+            {
+                "groups": [
+                    // Packages.
+                    // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+                    ["^@?\\w"],
+                    // Absolute imports and other imports such as Vue-style `@/foo`.
+                    // Anything that does not start with a dot.
+                    ["^[^.]"],
+                    // Side effect imports.
+                    ["^\\u0000"],
+                    // Relative imports.
+                    // Anything that starts with a dot.
+                    ["^\\."]
+                ]
+            }
+        ],
+        "simple-import-sort/exports": ["error"],
+        "no-console": ["error"],
+        "no-unused-vars": ["error", { "varsIgnorePattern": "_" }]
     }
-  }
 }

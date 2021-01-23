@@ -1,22 +1,22 @@
+import { useAuth0 } from '@auth0/auth0-react'
+import Layout from 'components/Layout'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import {
-    Container,
-    Row,
-    Col,
+    Badge,
     Card,
     CardBody,
     CardFooter,
     CardHeader,
-    Badge,
+    Col,
+    Container,
+    Row,
 } from 'reactstrap'
-import { useAuth0 } from '@auth0/auth0-react'
-import Layout from 'components/Layout'
-import { useTranslation } from 'react-i18next'
 
 import './profile.scss'
 
 const Profile = () => {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     const { user } = useAuth0()
 
     return (

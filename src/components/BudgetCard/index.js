@@ -1,10 +1,11 @@
+import { useLocale } from 'hooks'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Card, CardBody, Col } from 'reactstrap'
+
 import ProgressBar from '../ProgressBar'
-import { useTranslation } from 'react-i18next'
-import { useLocale } from 'hooks'
 
 const BudgetCard = props => {
     const { budget } = props

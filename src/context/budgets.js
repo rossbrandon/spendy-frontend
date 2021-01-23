@@ -1,10 +1,10 @@
-import React, { createContext, useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import { useMonthSwitcher } from 'hooks'
-import useLocalStorageState from 'use-local-storage-state'
 import { useAuth0 } from '@auth0/auth0-react'
-import { config } from '../config'
-import { showToast } from '../utils'
+import { config } from 'config'
+import { useMonthSwitcher } from 'hooks'
+import PropTypes from 'prop-types'
+import React, { createContext, useEffect, useState } from 'react'
+import useLocalStorageState from 'use-local-storage-state'
+import { showToast } from 'utils'
 
 const getQuery = (startDate, endDate) => {
     return {
@@ -43,7 +43,7 @@ const BudgetsProvider = ({ children }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(query),
             })

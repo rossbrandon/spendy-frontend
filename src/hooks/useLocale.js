@@ -1,5 +1,5 @@
-import { useContext } from 'react'
 import { LocaleContext } from 'context'
+import { useContext } from 'react'
 
 const useLocale = () => {
     const localContext = useContext(LocaleContext)

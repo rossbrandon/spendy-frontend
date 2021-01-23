@@ -1,5 +1,5 @@
-import { useContext } from 'react'
 import { ExpensesContext } from 'context'
+import { useContext } from 'react'
 
 const useExpenses = () => {
     const expensesContext = useContext(ExpensesContext)

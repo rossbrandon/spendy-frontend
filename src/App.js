@@ -1,24 +1,24 @@
-import React from 'react'
-import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
+import PrivateRoute from 'components/PrivateRoute'
 import {
-    BudgetsProvider,
-    ExpensesProvider,
-    LocaleProvider,
-    MonthSwitcherProvider,
-    LoadingProvider,
     AggregateProvider,
     AllExpensesProvider,
+    BudgetsProvider,
+    ExpensesProvider,
+    LoadingProvider,
+    LocaleProvider,
+    MonthSwitcherProvider,
 } from 'context'
-import PrivateRoute from './components/PrivateRoute'
-import Landing from './pages/Landing'
+import Budgets from 'pages/Budgets'
 import Dashboard from 'pages/Dashboard'
 import Expenses from 'pages/Expenses'
-import Budgets from './pages/Budgets'
-import Profile from 'pages/Profile'
 import ExpenseSearch from 'pages/ExpenseSearch'
+import Landing from 'pages/Landing'
+import Profile from 'pages/Profile'
 import Trends from 'pages/Trends'
-import i18n from 'i18n'
+import React from 'react'
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
+
 import './assets/scss/theme.scss'
 
 const App = () => {

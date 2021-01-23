@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { useAuth0 } from '@auth0/auth0-react'
-import { config } from '../../config'
-import { showToast } from 'utils'
+import { config } from 'config'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { showToast } from 'utils'
 
 const getQuery = variables => {
     return {
@@ -34,7 +34,7 @@ const DeleteBudgetModal = props => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(query),
         })

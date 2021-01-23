@@ -1,8 +1,8 @@
-import React from 'react'
-import { PropTypes } from 'prop-types'
-import { Row, Col, Card, CardBody, Media } from 'reactstrap'
-import { useTranslation } from 'react-i18next'
 import { useLocale } from 'hooks'
+import { PropTypes } from 'prop-types'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { Card, CardBody, Col, Media, Row } from 'reactstrap'
 
 const ExpenseSearchTotals = props => {
     const { allExpenses } = props
@@ -26,7 +26,7 @@ const ExpenseSearchTotals = props => {
                                 </div>
                                 <Media body>
                                     <p className="text-muted mb-2">
-                                        {t('Transations')}
+                                        {t('Transactions')}
                                     </p>
                                     <h5 className="mb-0">
                                         {allExpenses.length}
@@ -66,7 +66,7 @@ const ExpenseSearchTotals = props => {
     )
 }
 
-ExpenseSearchTotals.PropTypes = {
+ExpenseSearchTotals.propTypes = {
     allExpenses: PropTypes.array,
 }
 

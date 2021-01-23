@@ -93,5 +93,13 @@
     "How much should be bugeted?": "Сколько нужно включить в список?",
     "Create": "Создайте",
     "All Expenses": "Все расходы",
-    "Search Expenses": "Расходы на поиск"
+    "Search Expenses": "Расходы на поиск",
+    "Showing": "Отображение",
+    "to": "к",
+    "of": "из",
+    "entries": "записи",
+    "Previous": "Предыдущий",
+    "Next": "следующий",
+    "Trends": "Тенденции",
+    "Spend History (Previous Year)": "Провести историю (предыдущий год)"
 }

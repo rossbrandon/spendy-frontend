@@ -282,7 +282,23 @@ body[data-layout='horizontal'] {
     }
 }
 
-@media (max-width: 992px) {
+// @media (max-width: 992px) {
+//     body[data-layout='horizontal'] {
+//         .page-content {
+//             margin-top: 15px;
+//         }
+//     }
+// }
+
+// @media (max-width: 768px) {
+//     body[data-layout='horizontal'] {
+//         .page-content {
+//             margin-top: 15px;
+//         }
+//     }
+// }
+
+@media (max-width: 576px) {
     body[data-layout='horizontal'] {
         .page-content {
             margin-top: 15px;

@@ -1,5 +1,5 @@
-import { useContext } from 'react'
 import { MonthSwitcherContext } from 'context'
+import { useContext } from 'react'
 
 const useMonthSwitcher = () => {
     const monthSwitcherContext = useContext(MonthSwitcherContext)

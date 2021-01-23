@@ -1,5 +1,10 @@
-import React, { useState } from 'react'
+/* eslint-disable no-undef */
+import { useAuth0 } from '@auth0/auth0-react'
+import { AvForm, AvInput } from 'availity-reactstrap-validation'
+import { config } from 'config'
 import PropTypes from 'prop-types'
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
     Button,
     FormGroup,
@@ -10,11 +15,7 @@ import {
     ModalFooter,
     ModalHeader,
 } from 'reactstrap'
-import { AvForm, AvInput } from 'availity-reactstrap-validation'
-import { useAuth0 } from '@auth0/auth0-react'
-import { config } from '../../config'
 import { showToast } from 'utils'
-import { useTranslation } from 'react-i18next'
 
 const getQuery = variables => {
     return {
@@ -63,7 +64,7 @@ const CreateBudgetModal = props => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(query),
         })
@@ -141,6 +142,16 @@ const CreateBudgetModal = props => {
                             />
                         </FormGroup>
                         <FormGroup>
+                            <Label for="endDate">{t('End Date')}</Label>
+                            <Input
+                                type="date"
+                                className="form-control"
+                                id="endDate"
+                                defaultValue={null}
+                                required
+                            />
+                        </FormGroup>
+                        <FormGroup>
                             <div
                                 className="custom-control custom-switch"
                                 dir="ltr"
@@ -150,7 +161,7 @@ const CreateBudgetModal = props => {
                                     className="custom-control-input mt-2"
                                     id="showInMenu"
                                     name="showInMenu"
-                                    onChange={e => {
+                                    onChange={() => {
                                         setShowInMenu(!showInMenu)
                                     }}
                                 />

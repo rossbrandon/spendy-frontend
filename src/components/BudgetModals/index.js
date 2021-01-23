@@ -1,9 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ViewBudgetModal from 'components/BudgetModals/ViewBudgetModal'
 import CreateBudgetModal from 'components/BudgetModals/CreateBudgetModal'
 import EditBudgetModal from 'components/BudgetModals/EditBudgetModal'
-import DeleteBudgetModal from 'components/BudgetModals/DeleteBudgetModal'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const BudgetModals = props => {
     const {
@@ -39,8 +37,8 @@ const BudgetModals = props => {
 BudgetModals.propTypes = {
     budgets: PropTypes.array,
     modalInfo: PropTypes.object,
-    viewModal: PropTypes.bool,
-    toggleViewModal: PropTypes.func,
+    createModal: PropTypes.bool,
+    toggleCreateModal: PropTypes.func,
     editModal: PropTypes.bool,
     toggleEditModal: PropTypes.func,
     showConfirmation: PropTypes.bool,

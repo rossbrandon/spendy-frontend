@@ -1,12 +1,12 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Container, Row, Col, Card, CardBody, Media } from 'reactstrap'
 import BudgetCard from 'components/BudgetCard'
+import Layout from 'components/Layout'
+import MonthSwitcher from 'components/MonthSwitcher'
 import ProgressBar from 'components/ProgressBar'
 import { useBudgets, useLocale } from 'hooks'
-import MonthSwitcher from 'components/MonthSwitcher'
-import Layout from 'components/Layout'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { Card, CardBody, Col, Container, Media,Row } from 'reactstrap'
 
 const Dashboard = () => {
     const { t } = useTranslation()

@@ -1,9 +1,9 @@
-import React, { createContext, useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { useAuth0 } from '@auth0/auth0-react'
-import { config } from '../config'
-import { showToast } from '../utils'
+import { config } from 'config'
 import { useLoading } from 'hooks'
+import PropTypes from 'prop-types'
+import React, { createContext, useEffect, useState } from 'react'
+import { showToast } from 'utils'
 
 const getQuery = () => {
     return {
@@ -42,7 +42,7 @@ const AllExpensesProvider = ({ children }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(query),
             })

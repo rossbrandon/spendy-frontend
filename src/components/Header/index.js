@@ -1,10 +1,11 @@
-import React from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
+import spendyLogo from 'assets/images/spendy_logo.png'
 import PropTypes from 'prop-types'
+import React from 'react'
 import { Link } from 'react-router-dom'
+
 import LanguageDropdown from '../LanguageDropdown'
 import ProfileMenu from '../ProfileMenu'
-import spendyLogo from '../../assets/images/spendy_logo.png'
-import { useAuth0 } from '@auth0/auth0-react'
 
 const Header = props => {
     const { openMenu } = props

@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
-import { Container, Row, Col, Card, CardTitle, CardBody } from 'reactstrap'
-import Layout from 'components/Layout'
-import { useTranslation } from 'react-i18next'
 import AreaChart from 'components/AreaChart'
+import Layout from 'components/Layout'
 import { useAggregate, useBudgets } from 'hooks'
-import { getPreviousYearFirstDayOfMonth, getLastDayOfCurrentMonth } from 'utils'
+import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Card, CardBody,CardTitle, Col, Container, Row } from 'reactstrap'
+import { getLastDayOfCurrentMonth,getPreviousYearFirstDayOfMonth } from 'utils'
 
 /**
  * Build array of year-months (yyyy-mm) 1 year from today
@@ -17,10 +17,9 @@ import { getPreviousYearFirstDayOfMonth, getLastDayOfCurrentMonth } from 'utils'
  *  d. Push yyyy-mm format to months array
  * 3. Reverse the array to go yyyy-01 to yyyy-12
  *
- * @param aggregate budget aggregate data from aggregate context
  * @returns array of yyyy-mm data for graph categories
  */
-const getCategoryData = aggregate => {
+const getCategoryData = () => {
     const months = []
     const date = new Date()
     for (let i = 0; i < 12; i++) {

@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import CreateExpenseModal from 'components/ExpenseModals/CreateExpenseModal'
 import EditExpenseModal from 'components/ExpenseModals/EditExpenseModal'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const ExpenseModals = props => {
     const {

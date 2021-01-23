@@ -3,10 +3,10 @@ import detector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 
 import translationDE from './assets/translations/de.json'
+import translationEN from './assets/translations/en.json'
+import translationES from './assets/translations/es.json'
 import translationIT from './assets/translations/it.json'
 import translationRU from './assets/translations/ru.json'
-import translationES from './assets/translations/es.json'
-import translationEN from './assets/translations/en.json'
 
 // the translations
 const resources = {

@@ -1,10 +1,10 @@
-import React from 'react'
-import { Container, Row, Col, Card, CardBody, CardFooter } from 'reactstrap'
 import { useAuth0 } from '@auth0/auth0-react'
-import { Link } from 'react-router-dom'
 import LanguageDropdown from 'components/LanguageDropdown'
-import { useTranslation } from 'react-i18next'
 import { LocaleProvider } from 'context'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { Card, CardBody, CardFooter,Col, Container, Row } from 'reactstrap'
 
 const Landing = () => {
     const { t } = useTranslation()

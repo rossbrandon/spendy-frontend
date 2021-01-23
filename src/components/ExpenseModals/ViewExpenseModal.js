@@ -1,5 +1,7 @@
-import React from 'react'
+import { useLocale } from 'hooks'
 import PropTypes from 'prop-types'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 import {
     Badge,
     Button,
@@ -8,8 +10,6 @@ import {
     ModalFooter,
     ModalHeader,
 } from 'reactstrap'
-import { useTranslation } from 'react-i18next'
-import { useLocale } from 'hooks'
 
 const ViewExpenseModal = props => {
     const { isOpen, toggle, currentBudget, expense } = props
@@ -100,6 +100,7 @@ ViewExpenseModal.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
     expense: PropTypes.object,
+    currentBudget: PropTypes.object,
 }
 
 export default ViewExpenseModal

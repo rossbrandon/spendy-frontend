@@ -36,10 +36,29 @@ const getPreviousYearFirstDayOfMonth = date => {
     return getFirstDayOfMonth(date)
 }
 
+const getDateOrdinal = date => {
+    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
+    const dom = utcDate.getDate()
+    if (dom == 31 || dom == 21 || dom == 1) return dom + 'st'
+    else if (dom == 22 || dom == 2) return dom + 'nd'
+    else if (dom == 23 || dom == 3) return dom + 'rd'
+    else return dom + 'th'
+}
+
+const getYearMonthDayString = date => {
+    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
+    utcDate.setDate(utcDate.getDate())
+    const dayNum = ('0' + utcDate.getDate()).slice(-2)
+    const monthNum = ('0' + (utcDate.getMonth() + 1)).slice(-2)
+    return `${utcDate.getFullYear()}-${monthNum}-${dayNum}`
+}
+
 export {
+    getDateOrdinal,
     getFirstDayOfCurrentMonth,
-    getLastDayOfCurrentMonth,
     getFirstDayOfMonth,
+    getLastDayOfCurrentMonth,
     getLastDayOfMonth,
     getPreviousYearFirstDayOfMonth,
+    getYearMonthDayString,
 }

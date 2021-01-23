@@ -1,12 +1,10 @@
+import { useBudgets } from 'hooks'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Collapse } from 'reactstrap'
-import { useBudgets } from 'hooks'
-import { useTranslation } from 'react-i18next'
 
 const Navbar = props => {
-    const { t } = useTranslation()
     const { budgets } = useBudgets()
 
     const menuBudgets = budgets
@@ -17,7 +15,7 @@ const Navbar = props => {
         <div className="topnav">
             <div className="container-fluid">
                 <nav
-                    className="navbar navbar-light navbar-expand-lg topnav-menu"
+                    className="navbar navbar-light navbar-expand-sm topnav-menu"
                     id="navigation"
                 >
                     <Collapse
