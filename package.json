@@ -96,5 +96,16 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{js,jsx,md,html,css,less,scss}": [
+            "npm run format:fix",
+            "npm run lint:fix"
+        ]
     }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import { useAuth0 } from '@auth0/auth0-react'
 import PrivateRoute from 'components/PrivateRoute'
 import {
@@ -29,10 +30,10 @@ const App = () => {
         <HashRouter>
             <Switch>
                 <Route path="/" exact>
-                    {isAuthenticated ? (
-                        <Redirect to="/dashboard" />
-                    ) : (
+                    {!!isAuthenticated ? (
                         <Landing />
+                    ) : (
+                        <Redirect to="/dashboard" />
                     )}
                 </Route>
                 <LoadingProvider>
