@@ -11,6 +11,13 @@ import {
     getYearMonthDayString,
 } from 'utils'
 
+const getExpensePath = expense => {
+    const expenseDate = new Date(expense.date)
+    const firstDayOfMonth = getFirstDayOfMonth(expenseDate).toISOString()
+    const lastDayOfMonth = getLastDayOfMonth(expenseDate).toISOString()
+    return `/expenses/${expense.budget._id}/${firstDayOfMonth}/${lastDayOfMonth}`
+}
+
 const ExpenseSearchTable = props => {
     const { allExpenses } = props
     const { t } = useTranslation()
@@ -30,11 +37,7 @@ const ExpenseSearchTable = props => {
             <>
                 <Link
                     to={{
-                        pathname: `/expenses/${
-                            expense.budget._id
-                        }/${getFirstDayOfMonth(
-                            new Date(expense.date),
-                        )}/${getLastDayOfMonth(new Date(expense.date))}`,
+                        pathname: getExpensePath(expense),
                     }}
                 >
                     <Badge
