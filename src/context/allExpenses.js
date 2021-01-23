@@ -14,6 +14,7 @@ const getQuery = () => {
                     date
                     place
                     price
+                    reason
                     budget(populate: true) {
                     _id
                     name

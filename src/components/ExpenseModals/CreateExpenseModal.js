@@ -72,7 +72,7 @@ const CreateExpenseModal = props => {
             const utcDate = new Date(
                 date.getTime() + date.getTimezoneOffset() * 60000,
             )
-            return getFirstDayOfMonth(utcDate).substr(0, 10)
+            return getFirstDayOfMonth(utcDate).toISOString().substr(0, 10)
         }
     }
 

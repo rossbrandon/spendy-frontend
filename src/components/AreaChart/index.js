@@ -98,7 +98,6 @@ const AreaChart = () => {
 
     const options = {
         chart: {
-            height: 350,
             type: 'area',
             toolbar: {
                 show: false,
@@ -106,6 +105,9 @@ const AreaChart = () => {
         },
         dataLabels: {
             enabled: false,
+        },
+        tooltip: {
+            theme: 'dark',
         },
         stroke: {
             curve: 'smooth',
@@ -124,7 +126,6 @@ const AreaChart = () => {
         xaxis: {
             categories,
         },
-
         markers: {
             size: 3,
             strokeWidth: 3,

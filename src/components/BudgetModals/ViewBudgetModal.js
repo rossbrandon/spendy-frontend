@@ -59,13 +59,13 @@ const ViewBudgetModal = props => {
                         <p className="mt-2 mb-2">
                             {t('Start Date')}:{' '}
                             <span className="text-primary">
-                                {getFormattedDate(new Date(budget.startDate))}
+                                {getFormattedDate(budget.startDate)}
                             </span>
                         </p>
                         <p className="mt-2 mb-2">
                             {t('End Date')}:{' '}
                             <span className="text-primary">
-                                {getFormattedDate(new Date(budget.endDate))}
+                                {getFormattedDate(budget.endDate)}
                             </span>
                         </p>
                         <p className="mb-2">

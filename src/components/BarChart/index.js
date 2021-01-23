@@ -16,6 +16,9 @@ const BarChart = () => {
                 show: false,
             },
         },
+        tooltip: {
+            theme: 'dark',
+        },
         plotOptions: {
             bar: {
                 horizontal: true,

@@ -46,7 +46,7 @@ const ViewExpenseModal = props => {
                         <p className="mb-2">
                             {t('Date')}:{' '}
                             <span className="text-primary">
-                                {getFormattedDate(new Date(expense.date))}
+                                {getFormattedDate(expense.date)}
                             </span>
                         </p>
                         <p className="mb-2">

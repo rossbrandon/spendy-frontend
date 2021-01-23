@@ -6,7 +6,7 @@ const getFirstDayOfCurrentMonth = () => {
         1,
     )
     firstDayOfCurrentMonth.setUTCHours(0, 0, 0, 0)
-    return firstDayOfCurrentMonth.toISOString()
+    return firstDayOfCurrentMonth
 }
 
 const getLastDayOfCurrentMonth = () => {
@@ -17,19 +17,19 @@ const getLastDayOfCurrentMonth = () => {
         0,
     )
     lastDayOfCurrentMonth.setUTCHours(0, 0, 0, 0)
-    return lastDayOfCurrentMonth.toISOString()
+    return lastDayOfCurrentMonth
 }
 
 const getFirstDayOfMonth = date => {
     const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
     firstDayOfMonth.setUTCHours(0, 0, 0, 0)
-    return firstDayOfMonth.toISOString()
+    return firstDayOfMonth
 }
 
 const getLastDayOfMonth = date => {
     const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0)
     lastDayOfMonth.setUTCHours(0, 0, 0, 0)
-    return lastDayOfMonth.toISOString()
+    return lastDayOfMonth
 }
 
 const getPreviousYearFirstDayOfMonth = date => {
