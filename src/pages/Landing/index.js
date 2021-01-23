@@ -4,7 +4,7 @@ import { LocaleProvider } from 'context'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { Card, CardBody, CardFooter,Col, Container, Row } from 'reactstrap'
+import { Card, CardBody, CardFooter, Col, Container, Row } from 'reactstrap'
 
 const Landing = () => {
     const { t } = useTranslation()

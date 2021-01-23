@@ -4,7 +4,7 @@ import { MDBDataTable } from 'mdbreact'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, Col,Row } from 'reactstrap'
+import { Button, Col, Row } from 'reactstrap'
 import { getDateOrdinal } from 'utils'
 
 const ExpenseTable = props => {

@@ -5,7 +5,7 @@ import { AllExpensesProvider } from 'context'
 import { useAllExpenses } from 'hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, CardBody,Col, Container, Row } from 'reactstrap'
+import { Card, CardBody, Col, Container, Row } from 'reactstrap'
 
 const ExpenseSearch = () => {
     const { t } = useTranslation()

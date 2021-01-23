@@ -5,7 +5,7 @@ import MonthSwitcher from 'components/MonthSwitcher'
 import { useBudgets, useExpenses, useMonthSwitcher } from 'hooks'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Card, CardBody,Col, Container, Row } from 'reactstrap'
+import { Card, CardBody, Col, Container, Row } from 'reactstrap'
 
 const Expenses = () => {
     const { budgetId, startDateOverride, endDateOverride } = useParams()

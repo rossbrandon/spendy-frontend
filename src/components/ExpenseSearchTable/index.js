@@ -1,3 +1,4 @@
+import { useLocale } from 'hooks'
 import { MDBDataTable } from 'mdbreact'
 import { PropTypes } from 'prop-types'
 import React from 'react'
@@ -13,15 +14,16 @@ import {
 const ExpenseSearchTable = props => {
     const { allExpenses } = props
     const { t } = useTranslation()
+    const { local, currency } = useLocale()
 
     const rows = []
     allExpenses.map(expense => {
         const row = {}
         row.date = getYearMonthDayString(new Date(expense.date))
         row.place = expense.place
-        row.price = expense.price.toLocaleString('en-US', {
+        row.price = expense.price.toLocaleString(local, {
             style: 'currency',
-            currency: 'USD',
+            currency,
         })
         row.reason = expense.reason
         row.action = (

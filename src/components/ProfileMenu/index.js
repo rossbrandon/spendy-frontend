@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { withTranslation } from 'react-i18next'
 import { useTranslation } from 'react-i18next'
-import { Link,withRouter } from 'react-router-dom'
-import { Dropdown, DropdownMenu,DropdownToggle } from 'reactstrap'
+import { Link, withRouter } from 'react-router-dom'
+import { Dropdown, DropdownMenu, DropdownToggle } from 'reactstrap'
 
 import './profileMenu.scss'
 

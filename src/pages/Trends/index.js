@@ -3,8 +3,8 @@ import Layout from 'components/Layout'
 import { useAggregate, useBudgets } from 'hooks'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, CardBody,CardTitle, Col, Container, Row } from 'reactstrap'
-import { getLastDayOfCurrentMonth,getPreviousYearFirstDayOfMonth } from 'utils'
+import { Card, CardBody, CardTitle, Col, Container, Row } from 'reactstrap'
+import { getLastDayOfCurrentMonth, getPreviousYearFirstDayOfMonth } from 'utils'
 
 /**
  * Build array of year-months (yyyy-mm) 1 year from today

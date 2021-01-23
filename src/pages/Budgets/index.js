@@ -3,7 +3,7 @@ import Layout from 'components/Layout'
 import { useBudgets } from 'hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, CardBody,Col, Container, Row } from 'reactstrap'
+import { Card, CardBody, Col, Container, Row } from 'reactstrap'
 
 const Budgets = () => {
     const { t } = useTranslation()

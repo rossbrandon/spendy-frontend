@@ -6,7 +6,7 @@ import { useBudgets, useLocale } from 'hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { Card, CardBody, Col, Container, Media,Row } from 'reactstrap'
+import { Card, CardBody, Col, Container, Media, Row } from 'reactstrap'
 
 const Dashboard = () => {
     const { t } = useTranslation()
