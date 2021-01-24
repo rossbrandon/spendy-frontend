@@ -78,9 +78,7 @@ const ExpenseTable = props => {
                     type="button"
                     color="light"
                     className="btn-sm btn-rounded ml-2"
-                    onClick={e => {
-                        toggleCloneModal()
-                    }}
+                    onClick={toggleCloneModal}
                 >
                     {t('Clone')}
                 </Button>
