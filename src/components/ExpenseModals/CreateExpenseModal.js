@@ -209,6 +209,8 @@ const CreateExpenseModal = props => {
                             <ReactTagInput
                                 id="tags"
                                 tags={tags}
+                                maxTags={5}
+                                placeholder={t('Type and press enter')}
                                 removeOnBackspace
                                 onChange={newTags => setTags(newTags)}
                             />

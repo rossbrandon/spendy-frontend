@@ -109,5 +109,8 @@
     "Manage Your Budgets": "Управляйте своими бюджетами",
     "No budgets found": "Бюджеты не найдены",
     "No expenses found": "Расходов не обнаружено",
-    "Looks like you don't have any budgets yet...": "Похоже, у вас еще нет бюджета..."
+    "Looks like you don't have any budgets yet...": "Похоже, у вас еще нет бюджета...",
+    "Clone": "Клонировать",
+    "Tags": "Теги",
+    "Type and press enter": "Введите и нажмите ввод"
 }
