@@ -15,7 +15,7 @@ import {
     ModalFooter,
     ModalHeader,
 } from 'reactstrap'
-import { showToast } from 'utils'
+import { getFirstDayOfCurrentMonth, showToast } from 'utils'
 
 const getQuery = variables => {
     return {
@@ -47,10 +47,8 @@ const getQuery = variables => {
     }
 }
 
-const getFormattedDate = date => {
-    return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10)
+const getFormattedDate = () => {
+    return getFirstDayOfCurrentMonth().toISOString().substr(0, 10)
 }
 
 const getNextSortOrder = budgets => {
@@ -153,7 +151,7 @@ const CreateBudgetModal = props => {
                                 type="date"
                                 className="form-control"
                                 id="startDate"
-                                defaultValue={getFormattedDate(new Date())}
+                                defaultValue={getFormattedDate()}
                                 required
                             />
                         </FormGroup>

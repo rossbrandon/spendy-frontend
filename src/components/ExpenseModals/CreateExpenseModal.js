@@ -73,7 +73,7 @@ const CreateExpenseModal = props => {
     const [tags, setTags] = useState([])
 
     const getFormattedDate = date => {
-        if (startDate == getFirstDayOfCurrentMonth()) {
+        if (startDate == getFirstDayOfCurrentMonth().toISOString()) {
             const today = new Date()
             return new Date(today.getTime() - today.getTimezoneOffset() * 60000)
                 .toISOString()
