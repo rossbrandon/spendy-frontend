@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
 import { useAuth0 } from '@auth0/auth0-react'
+import ReactTagInput from '@pathofdev/react-tag-input'
 import { AvForm, AvInput } from 'availity-reactstrap-validation'
 import { config } from 'config'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
     Button,
@@ -17,6 +18,9 @@ import {
 } from 'reactstrap'
 import { showToast } from 'utils'
 
+import '@pathofdev/react-tag-input/build/index.css'
+import './modal.scss'
+
 const getQuery = variables => {
     return {
         query: `
@@ -27,6 +31,7 @@ const getQuery = variables => {
                 $place: String!
                 $recurUntil: DateTime
                 $recurring: Boolean!
+                $tags: [String!]
                 $budget: String!
             ) {
                 createExpense(
@@ -36,6 +41,7 @@ const getQuery = variables => {
                     reason: $reason
                     recurUntil: $recurUntil
                     recurring: $recurring
+                    tags: $tags
                     budget: $budget
                 ) {
                     _id
@@ -43,6 +49,9 @@ const getQuery = variables => {
                     place
                     price
                     reason
+                    recurUntil
+                    recurring
+                    tags
                     budget(populate: true) {
                         _id
                         name
@@ -63,6 +72,11 @@ const CloneExpenseModal = props => {
     const { isOpen, toggle, budgets, currentBudget, expense } = props
     const { t } = useTranslation()
     const { getAccessTokenSilently } = useAuth0()
+    const [tags, setTags] = useState([])
+
+    useEffect(() => {
+        if (expense) setTags(expense.tags)
+    }, [expense])
 
     const createExpense = async variables => {
         const token = await getAccessTokenSilently()
@@ -113,6 +127,7 @@ const CloneExpenseModal = props => {
                                 reason: reason.value,
                                 recurUntil: null,
                                 recurring: false,
+                                tags,
                             })
                             toggle()
                         }}
@@ -183,6 +198,17 @@ const CloneExpenseModal = props => {
                                         '(Optional) Enter a reason or description',
                                     )}
                                     value={expense.reason}
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="tags">{t('Tags')}</Label>
+                                <ReactTagInput
+                                    id="tags"
+                                    tags={tags}
+                                    maxTags={5}
+                                    placeholder={t('Type and press enter')}
+                                    removeOnBackspace
+                                    onChange={newTags => setTags(newTags)}
                                 />
                             </FormGroup>
                         </ModalBody>

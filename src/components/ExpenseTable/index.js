@@ -31,6 +31,7 @@ const ExpenseTable = props => {
     }
 
     const toggleCloneModal = () => {
+        toggleEditModal()
         setCloneModal(!cloneModal)
         setRefetchExpenseData(refetchExpenseData + 1)
     }
@@ -79,7 +80,6 @@ const ExpenseTable = props => {
                     className="btn-sm btn-rounded ml-2"
                     onClick={e => {
                         toggleCloneModal()
-                        e.stopPropagation()
                     }}
                 >
                     {t('Clone')}
