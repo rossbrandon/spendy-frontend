@@ -13,8 +13,11 @@ import {
 
 const getExpensePath = expense => {
     const expenseDate = new Date(expense.date)
-    const firstDayOfMonth = getFirstDayOfMonth(expenseDate).toISOString()
-    const lastDayOfMonth = getLastDayOfMonth(expenseDate).toISOString()
+    const utcDate = new Date(
+        expenseDate.getTime() + expenseDate.getTimezoneOffset() * 60000,
+    )
+    const firstDayOfMonth = getFirstDayOfMonth(utcDate).toISOString()
+    const lastDayOfMonth = getLastDayOfMonth(utcDate).toISOString()
     return `/expenses/${expense.budget._id}/${firstDayOfMonth}/${lastDayOfMonth}`
 }
 

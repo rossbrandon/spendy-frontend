@@ -53,6 +53,19 @@ const getFormattedDate = date => {
         .substr(0, 10)
 }
 
+const getNextSortOrder = budgets => {
+    let lastSortOrder = 0
+    if (budgets.length) {
+        lastSortOrder = Math.max.apply(
+            Math,
+            budgets.map(b => {
+                return b.sortOrder
+            }),
+        )
+    }
+    return lastSortOrder + 1
+}
+
 const CreateBudgetModal = props => {
     const { isOpen, toggle, budgets } = props
     const { t } = useTranslation()
@@ -77,14 +90,6 @@ const CreateBudgetModal = props => {
             showToast('success', t('Budget created!'))
         }
     }
-
-    const nextSortOrder =
-        Math.max.apply(
-            Math,
-            budgets.map(b => {
-                return b.sortOrder
-            }),
-        ) + 1
 
     return (
         <Modal
@@ -174,7 +179,7 @@ const CreateBudgetModal = props => {
                                     'Which position in the list is this budget?',
                                 )}
                                 validate={{ required: { value: true } }}
-                                defaultValue={nextSortOrder}
+                                defaultValue={getNextSortOrder(budgets)}
                                 required
                             />
                         </FormGroup>

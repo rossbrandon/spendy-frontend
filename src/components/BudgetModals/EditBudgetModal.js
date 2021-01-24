@@ -207,7 +207,9 @@ const EditBudgetModal = props => {
                                     id="endDate"
                                     defaultValue={
                                         budget.endDate
-                                            ? getFormattedDate(budget.endDate)
+                                            ? getFormattedDate(
+                                                  new Date(budget.endDate),
+                                              )
                                             : null
                                     }
                                     required
