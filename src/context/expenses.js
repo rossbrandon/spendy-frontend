@@ -21,8 +21,10 @@ const getQuery = (id, startDate, endDate) => {
                         date
                         place
                         reason
-                        userEmail
                         price
+                        recurring
+                        recurUntil
+                        tags
                     }
                 }
             }

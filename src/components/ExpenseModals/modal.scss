@@ -1,0 +1,23 @@
+.react-tag-input {
+    font-size: inherit;
+    background: #2e3548;
+    color: #bfc8e2;
+    height: 50px;
+    border: none;
+}
+
+.react-tag-input__input {
+    color: #bfc8e2;
+}
+
+.react-tag-input__tag {
+    color: #fff;
+    background-color: #50a5f1;
+    padding-right: 0.6em;
+    padding-left: 0.6em;
+    border-radius: 10rem;
+}
+
+.react-tag-input__tag__remove {
+    background: none;
+}

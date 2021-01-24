@@ -13,7 +13,7 @@ const Trends = () => {
             <div className="page-content">
                 <Container fluid>
                     <h4>{t('Trends')}</h4>
-                    <Row>
+                    <Row className="align-items-center">
                         <Col xl="12">
                             <Card>
                                 <CardBody>
@@ -25,7 +25,7 @@ const Trends = () => {
                             </Card>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className="align-items-center">
                         <Col xl="12">
                             <Card>
                                 <CardBody>

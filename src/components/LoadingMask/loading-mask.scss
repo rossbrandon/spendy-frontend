@@ -1,0 +1,11 @@
+#loading-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #2a3042;
+    z-index: 9999;
+    width: 100% !important;
+    max-width: 100% !important;
+}

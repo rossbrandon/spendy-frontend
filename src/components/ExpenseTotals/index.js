@@ -99,10 +99,10 @@ const ExpenseTotals = props => {
                                     </p>
                                     <h5 className="mb-0">
                                         {totalRemaining.toLocaleString(
-                                            'en-US',
+                                            localeString,
                                             {
                                                 style: 'currency',
-                                                currency: 'USD',
+                                                currency,
                                             },
                                         )}
                                     </h5>

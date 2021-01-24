@@ -1,3 +1,4 @@
+import CloneExpenseModal from 'components/ExpenseModals/CloneExpenseModal'
 import CreateExpenseModal from 'components/ExpenseModals/CreateExpenseModal'
 import EditExpenseModal from 'components/ExpenseModals/EditExpenseModal'
 import PropTypes from 'prop-types'
@@ -12,6 +13,8 @@ const ExpenseModals = props => {
         toggleCreateModal,
         editModal,
         toggleEditModal,
+        cloneModal,
+        toggleCloneModal,
         showConfirmation,
         setShowConfirmation,
     } = props
@@ -33,6 +36,13 @@ const ExpenseModals = props => {
                 showConfirmation={showConfirmation}
                 setShowConfirmation={setShowConfirmation}
             />
+            <CloneExpenseModal
+                isOpen={cloneModal}
+                toggle={toggleCloneModal}
+                budgets={budgets}
+                currentBudget={currentBudget}
+                expense={modalInfo}
+            />
         </React.Fragment>
     )
 }
@@ -45,6 +55,8 @@ ExpenseModals.propTypes = {
     toggleCreateModal: PropTypes.func,
     editModal: PropTypes.bool,
     toggleEditModal: PropTypes.func,
+    cloneModal: PropTypes.bool,
+    toggleCloneModal: PropTypes.func,
     showConfirmation: PropTypes.bool,
     setShowConfirmation: PropTypes.func,
 }

@@ -1,10 +1,9 @@
 /* eslint-disable no-undef */
 import { useAuth0 } from '@auth0/auth0-react'
-import ReactTagInput from '@pathofdev/react-tag-input'
 import { AvForm, AvInput } from 'availity-reactstrap-validation'
 import { config } from 'config'
 import PropTypes from 'prop-types'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
     Button,
@@ -18,59 +17,27 @@ import {
 } from 'reactstrap'
 import { showToast } from 'utils'
 
-import '@pathofdev/react-tag-input/build/index.css'
-import './modal.scss'
-
-const getSaveQuery = variables => {
+const getQuery = variables => {
     return {
         query: `
-            mutation updateExpense(
-                $id: String!
+            mutation createExpense(
                 $reason: String!
                 $date: DateTime!
                 $price: Float!
                 $place: String!
                 $recurUntil: DateTime
                 $recurring: Boolean!
-                $tags: [String!]
                 $budget: String!
             ) {
-                updateExpense(
-                    id: $id
+                createExpense(
                     date: $date
                     price: $price
                     place: $place
                     reason: $reason
                     recurUntil: $recurUntil
                     recurring: $recurring
-                    tags: $tags
                     budget: $budget
                 ) {
-                    _id
-                    date
-                    place
-                    price
-                    reason
-                    recurring
-                    recurUntil
-                    tags
-                    budget(populate: true) {
-                        _id
-                        name
-                        amount
-                    }
-                }
-            }
-        `,
-        variables,
-    }
-}
-
-const getDeleteQuery = variables => {
-    return {
-        query: `
-            mutation deleteExpense($id: String!) {
-                deleteExpense(id: $id) {
                     _id
                     date
                     place
@@ -92,27 +59,14 @@ const getFormattedDate = date => {
     return new Date(date.getTime()).toISOString().substr(0, 10)
 }
 
-const EditExpenseModal = props => {
-    const {
-        isOpen,
-        toggle,
-        budgets,
-        currentBudget,
-        expense,
-        showConfirmation,
-        setShowConfirmation,
-    } = props
+const CloneExpenseModal = props => {
+    const { isOpen, toggle, budgets, currentBudget, expense } = props
     const { t } = useTranslation()
     const { getAccessTokenSilently } = useAuth0()
-    const [tags, setTags] = useState([])
 
-    useEffect(() => {
-        if (expense) setTags(expense.tags)
-    }, [expense])
-
-    const updateExpense = async variables => {
+    const createExpense = async variables => {
         const token = await getAccessTokenSilently()
-        const query = getSaveQuery(variables)
+        const query = getQuery(variables)
         const response = await fetch(config.backend.url, {
             method: 'POST',
             headers: {
@@ -125,26 +79,7 @@ const EditExpenseModal = props => {
         if (result.errors) {
             showToast('error', result.errors[0].message)
         } else {
-            showToast('success', t('Expense updated!'))
-        }
-    }
-
-    const deleteExpense = async variables => {
-        const token = await getAccessTokenSilently()
-        const query = getDeleteQuery(variables)
-        const response = await fetch(config.backend.url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify(query),
-        })
-        const result = await response.json()
-        if (result.errors) {
-            showToast('error', result.errors[0].message)
-        } else {
-            showToast('success', t('Expense deleted!'))
+            showToast('success', t('Expense created!'))
         }
     }
 
@@ -170,8 +105,7 @@ const EditExpenseModal = props => {
                         className="needs-validation"
                         onSubmit={e => {
                             e.preventDefault()
-                            updateExpense({
-                                id: expense._id,
+                            createExpense({
                                 date: date.value,
                                 budget: budget.value,
                                 place: place.value,
@@ -179,13 +113,12 @@ const EditExpenseModal = props => {
                                 reason: reason.value,
                                 recurUntil: null,
                                 recurring: false,
-                                tags,
                             })
                             toggle()
                         }}
                     >
                         <ModalHeader toggle={toggle}>
-                            {t('Edit Expense')}
+                            {t('Create Expense')}
                         </ModalHeader>
                         <ModalBody>
                             <FormGroup>
@@ -252,70 +185,18 @@ const EditExpenseModal = props => {
                                     value={expense.reason}
                                 />
                             </FormGroup>
-                            <FormGroup>
-                                <Label for="tags">{t('Tags')}</Label>
-                                <ReactTagInput
-                                    id="tags"
-                                    tags={tags}
-                                    removeOnBackspace
-                                    onChange={newTags => setTags(newTags)}
-                                />
-                            </FormGroup>
                         </ModalBody>
                         <ModalFooter>
-                            {showConfirmation ? (
-                                <React.Fragment>
-                                    <p className="mb-2 mr-5">
-                                        {t(
-                                            'Do you want to delete this expense?',
-                                        )}
-                                    </p>
-                                    <Button
-                                        type="button"
-                                        color="danger"
-                                        onClick={() => {
-                                            deleteExpense({
-                                                id: expense._id,
-                                            })
-                                            setShowConfirmation(false)
-                                            toggle()
-                                        }}
-                                    >
-                                        {t('Delete')}
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        color="secondary"
-                                        onClick={() => {
-                                            setShowConfirmation(false)
-                                        }}
-                                    >
-                                        {t('Cancel')}
-                                    </Button>
-                                </React.Fragment>
-                            ) : (
-                                <React.Fragment>
-                                    <Button type="submit" color="success">
-                                        {t('Save')}
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        color="danger"
-                                        onClick={() => {
-                                            setShowConfirmation(true)
-                                        }}
-                                    >
-                                        {t('Delete')}
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        color="secondary"
-                                        onClick={toggle}
-                                    >
-                                        {t('Close')}
-                                    </Button>
-                                </React.Fragment>
-                            )}
+                            <Button type="submit" color="success">
+                                {t('Create')}
+                            </Button>
+                            <Button
+                                type="button"
+                                color="secondary"
+                                onClick={toggle}
+                            >
+                                {t('Cancel')}
+                            </Button>
                         </ModalFooter>
                     </AvForm>
                 </div>
@@ -324,14 +205,12 @@ const EditExpenseModal = props => {
     )
 }
 
-EditExpenseModal.propTypes = {
+CloneExpenseModal.propTypes = {
     isOpen: PropTypes.bool,
     toggle: PropTypes.func,
     budgets: PropTypes.array,
     currentBudget: PropTypes.object,
     expense: PropTypes.object,
-    showConfirmation: PropTypes.bool,
-    setShowConfirmation: PropTypes.func,
 }
 
-export default EditExpenseModal
+export default CloneExpenseModal

@@ -36,6 +36,20 @@ const ExpenseSearchTable = props => {
             currency,
         })
         row.reason = expense.reason
+        row.tagsSearch = expense.tags
+        row.tags = expense.tags.map(tag => {
+            return (
+                <>
+                    <Badge
+                        className={'font-size-12 badge-soft-warning mr-1'}
+                        color="warning"
+                        pill
+                    >
+                        {tag}
+                    </Badge>
+                </>
+            )
+        })
         row.action = (
             <>
                 <Link
@@ -74,6 +88,10 @@ const ExpenseSearchTable = props => {
             {
                 field: 'reason',
                 label: t('Reason'),
+            },
+            {
+                field: 'tags',
+                label: t('Tags'),
             },
             {
                 field: 'action',

@@ -4,7 +4,7 @@ import { MDBDataTable } from 'mdbreact'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, Col, Row } from 'reactstrap'
+import { Badge, Button, Col, Row } from 'reactstrap'
 import { getYearMonthDayString } from 'utils'
 
 const ExpenseTable = props => {
@@ -16,6 +16,7 @@ const ExpenseTable = props => {
     const [modalInfo, setModalInfo] = useState()
     const [createModal, setCreateModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
+    const [cloneModal, setCloneModal] = useState(false)
     const [showConfirmation, setShowConfirmation] = useState(false)
 
     const toggleCreateModal = () => {
@@ -26,6 +27,11 @@ const ExpenseTable = props => {
     const toggleEditModal = () => {
         setEditModal(!editModal)
         setShowConfirmation(false)
+        setRefetchExpenseData(refetchExpenseData + 1)
+    }
+
+    const toggleCloneModal = () => {
+        setCloneModal(!cloneModal)
         setRefetchExpenseData(refetchExpenseData + 1)
     }
 
@@ -43,6 +49,20 @@ const ExpenseTable = props => {
             currency,
         })
         row.reason = expense.reason
+        row.tagsSearch = expense.tags
+        row.tags = expense.tags.map(tag => {
+            return (
+                <>
+                    <Badge
+                        className={'font-size-12 badge-soft-warning mr-1'}
+                        color="warning"
+                        pill
+                    >
+                        {tag}
+                    </Badge>
+                </>
+            )
+        })
         row.action = (
             <>
                 <Button
@@ -52,6 +72,17 @@ const ExpenseTable = props => {
                     onClick={toggleEditModal}
                 >
                     {t('Edit Expense')}
+                </Button>
+                <Button
+                    type="button"
+                    color="light"
+                    className="btn-sm btn-rounded ml-2"
+                    onClick={e => {
+                        toggleCloneModal()
+                        e.stopPropagation()
+                    }}
+                >
+                    {t('Clone')}
                 </Button>
             </>
         )
@@ -78,6 +109,10 @@ const ExpenseTable = props => {
                 label: t('Reason'),
             },
             {
+                field: 'tags',
+                label: t('Tags'),
+            },
+            {
                 field: 'action',
                 label: t('Action'),
                 sort: 'disabled',
@@ -96,6 +131,8 @@ const ExpenseTable = props => {
                 toggleCreateModal={toggleCreateModal}
                 editModal={editModal}
                 toggleEditModal={toggleEditModal}
+                cloneModal={cloneModal}
+                toggleCloneModal={toggleCloneModal}
                 showConfirmation={showConfirmation}
                 setShowConfirmation={setShowConfirmation}
             />

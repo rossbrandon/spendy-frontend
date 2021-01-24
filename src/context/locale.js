@@ -6,10 +6,7 @@ import useLocalStorageState from 'use-local-storage-state'
 const LocaleContext = createContext()
 
 const LocaleProvider = ({ children }) => {
-    const [locale, setLocale] = useLocalStorageState(
-        'locale',
-        localStorage.getItem('I18N_LANGUAGE'),
-    )
+    const [locale, setLocale] = useLocalStorageState('locale', 'en')
     const [currency, setCurrency] = useLocalStorageState(
         'currency',
         languages['en'].currency,

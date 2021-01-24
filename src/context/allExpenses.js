@@ -15,10 +15,13 @@ const getQuery = () => {
                     place
                     price
                     reason
+                    recurring
+                    recurUntil
+                    tags
                     budget(populate: true) {
-                    _id
-                    name
-                    amount
+                        _id
+                        name
+                        amount
                     }
                 }
             }
