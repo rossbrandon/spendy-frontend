@@ -1,4 +1,6 @@
-export { default as useAggregate } from './useAggregate'
+export { default as useAggregatePlaces } from './useAggregatePlaces'
+export { default as useAggregateSum } from './useAggregateSum'
+export { default as useAggregateTags } from './useAggregateTags'
 export { default as useAllBudgets } from './useAllBudgets'
 export { default as useAllExpenses } from './useAllExpenses'
 export { default as useBudgets } from './useBudgets'

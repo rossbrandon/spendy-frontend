@@ -1,4 +1,4 @@
-import { useAggregate, useBudgets } from 'hooks'
+import { useAggregateSum, useBudgets } from 'hooks'
 import React, { useEffect } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { getLastDayOfCurrentMonth, getPreviousYearFirstDayOfMonth } from 'utils'
@@ -80,13 +80,13 @@ const getSeriesData = (budgets, aggregateSum, months) => {
     return series
 }
 
-const AreaChart = () => {
+const SpendHistoryChart = () => {
     const { budgets } = useBudgets()
     const {
         aggregateSum,
         setAggregateStartDate,
         setAggregateEndDate,
-    } = useAggregate()
+    } = useAggregateSum()
 
     useEffect(() => {
         setAggregateStartDate(getPreviousYearFirstDayOfMonth(new Date()))
@@ -151,4 +151,4 @@ const AreaChart = () => {
     )
 }
 
-export default AreaChart
+export default SpendHistoryChart

@@ -1,14 +1,14 @@
-import { useAggregate } from 'hooks'
+import { useAggregateTags } from 'hooks'
 import React from 'react'
 import ReactApexChart from 'react-apexcharts'
 
-const BarChart = () => {
-    const { aggregatePlaces } = useAggregate()
+const TopTagsChart = () => {
+    const { aggregateTags } = useAggregateTags()
 
-    aggregatePlaces.sort((a, b) => a.count > b.count)
-    const categories = aggregatePlaces.map(p => p.place)
+    aggregateTags.sort((a, b) => a.count > b.count)
+    const categories = aggregateTags.map(p => p.tag)
     const series = [{}]
-    series[0].data = aggregatePlaces.map(c => c.count)
+    series[0].data = aggregateTags.map(c => c.count)
 
     const options = {
         chart: {
@@ -28,7 +28,7 @@ const BarChart = () => {
             enabled: false,
         },
 
-        colors: ['#34c38f'],
+        colors: ['#f1b44c'],
         grid: {
             borderColor: '#f1f1f1',
         },
@@ -47,4 +47,4 @@ const BarChart = () => {
     )
 }
 
-export default BarChart
+export default TopTagsChart

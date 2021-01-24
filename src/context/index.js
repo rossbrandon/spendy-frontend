@@ -1,4 +1,6 @@
-export * from './aggregate'
+export * from './aggregatePlaces'
+export * from './aggregateSum'
+export * from './aggregateTags'
 export * from './allBudgets'
 export * from './allExpenses'
 export * from './budgets'
