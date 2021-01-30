@@ -14,6 +14,7 @@ import {
 import { getFirstDayOfMonth, getLastDayOfMonth } from 'utils'
 
 import 'react-calendar/dist/Calendar.css'
+import './monthSwitcher.scss'
 
 const MonthSwitcher = () => {
     const { t } = useTranslation()
@@ -41,7 +42,18 @@ const MonthSwitcher = () => {
     return (
         <Col>
             <Row className="mb-4 text-center">
-                <Col xl="12">
+                <Col xs="1">
+                    <i
+                        id="month-previous"
+                        className="bx bx-left-arrow-alt h1 mt-4 text-left"
+                        onClick={() => {
+                            const date = new Date(startDate)
+                            date.setDate(1)
+                            updateDates(date)
+                        }}
+                    ></i>
+                </Col>
+                <Col xs="10">
                     <h2 className="mb-4">
                         {getFormattedDate(new Date(startDate))}
                     </h2>
@@ -84,8 +96,8 @@ const MonthSwitcher = () => {
                                     className="m-auto"
                                     value={new Date(endDate)}
                                     onChangeYearUpdate={false}
-                                    onChange={selectedYear => {
-                                        updateDates(selectedYear)
+                                    onChange={selectedMonth => {
+                                        updateDates(selectedMonth)
                                         toggle()
                                     }}
                                     maxDetail="year"
@@ -103,6 +115,17 @@ const MonthSwitcher = () => {
                             </ModalFooter>
                         </div>
                     </Modal>
+                </Col>
+                <Col xs="1">
+                    <i
+                        id="month-next"
+                        className="bx bx-right-arrow-alt h1 mt-4"
+                        onClick={() => {
+                            const date = getLastDayOfMonth(new Date(endDate))
+                            date.setMonth(date.getMonth() + 1, 1)
+                            updateDates(date)
+                        }}
+                    ></i>
                 </Col>
             </Row>
         </Col>
