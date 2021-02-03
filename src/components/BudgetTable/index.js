@@ -45,7 +45,7 @@ const BudgetTable = props => {
         row.endDate = budget.endDate
             ? getYearMonthDayString(new Date(budget.endDate))
             : null
-        row.showInMenu = budget.showInMenu ? 'true' : 'false'
+        row.showInMenu = budget.showInMenu ? 'Yes' : 'No'
         row.sortOrder = budget.sortOrder
         row.action = (
             <>
