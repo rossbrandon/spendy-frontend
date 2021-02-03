@@ -8,6 +8,7 @@ const TopPlacesChart = () => {
     aggregatePlaces.sort((a, b) => a.count > b.count)
     const categories = aggregatePlaces.map(p => p.place)
     const series = [{}]
+    series[0].name = 'Count'
     series[0].data = aggregatePlaces.map(c => c.count)
 
     const options = {
@@ -27,7 +28,6 @@ const TopPlacesChart = () => {
         dataLabels: {
             enabled: false,
         },
-
         colors: ['#34c38f'],
         grid: {
             borderColor: '#f1f1f1',

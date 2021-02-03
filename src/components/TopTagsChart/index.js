@@ -8,6 +8,7 @@ const TopTagsChart = () => {
     aggregateTags.sort((a, b) => a.count > b.count)
     const categories = aggregateTags.map(p => p.tag)
     const series = [{}]
+    series[0].name = 'Count'
     series[0].data = aggregateTags.map(c => c.count)
 
     const options = {
@@ -27,7 +28,6 @@ const TopTagsChart = () => {
         dataLabels: {
             enabled: false,
         },
-
         colors: ['#f1b44c'],
         grid: {
             borderColor: '#f1f1f1',
