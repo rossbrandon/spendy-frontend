@@ -50,7 +50,8 @@ const ExpenseSearchTable = props => {
                 </>
             )
         })
-        row.action = (
+        row.budgetSearch = expense.budget.name
+        row.budget = (
             <>
                 <Link
                     to={{
@@ -94,8 +95,8 @@ const ExpenseSearchTable = props => {
                 label: t('Tags'),
             },
             {
-                field: 'action',
-                label: t('Action'),
+                field: 'budget',
+                label: t('Budget'),
                 sort: 'disabled',
             },
         ],
