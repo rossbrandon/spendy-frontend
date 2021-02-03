@@ -40,95 +40,93 @@ const MonthSwitcher = () => {
     }
 
     return (
-        <Col>
-            <Row className="mb-4 text-center">
-                <Col xs="1">
-                    <i
-                        id="month-previous"
-                        className="bx bx-left-arrow-alt h1 mt-4 text-left"
-                        onClick={() => {
-                            const date = new Date(startDate)
-                            date.setDate(1)
-                            updateDates(date)
-                        }}
-                    ></i>
-                </Col>
-                <Col xs="10">
-                    <h2 className="mb-4">
-                        {getFormattedDate(new Date(startDate))}
-                    </h2>
-                    <Button type="button" color="info" onClick={toggle}>
-                        {t('Change Month')}
-                    </Button>
-                    <Modal
-                        isOpen={isOpen}
-                        role="dialog"
-                        autoFocus={true}
-                        centered={true}
-                        className="exampleModal"
-                        tabIndex="-1"
-                        toggle={toggle}
-                    >
-                        <div className="modal-content">
-                            <ModalHeader toggle={toggle}>
-                                {t('Change Month')}
-                            </ModalHeader>
-                            <ModalBody className="text-center">
-                                <div className="mb-2">
-                                    <Button
-                                        type="button"
-                                        color="info"
-                                        onClick={() => {
-                                            updateDates(new Date())
-                                            toggle()
-                                        }}
-                                    >
-                                        {t('Go to Current Month')}
-                                    </Button>
-                                </div>
-                                <hr />
-                                <p className="mb-2">
-                                    {t(
-                                        'Select month to display budgets and expenses',
-                                    )}
-                                </p>
-                                <Calendar
-                                    className="m-auto"
-                                    value={new Date(endDate)}
-                                    onChangeYearUpdate={false}
-                                    onChange={selectedMonth => {
-                                        updateDates(selectedMonth)
-                                        toggle()
-                                    }}
-                                    maxDetail="year"
-                                    minDetail="month"
-                                />
-                            </ModalBody>
-                            <ModalFooter>
+        <Row className="mb-4 text-center">
+            <Col xs="2" md="1">
+                <i
+                    id="month-previous"
+                    className="bx bx-left-arrow-alt h1 mt-4"
+                    onClick={() => {
+                        const date = new Date(startDate)
+                        date.setDate(1)
+                        updateDates(date)
+                    }}
+                ></i>
+            </Col>
+            <Col xs="8" md="10">
+                <h2 className="mb-4">
+                    {getFormattedDate(new Date(startDate))}
+                </h2>
+                <Button type="button" color="info" onClick={toggle}>
+                    {t('Change Month')}
+                </Button>
+                <Modal
+                    isOpen={isOpen}
+                    role="dialog"
+                    autoFocus={true}
+                    centered={true}
+                    className="exampleModal"
+                    tabIndex="-1"
+                    toggle={toggle}
+                >
+                    <div className="modal-content">
+                        <ModalHeader toggle={toggle}>
+                            {t('Change Month')}
+                        </ModalHeader>
+                        <ModalBody className="text-center">
+                            <div className="mb-2">
                                 <Button
                                     type="button"
-                                    color="success"
-                                    onClick={toggle}
+                                    color="info"
+                                    onClick={() => {
+                                        updateDates(new Date())
+                                        toggle()
+                                    }}
                                 >
-                                    {t('Apply')}
+                                    {t('Go to Current Month')}
                                 </Button>
-                            </ModalFooter>
-                        </div>
-                    </Modal>
-                </Col>
-                <Col xs="1">
-                    <i
-                        id="month-next"
-                        className="bx bx-right-arrow-alt h1 mt-4"
-                        onClick={() => {
-                            const date = getLastDayOfMonth(new Date(endDate))
-                            date.setMonth(date.getMonth() + 1, 1)
-                            updateDates(date)
-                        }}
-                    ></i>
-                </Col>
-            </Row>
-        </Col>
+                            </div>
+                            <hr />
+                            <p className="mb-2">
+                                {t(
+                                    'Select month to display budgets and expenses',
+                                )}
+                            </p>
+                            <Calendar
+                                className="m-auto"
+                                value={new Date(endDate)}
+                                onChangeYearUpdate={false}
+                                onChange={selectedMonth => {
+                                    updateDates(selectedMonth)
+                                    toggle()
+                                }}
+                                maxDetail="year"
+                                minDetail="month"
+                            />
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button
+                                type="button"
+                                color="success"
+                                onClick={toggle}
+                            >
+                                {t('Apply')}
+                            </Button>
+                        </ModalFooter>
+                    </div>
+                </Modal>
+            </Col>
+            <Col xs="2" md="1">
+                <i
+                    id="month-next"
+                    className="bx bx-right-arrow-alt h1 mt-4"
+                    onClick={() => {
+                        const date = getLastDayOfMonth(new Date(endDate))
+                        date.setMonth(date.getMonth() + 1, 1)
+                        updateDates(date)
+                    }}
+                ></i>
+            </Col>
+        </Row>
     )
 }
 

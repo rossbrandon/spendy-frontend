@@ -28,7 +28,7 @@ const Header = props => {
                     </div>
                     <button
                         type="button"
-                        className="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light"
+                        className="btn btn-sm px-3 font-size-16 d-sm-none header-item waves-effect waves-light"
                         data-toggle="collapse"
                         onClick={() => {
                             openMenu()

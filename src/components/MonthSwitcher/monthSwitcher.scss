@@ -1,3 +1,5 @@
-#month-next {
-    margin-right: 530%;
+#month-previous:hover,
+#month-next:hover {
+    cursor: pointer;
+    color: #556ee6;
 }
